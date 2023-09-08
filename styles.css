@@ -108,3 +108,7 @@ th {
   background-color: #f2f2f2;
   color: #333;
 }
+th:hover {
+  cursor: pointer; /* Change the cursor style on hover */
+  background-color: #f2f2f2; /* Change the background color on hover */
+}

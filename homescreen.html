@@ -15,19 +15,26 @@
   </div>
 
   <div class="table-container">
-    <table>
+    <table id="sortable-table">
         <thead>
             <tr>
-                <th>Lvl</th>
-                <th>Time</th>
-                <th>IP</th>
-                <th>Port</th>
+                <th data-sort="numeric">Lvl</th>
+                <th data-sort="numeric">Time</th>
+                <th data-sort="numeric">IP</th>
+                <th data-sort="numeric">Port</th>
                 <th>Description</th>
                 <!-- Add more headers as needed -->
+                <!-- <th data-sort="numeric" onclick="sortTable(0)">Lvl</th>
+                    <th data-sort="numeric" onclick="sortTable(1)">Time</th>
+                    <th data-sort="text" onclick="sortTable(2)">IP</th>
+                    <th data-sort="numeric" onclick="sortTable(3)">Port</th>
+                    <th data-sort="text" onclick="sortTable(4)">Description</th> -->
             </tr>
         </thead>
         <tbody>
             <!-- Add table rows and data here -->
+            <!-- {% for row in data %} -->
+
             <tr>
                 <td>1</td>
                 <td>8.233</td>
@@ -35,11 +42,28 @@
                 <td>88</td>
                 <td>Multiple password attempts</td>
                 <!-- Add more data cells as needed -->
+
+                <!-- <td>{{ row['Lvl'] }}</td>
+                    <td>{{ row['Time'] }}</td>
+                    <td>{{ row['IP'] }}</td>
+                    <td>{{ row['Port'] }}</td>
+                    <td>{{ row['Description'] }}</td> -->
             </tr>
+            <!-- {% endfor %} -->
+            <tr>
+              <td>2</td>
+              <td>7.653</td>
+              <td>182.12.4.101</td>
+              <td>64</td>
+              <td>Account blocked</td>
+              <!-- Add more data cells as needed -->
+          </tr>
             <!-- Add more rows as needed -->
         </tbody>
     </table>
 </div> 
 
 </body>
+<!-- <script src="{{ url_for('static', filename='script.js') }}"></script> -->
+<script src="TableSort.js"></script>
 </html>

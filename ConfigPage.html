@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Screen</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  
+   <div class="config">
+      <h1 >Welcome</h1>
+      <h3 >Please select a configuration file</h3>
+      <form id="redirectForm" action="./homescreen.html" method="get">
+        <input type="file" name="fileInput" id="fileInput1"></input><br><br>
+          <input type="submit" value="submit" id="targetInput" disabled></input>
+        
+      </form>
+      <div id="result"></div>
+   </div>
+   
+
+</body>
+<script>
+ function enableInputOnFileUpload(sourceInputId, targetInputId) {
+            const sourceInput = document.getElementById(sourceInputId);
+            const targetInput = document.getElementById(targetInputId);
+
+            if (!sourceInput || !targetInput) {
+                console.error("Source or target input element not found");
+                return;
+            }
+
+            sourceInput.addEventListener("change", function () {
+                if (sourceInput.files.length > 0) {
+                    targetInput.removeAttribute("disabled");
+                } else {
+                    targetInput.setAttribute("disabled", "disabled");
+                }
+            });
+        }
+
+        // Call the function with your input element IDs
+        enableInputOnFileUpload("fileInput1", "targetInput");
+</script>
+</html>
+

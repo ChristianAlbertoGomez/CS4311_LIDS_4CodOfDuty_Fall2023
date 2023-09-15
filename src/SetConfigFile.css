@@ -1,0 +1,11 @@
+.config{
+  position: fixed;
+  top: 50%;
+  left: 45%;
+  margin-top: -50px;
+  margin-left: -100px;
+  text-align: center;
+  color: aliceblue;
+}
+
+

@@ -1,0 +1,31 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-color: #f2f2f2;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  color: #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+  color: black;
+}
+
+th:hover {
+  background-color:cadetblue;
+}
+
+.low {
+  color: rgb(13, 219, 13);
+}
+.mid {
+  color: yellow;
+}
+.high {
+  color: red;
+} 

@@ -1,34 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
+import Sidebar from './Components/Sidebar';
 import React, { useState, useEffect } from 'react';
-import Loading from './loading';
-
+import Loading from './Components/loading';
+import AlertTable from './Components/AlertTable';
+import SetConfigFile from './SetConfigFile';
 const App = () => {
   const [loading, setLoading] = useState(true);
   
-  // Simulate an async operation
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -40,14 +18,25 @@ const App = () => {
       {loading ? (
         <Loading />
       ) : (
-        // Render your main content when loading is false
-        <div>
-          <h1>Welcome to My App</h1>
-          {/* Your main content */}
-        </div>
+        <div>        
+          <Sidebar />
+          <main className="mainBody">
+            <AlertTable />
+          </main> 
+       </div>
       )}
+      
     </div>
   );
+
+  // return(
+  //   <div>
+  //      <Sidebar />
+  //     <main className="mainBody">
+  //       <AlertTable />
+  //     </main> 
+  //   </div>
+  // );
 };
 
 

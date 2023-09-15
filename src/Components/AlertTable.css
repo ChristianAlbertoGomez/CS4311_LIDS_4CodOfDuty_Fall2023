@@ -1,13 +1,4 @@
-/* .App {
-  
-} */
-
-.mainBody {
-  margin-left: 220px; /* Width of the sidebar */
-  padding: 20px;
-}
-
-/* table {
+table {
   width: 100%;
   border-collapse: collapse;
   border-color: #f2f2f2;
@@ -25,16 +16,16 @@ th {
   color: black;
 }
 
-tr:hover {
-  background-color: #f5f5f5;
+th:hover {
+  background-color:cadetblue;
 }
 
 .low {
-  color: aqua;
+  color: rgb(13, 219, 13);
 }
 .mid {
   color: yellow;
 }
 .high {
   color: red;
-}  */
+} 

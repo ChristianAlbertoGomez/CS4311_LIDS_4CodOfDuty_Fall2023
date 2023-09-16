@@ -3,7 +3,7 @@ import Sidebar from './Components/Sidebar';
 import React, { useState, useEffect } from 'react';
 import Loading from './Components/loading';
 import AlertTable from './Components/AlertTable';
-import SetConfigFile from './SetConfigFile';
+
 const App = () => {
   const [loading, setLoading] = useState(true);
   
@@ -28,15 +28,6 @@ const App = () => {
       
     </div>
   );
-
-  // return(
-  //   <div>
-  //      <Sidebar />
-  //     <main className="mainBody">
-  //       <AlertTable />
-  //     </main> 
-  //   </div>
-  // );
 };
 
 

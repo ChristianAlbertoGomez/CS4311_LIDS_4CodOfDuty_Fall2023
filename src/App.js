@@ -3,6 +3,9 @@ import Sidebar from './Components/Sidebar';
 import React, { useState, useEffect } from 'react';
 import Loading from './Components/loading';
 import AlertTable from './Components/AlertTable';
+import NotificationsTable from './Components/NotificationsTable';
+import ErrorTable from './Components/ErrorTable';
+import SortButton from './Components/SortButton';
 import SetConfigFile from './SetConfigFile';
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -21,7 +24,10 @@ const App = () => {
         <div>        
           <Sidebar />
           <main className="mainBody">
+            <SortButton/>
             <AlertTable />
+            <NotificationsTable />
+            <ErrorTable />
           </main> 
        </div>
       )}

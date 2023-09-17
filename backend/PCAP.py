@@ -1,7 +1,7 @@
 from tabulate import tabulate
 
 # Define your data as a list of lists (each inner list represents a row)
-def pcapTable:
+def pcapTable():
     data = [
         ["5.05", "192.168.0.8", "198.809.9.1","TCP","64","4830 -> 80 [SYN] Seq = 0..."],
         ["64.05", "193.156.0.1", "198.809.9.1","HTTP","478","POST/Action_page.php HTTP..."],

@@ -1,5 +1,6 @@
 from config import *
 from Alerts import *
+from PCAP import *
 
   
 while True:
@@ -11,7 +12,7 @@ while True:
     elif userInp == 1:
       setConfigFile()
     elif userInp == 2:
-      print("Show PCAP") 
+      pcapTable() 
     elif userInp == 3:
       print("You'll be able to search for a specific PCAP")
     elif userInp == 4:

@@ -17,12 +17,14 @@ const SetConfigFile = () => {
 
   return (
     <div className="config"> 
-      <h1>Welcome to LIDS</h1>
-      <h3>Please select the Configuration File</h3>
+      <div className="title">Welcome to LIDS</div>
+      <div className="title-2">Please select the Configuration File</div>
       <form>
-        <input type="file" onChange={uploadFile} id="fileInput" />
+        <input type="file" onChange={uploadFile} id="fileInput"/>
         <Link to="/home">
-          <input type="submit" value="submit" onChange={uploadFile} id="targetInput" disabled />
+
+        <input type="submit" value="Submit" onChange={uploadFile} id="targetInput" className="submit-button" disabled/>
+
         </Link>
       </form>
     </div>

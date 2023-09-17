@@ -28,6 +28,7 @@ Lightweight Intrusion Detection System Distributed (LIDS-D) Agent
 
 ### Team members
 
+* Darinka Carrasco-Cardona
 * Carlos Cepeda 
 * Courtney Woods 
 * Christian Gomez 
@@ -38,7 +39,7 @@ Lightweight Intrusion Detection System Distributed (LIDS-D) Agent
 
 ## LIDS GUI Information
 
-    First page, LIDS GUI allows the users to upload a configuration file for the system to read.  Once readable, it transfers to the second screen where the alerts are put into data tables where it shows the following:
+First page, LIDS GUI allows the users to upload a configuration file for the system to read.  Once readable, it transfers to the second screen where the alerts are put into data tables where it shows the following:
 
 Level
 
@@ -70,7 +71,7 @@ Errors
 
 ## CLI Information
 
-The CLI or Command Line Interface is mainly to start the program from the command line or terminal. Once the script is ran, it will open up the LIDS program where you will begin to detect. 
+The CLI or Command Line Interface is mainly to start the program from the command line or terminal. Once the script is ran, it will open up the LIDS program where you will begin to detect.
 
 ### Available Scripts
 
@@ -84,7 +85,7 @@ You may also see any lint errors in the console.
 
 #### npm install
 
-Installs the necessary files so t hat you are able to run the app in developement mode. 
+Installs the necessary files so t hat you are able to run the app in developement mode.
 
 ## Date:
 

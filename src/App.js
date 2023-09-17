@@ -6,6 +6,7 @@ import AlertTable from './Components/AlertTable';
 import NotificationsTable from './Components/NotificationsTable';
 import ErrorTable from './Components/ErrorTable';
 import SetConfigFile from './SetConfigFile';
+
 const App = () => {
   const [loading, setLoading] = useState(true);
   
@@ -41,15 +42,6 @@ const App = () => {
       
     </div>
   );
-
-  // return(
-  //   <div>
-  //      <Sidebar />
-  //     <main className="mainBody">
-  //       <AlertTable />
-  //     </main> 
-  //   </div>
-  // );
 };
 
 

@@ -1,6 +1,8 @@
 import React from 'react';
+
 import './Sidebar.css'; // You'll create this CSS file in the next step
 import { BsDiagram2, BsFillExclamationCircleFill, BsFillGearFill, BsGearFill, BsHouseFill, BsCloudHaze} from "react-icons/bs";
+
 
 const Sidebar = () => {
   return (

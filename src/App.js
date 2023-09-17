@@ -22,10 +22,19 @@ const App = () => {
       ) : (
         <div>        
           <Sidebar />
+          <div className="header">
+              Dashboard
+          </div>
           <main className="mainBody">
             <AlertTable />
-            <NotificationsTable />
-            <ErrorTable />
+            <div className="tables">
+              <div className="table-1">
+                <NotificationsTable />
+              </div>
+              <div className="table-2">
+                <ErrorTable />
+              </div>
+            </div>
           </main> 
        </div>
       )}

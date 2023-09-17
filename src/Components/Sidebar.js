@@ -5,8 +5,8 @@ import { BsDiagram2, BsFillExclamationCircleFill, BsFillGearFill, BsGearFill, Bs
 const Sidebar = () => {
   return (
     <div className="sidebar">
+      <div className="sidebar-title">LIDS</div>
       <ul className="nav-links">
-      <li className="sidebar-title">LIDS</li>
         <li><BsHouseFill /> Home</li>
         <li><BsFillExclamationCircleFill /> Alerts</li>
         <li><BsDiagram2 /> Network</li>

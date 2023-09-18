@@ -1,9 +1,115 @@
 import React, { useState } from 'react';
 import './AlertTable.css'; 
+import { AlertInfo } from '../AlertInfo';
 
 
 const AlertTable = () => {
   const initialData = [
+    {
+      level: 'Low',
+      time: 8.233,
+      ip: '192.12.4.101',
+      port: 88,
+      description: 'Multiple password attempts',
+    },
+    {
+      level: 'Mid',
+      time: 7.653,
+      ip: '182.12.4.101',
+      port: 64,
+      description: 'Account blocked',
+    },
+    {
+      level: 'High',
+      time: 9.152,
+      ip: '192.12.03.101',
+      port: 99,
+      description: 'Brute force connection',
+    },
+    {
+      level: 'Low',
+      time: 2.233,
+      ip: '192.12.4.101',
+      port: 88,
+      description: 'Multiple password attempts',
+    },
+    {
+      level: 'Mid',
+      time: 5.312,
+      ip: '172.12.4.101',
+      port: 48,
+      description: 'Multiple password attempts',
+    },
+    {
+      level: 'Low',
+      time: 8.233,
+      ip: '192.12.4.101',
+      port: 88,
+      description: 'Multiple password attempts',
+    },
+    {
+      level: 'Mid',
+      time: 7.653,
+      ip: '182.12.4.101',
+      port: 64,
+      description: 'Account blocked',
+    },
+    {
+      level: 'High',
+      time: 9.152,
+      ip: '192.12.03.101',
+      port: 99,
+      description: 'Brute force connection',
+    },
+    {
+      level: 'Low',
+      time: 2.233,
+      ip: '192.12.4.101',
+      port: 88,
+      description: 'Multiple password attempts',
+    },
+    {
+      level: 'Mid',
+      time: 5.312,
+      ip: '172.12.4.101',
+      port: 48,
+      description: 'Multiple password attempts',
+    },
+    {
+      level: 'Low',
+      time: 8.233,
+      ip: '192.12.4.101',
+      port: 88,
+      description: 'Multiple password attempts',
+    },
+    {
+      level: 'Mid',
+      time: 7.653,
+      ip: '182.12.4.101',
+      port: 64,
+      description: 'Account blocked',
+    },
+    {
+      level: 'High',
+      time: 9.152,
+      ip: '192.12.03.101',
+      port: 99,
+      description: 'Brute force connection',
+    },
+    {
+      level: 'Low',
+      time: 2.233,
+      ip: '192.12.4.101',
+      port: 88,
+      description: 'Multiple password attempts',
+    },
+    {
+      level: 'Mid',
+      time: 5.312,
+      ip: '172.12.4.101',
+      port: 48,
+      description: 'Multiple password attempts',
+    },
     {
       level: 'Low',
       time: 8.233,
@@ -99,7 +205,7 @@ const AlertTable = () => {
             <tr key={index}>
               <td className={item.level.toLowerCase()}>{item.level}</td>
               <td>{item.time}</td>
-              <td>{item.ip}</td>
+              <td >{item.ip}</td>
               <td>{item.port}</td>
               <td>{item.description}</td>
             </tr>

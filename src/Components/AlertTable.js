@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './AlertTable.css'; 
 
-
 const AlertTable = () => {
   const initialData = [
     {
@@ -45,6 +44,7 @@ const AlertTable = () => {
   const [data, setData] = useState(initialData);
   const [sortDirection, setSortDirection] = useState('asc');
   const [sortedColumn, setSortedColumn] = useState(null);
+
 
   const compareLevels = (a, b) => {
     const levels = ['Low', 'Mid', 'High'];

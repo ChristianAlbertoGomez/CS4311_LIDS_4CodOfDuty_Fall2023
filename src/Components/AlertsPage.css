@@ -1,9 +1,13 @@
 /* AlertsPage.css */
 .AlertsPage {
-  display: flex;
+  display: grid;
+  grid-template-columns: 88%; /* Sidebar and Content columns */
+  gap: 20px; /* Adjust the gap between columns */
+  justify-content: flex-end; /* Align content to the right */
+
 }
 
-/* Define styles for the sidebar and content */
+/* Define styles for the sidebar */
 .Sidebar {
   /* Add your sidebar styles here */
   width: 30%; /* Adjust as needed, e.g., 30% for the sidebar */
@@ -11,10 +15,10 @@
 
 .content {
   /* Add your content styles here */
-  flex-grow: 1; /* Allow the content to grow and take remaining space */
-  width: 85%; /* Adjust as needed, e.g., 70% for the content */
-  margin-left: auto; /* Push the content to the right */
+  display: flex;
+  flex-direction: column; /* Content in a column layout */
   padding: 20px; /* Add padding for spacing (adjust as needed) */
+  overflow: auto; /* Enable scrolling for content if needed */
 }
 
 /* Alert Details Modal */

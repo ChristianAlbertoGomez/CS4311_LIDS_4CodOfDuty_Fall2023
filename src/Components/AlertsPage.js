@@ -1,3 +1,4 @@
+// AlertsPage.js
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import './AlertsPage.css';

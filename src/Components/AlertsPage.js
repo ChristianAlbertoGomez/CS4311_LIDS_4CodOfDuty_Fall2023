@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
-import './AlertsPage.css'; // Import your CSS file for AlertsPage (adjust the path as needed)
+import './AlertsPage.css'; 
 
 const AlertsPage = () => {
   const [selectedAlert, setSelectedAlert] = useState(null);

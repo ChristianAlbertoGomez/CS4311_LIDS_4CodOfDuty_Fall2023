@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
-import './AlertsPage.css'; 
+import './AlertsPage.css';
 
 const AlertsPage = () => {
   const [selectedAlert, setSelectedAlert] = useState(null);
+  const [exportModalVisible, setExportModalVisible] = useState(false);
+  const [selectedExportFormat, setSelectedExportFormat] = useState('PDF');
+  const [selectedSaveLocation, setSelectedSaveLocation] = useState('');
 
   // Sample alert data (you can replace this with actual data from an API or elsewhere)
   const alertData = [
@@ -38,8 +41,27 @@ const AlertsPage = () => {
     setSelectedAlert(alert);
   };
 
+  const handleExport = () => {
+    setExportModalVisible(true);
+  };
+
+  const handleExportFormatChange = (format) => {
+    setSelectedExportFormat(format);
+  };
+
+  const handleSaveLocationChange = (location) => {
+    setSelectedSaveLocation(location);
+  };
+
+  const handleExportConfirm = () => {
+    // Perform the export based on selectedExportFormat and selectedSaveLocation
+    console.log(`Exporting alert as ${selectedExportFormat} to ${selectedSaveLocation}`);
+    setExportModalVisible(false);
+  };
+
   const closeModal = () => {
     setSelectedAlert(null);
+    setExportModalVisible(false);
   };
 
   return (
@@ -78,6 +100,16 @@ const AlertsPage = () => {
           <AlertDetailsModal
             alert={selectedAlert}
             onClose={closeModal}
+            onExport={handleExport}
+          />
+        )}
+        {exportModalVisible && (
+          <ExportOptionsModal
+            selectedFormat={selectedExportFormat}
+            selectedLocation={selectedSaveLocation}
+            onFormatChange={handleExportFormatChange}
+            onLocationChange={handleSaveLocationChange}
+            onConfirm={handleExportConfirm}
           />
         )}
       </div>
@@ -85,12 +117,7 @@ const AlertsPage = () => {
   );
 };
 
-const handleExport = (alert) => {
-  
-  console.log(`Exporting alert with ID ${alert.id}`);
-};
-
-const AlertDetailsModal = ({ alert, onClose }) => {
+const AlertDetailsModal = ({ alert, onClose, onExport }) => {
   return (
     <div className="alert-details-modal">
       <div className="modal-content">
@@ -106,11 +133,52 @@ const AlertDetailsModal = ({ alert, onClose }) => {
         <p><strong>Time:</strong> {alert.time}</p>
         <p><strong>Date:</strong> {alert.date}</p>
         <p><strong>Info:</strong> {alert.details}</p>
+        <button onClick={() => onExport(alert)}>Export</button>
       </div>
     </div>
   );
 };
 
-
+const ExportOptionsModal = ({
+  selectedFormat,
+  selectedLocation,
+  onFormatChange,
+  onLocationChange,
+  onConfirm,
+}) => {
+  return (
+    <div className="export-options-modal">
+      <div className="modal-content2">
+        <span className="close-button" onClick={onConfirm}>
+          &times;
+        </span>
+        <h3>Export Options</h3>
+        <div>
+          <label>
+            Export As:
+            <select
+              value={selectedFormat}
+              onChange={(e) => onFormatChange(e.target.value)}
+            >
+              <option value="PDF">PDF</option>
+              <option value="XML">XML</option>
+            </select>
+          </label>
+        </div>
+        <div>
+          <label>
+            Save In:
+            <input
+              type="text"
+              value={selectedLocation}
+              onChange={(e) => onLocationChange(e.target.value)}
+            />
+          </label>
+        </div>
+        <button onClick={onConfirm}>Export</button>
+      </div>
+    </div>
+  );
+};
 
 export default AlertsPage;

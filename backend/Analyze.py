@@ -15,7 +15,7 @@ def getPacketInfo(packet):
             f'\nDestination address: {destAddress}' \
             f'\nDestination port: {dstPort}\n'
 
-def analyze(packet):
+def analyze(packet, system_Info):
     if packet.ip.src in check_whitelist(packet.ip.dst, packet.ip.src):
         return
     else:

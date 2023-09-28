@@ -1,4 +1,5 @@
 import pyshark
+from Project.CS4311_LIDS_4CodOfDuty_Fall2023.backend.monitor_network import check_whitelist
 
 def getPacketInfo(packet):
     protocol = packet.transport_layer
@@ -14,5 +15,8 @@ def getPacketInfo(packet):
             f'\nDestination address: {destAddress}' \
             f'\nDestination port: {dstPort}\n'
 
-
-    
+def analyze(packet):
+    if packet.ip.src in check_whitelist(packet.ip.dst, packet.ip.src):
+        return
+    else:
+        getPacketInfo(packet)

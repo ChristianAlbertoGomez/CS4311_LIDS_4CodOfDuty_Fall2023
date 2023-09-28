@@ -1,7 +1,7 @@
 /* AlertsPage.css */
 .AlertsPage {
   display: grid;
-  grid-template-columns: 88%; /* Sidebar and Content columns */
+  grid-template-columns: 100%; /* Sidebar and Content columns */
   gap: 20px; /* Adjust the gap between columns */
   justify-content: flex-end; /* Align content to the right */
 

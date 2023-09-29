@@ -118,25 +118,29 @@ def createPacket(packet):
     if(protocol == 'TCP'):
         srcAddress = packet.ip.src
         srcPort = packet[protocol].srcport
-        destAddress = packet.ip.dst
+        dstAddress = packet.ip.dst
         dstPort = packet[protocol].dstport
         timeStamp = packet.sniff_time
         payLoadLength = packet.length
-        packetHeader = [srcAddress, srcPort, destAddress, dstPort, timeStamp, protocol, payLoadLength]
+        packetHeader = {'SrcIP': srcAddress, 'SrcPort': srcPort, 'DstIP': dstAddress, 'dstPort':dstPort, 'time':timeStamp, 'protocol':protocol, 'payLoadLen':payLoadLength}
         payload = packet.tcp.payload
-        createdPacket = (packetHeader, payload)
+        createdPacket = {}
+        createdPacket['header'] = packetHeader
+        createdPacket['payload'] = payload
         
         return createdPacket
     elif(protocol == 'UDP'):
         srcAddress = packet.ip.src
         srcPort = packet[protocol].srcport
-        destAddress = packet.ip.dst
+        dstAddress = packet.ip.dst
         dstPort = packet[protocol].dstport
         timeStamp = packet.sniff_time
         payLoadLength = packet.length
-        packetHeader = [srcAddress, srcPort, destAddress, dstPort, timeStamp, protocol, payLoadLength]
-        payload = packet.tcp.payload
-        createdPacket = (packetHeader, payload)
+        packetHeader = {'srcIP': srcAddress, 'srcPort': srcPort, 'dstIP': dstAddress, 'dstPort':dstPort, 'time':timeStamp, 'protocol':protocol, 'payLoadLen':payLoadLength}
+        payload = packet.udp.payload
+        createdPacket = {}
+        createdPacket['header'] = packetHeader
+        createdPacket['payload'] = payload
 
         return createdPacket
 
@@ -144,7 +148,7 @@ def createPacket(packet):
 def analyzePacket(packet, system_info):
     for i, j in system_info.items():
         for k in j['whitelist']:
-            if packet['IP'].src == k:
+            if packet['header']['srcIP'] == k:
                 print("Packet in whitelist")
                 #send to whitelist storage
                 #createAlert(packet, system_info, "whitelist")
@@ -156,7 +160,7 @@ def analyzePacket(packet, system_info):
                 #createAlert(packet, system_info, "unknown ip")
                 #storeMaliciousPackets()
                 #sendAlert()
-                    
+
     raise ValueError('test')
 
 #storeMaliciousPackets()

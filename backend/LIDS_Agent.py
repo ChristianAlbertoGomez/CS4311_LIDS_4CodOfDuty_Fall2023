@@ -115,47 +115,74 @@ def sniffTraffic(server_info: dict, system_info: dict) -> None:
         
 def createPacket(packet):
     protocol = packet.transport_layer
+
+    #check if packet is TCP or UDP
     if(protocol == 'TCP'):
+
+        #get packet header information
         srcAddress = packet.ip.src
         srcPort = packet[protocol].srcport
         dstAddress = packet.ip.dst
         dstPort = packet[protocol].dstport
         timeStamp = packet.sniff_time
         payLoadLength = packet.length
+
+        #create packet header
         packetHeader = {'SrcIP': srcAddress, 'SrcPort': srcPort, 'DstIP': dstAddress, 'dstPort':dstPort, 'time':timeStamp, 'protocol':protocol, 'payLoadLen':payLoadLength}
+
+        #get packet payload
         payload = packet.tcp.payload
-        createdPacket = {}
-        createdPacket['header'] = packetHeader
-        createdPacket['payload'] = payload
-        
-        return createdPacket
-    elif(protocol == 'UDP'):
-        srcAddress = packet.ip.src
-        srcPort = packet[protocol].srcport
-        dstAddress = packet.ip.dst
-        dstPort = packet[protocol].dstport
-        timeStamp = packet.sniff_time
-        payLoadLength = packet.length
-        packetHeader = {'srcIP': srcAddress, 'srcPort': srcPort, 'dstIP': dstAddress, 'dstPort':dstPort, 'time':timeStamp, 'protocol':protocol, 'payLoadLen':payLoadLength}
-        payload = packet.udp.payload
+
+        #create packet
         createdPacket = {}
         createdPacket['header'] = packetHeader
         createdPacket['payload'] = payload
 
+        #return packet
+        return createdPacket
+
+    elif(protocol == 'UDP'):
+
+        #get packet header information
+        srcAddress = packet.ip.src
+        srcPort = packet[protocol].srcport
+        dstAddress = packet.ip.dst
+        dstPort = packet[protocol].dstport
+        timeStamp = packet.sniff_time
+        payLoadLength = packet.length
+
+        #create packet header
+        packetHeader = {'srcIP': srcAddress, 'srcPort': srcPort, 'dstIP': dstAddress, 'dstPort':dstPort, 'time':timeStamp, 'protocol':protocol, 'payLoadLen':payLoadLength}
+
+        #get packet payload
+        payload = packet.udp.payload
+
+        #create packet
+        createdPacket = {}
+        createdPacket['header'] = packetHeader
+        createdPacket['payload'] = payload
+
+        #return packet
         return createdPacket
 
 
 def analyzePacket(packet, system_info):
+    
+    #check if packet is in whitelist
     for i, j in system_info.items():
+        
         for k in j['whitelist']:
+
             if packet['header']['srcIP'] == k:
                 print("Packet in whitelist")
+
                 #send to whitelist storage
                 #createAlert(packet, system_info, "whitelist")
                 #storeWhitelistPackets()
 
             else:
                 print("Packet not in whitelist")
+
                 #send to malicious storage
                 #createAlert(packet, system_info, "unknown ip")
                 #storeMaliciousPackets()

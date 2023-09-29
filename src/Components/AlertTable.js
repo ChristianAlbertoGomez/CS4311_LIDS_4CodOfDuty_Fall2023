@@ -3,44 +3,6 @@ import './AlertTable.css';
 
 
 const AlertTable = () => {
-  const initialData = [
-    {
-      level: 'Low',
-      time: 8.233,
-      ip: '192.12.4.101',
-      port: 88,
-      description: 'Multiple password attempts',
-    },
-    {
-      level: 'Mid',
-      time: 7.653,
-      ip: '182.12.4.101',
-      port: 64,
-      description: 'Account blocked',
-    },
-    {
-      level: 'High',
-      time: 9.152,
-      ip: '192.12.03.101',
-      port: 99,
-      description: 'Brute force connection',
-    },
-    {
-      level: 'Low',
-      time: 2.233,
-      ip: '192.12.4.101',
-      port: 88,
-      description: 'Multiple password attempts',
-    },
-    {
-      level: 'Mid',
-      time: 5.312,
-      ip: '172.12.4.101',
-      port: 48,
-      description: 'Multiple password attempts',
-    }
-    // Add more data rows as needed
-  ];
 
   const [data, setData] = useState([{}]);
   const [sortDirection, setSortDirection] = useState('asc');

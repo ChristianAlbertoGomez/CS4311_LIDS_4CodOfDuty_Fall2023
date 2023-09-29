@@ -40,10 +40,12 @@
 //       <table id='sortable-table'>
 //       <thead>
 //         <tr>
-//           <th>Lvl</th>
-//           <th data-sort="numeric">Time</th>
-//           <th data-sort="numeric">IP</th>
-//           <th data-sort="numeric">Port</th>
+//           <th>Level</th>
+//           <th data-sort="date">Timestamp</th>
+//           <th data-sort="string">Source IP</th>
+//           <th data-sort="numeric">Source Port</th>
+//           <th data-sort="string">Destination IP</th>
+//           <th data-sort="numeric">Destination Port</th>
 //           <th>Description</th>
 //         </tr>
 //       </thead>
@@ -51,24 +53,30 @@
 //         {/* Add table rows and data here */}
 //         <tr>
 //           <td className='low'>Low</td>
-//           <td>8.233</td>
-//           <td>192.12.4.101</td>
-//           <td>88</td>
-//           <td>Multiple password attempts</td>
+//           <td>2023-05-10 12:15:30</td>
+//           <td>192.168.1.100</td>
+//           <td>80</td>
+//           <td>203.0.113.10</td>
+//           <td>80</td>
+//           <td>Multiple Password Attempts</td>
 //         </tr>
 //         <tr>
 //           <td className='mid'>Mid</td>
-//           <td>7.653</td>
-//           <td>182.12.4.101</td>
-//           <td>64</td>
-//           <td>Account blocked</td>
+//           <td>2023-06-15 09:10:20</td>
+//           <td>192.168.1.100</td>
+//           <td>443</td>
+//           <td>203.0.113.10</td>
+//           <td>443</td>
+//           <td>Account Blocked</td>
 //         </tr>
 //         <tr>
 //           <td className='high'>High</td>
-//           <td>9.152</td>
-//           <td>192.12.03.101</td>
-//           <td>99</td>
-//           <td>Brute force connection</td>
+//           <td>2023-03-12 04:20:00</td>
+//           <td>192.168.1.100</td>
+//           <td>22</td>
+//           <td>203.0.113.10</td>
+//           <td>53</td>
+//           <td>Brute Force Connection</td>
 //         </tr>
 //         {/* Add more rows as needed */}
 //       </tbody> 
@@ -84,38 +92,48 @@ const AlertTable = () => {
   const initialData = [
     {
       level: 'Low',
-      time: 8.233,
-      ip: '192.12.4.101',
-      port: 88,
-      description: 'Multiple password attempts',
+      timestamp: '2023-05-10 12:15:30',
+      ip: '192.168.1.100',
+      port: 80,
+      ip2: '203.0.113.10',
+      port2: 80,
+      description: 'Multiple Password Attempts',
     },
     {
       level: 'Mid',
-      time: 7.653,
-      ip: '182.12.4.101',
-      port: 64,
-      description: 'Account blocked',
+      timestamp: '2023-06-15 09:10:20',
+      ip: '192.168.1.100',
+      port: 443,
+      ip2: '203.0.113.10',
+      port2: 443,
+      description: 'Account Blocked',
     },
     {
       level: 'High',
-      time: 9.152,
-      ip: '192.12.03.101',
-      port: 99,
-      description: 'Brute force connection',
+      timestamp: '2023-03-12 04:20:00',
+      ip: '194.170.1.101',
+      port: 22,
+      ip2: '205.0.115.12',
+      port2: 53,
+      description: 'Brute Force Connection',
     },
     {
       level: 'Low',
-      time: 2.233,
-      ip: '192.12.4.101',
-      port: 88,
-      description: 'Multiple password attempts',
+      timestamp: '2023-01-01 5:20:30',
+      ip: '192.168.1.100',
+      port: 80,
+      ip2: '203.0.113.10',
+      port2: 80,
+      description: 'Multiple Password Attempts',
     },
     {
       level: 'Mid',
-      time: 5.312,
-      ip: '172.12.4.101',
-      port: 48,
-      description: 'Multiple password attempts',
+      timestamp: '2023-10-12 8:45:02',
+      ip: '192.168.1.100',
+      port: 443,
+      ip2: '203.0.113.10',
+      port2: 443,
+      description: 'Multiple Password Attempts',
     }
     // Add more data rows as needed
   ];
@@ -158,16 +176,22 @@ const AlertTable = () => {
         <thead>
           <tr>
             <th onClick={() => handleSort('level')}>
-              Lvl {sortedColumn === 'level' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
+              Level {sortedColumn === 'level' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
             </th>
-            <th data-sort="numeric" onClick={() => handleSort('time')}>
-              Time {sortedColumn === 'time' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
+            <th data-sort="date" onClick={() => handleSort('timestamp')}>
+              Timestamp {sortedColumn === 'timestamp' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
             </th>
-            <th data-sort="numeric" onClick={() => handleSort('ip')}>
-              IP {sortedColumn === 'ip' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
+            <th data-sort="string" onClick={() => handleSort('ip')}>
+              Source IP {sortedColumn === 'ip' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
             </th>
             <th data-sort="numeric" onClick={() => handleSort('port')}>
-              Port {sortedColumn === 'port' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
+              Source Port {sortedColumn === 'port' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
+            </th>
+            <th data-sort="string" onClick={() => handleSort('ip2')}>
+              Destination IP {sortedColumn === 'ip2' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
+            </th>
+            <th data-sort="numeric" onClick={() => handleSort('port2')}>
+              Destination Port {sortedColumn === 'port2' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
             </th>
             <th>Description</th>
           </tr>
@@ -176,9 +200,11 @@ const AlertTable = () => {
           {data.map((item, index) => (
             <tr key={index}>
               <td className={item.level.toLowerCase()}>{item.level}</td>
-              <td>{item.time}</td>
+              <td>{item.timestamp}</td>
               <td>{item.ip}</td>
               <td>{item.port}</td>
+              <td>{item.ip2}</td>
+              <td>{item.port2}</td>
               <td>{item.description}</td>
             </tr>
           ))}

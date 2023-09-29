@@ -108,27 +108,55 @@ def sniffTraffic(server_info: dict, system_info: dict) -> None:
 
     try:
         for packet in capture.sniff_continuously():
-            analyzePacket(packet, system_info)
+            createdPacket = createPacket(packet)
+            analyzePacket(createdPacket, system_info)
     except KeyboardInterrupt:
         print("Capture stopped by user.")
         
-#createPacket()
+def createPacket(packet):
+    protocol = packet.transport_layer
+    if(protocol == 'TCP'):
+        srcAddress = packet.ip.src
+        srcPort = packet[protocol].srcport
+        destAddress = packet.ip.dst
+        dstPort = packet[protocol].dstport
+        timeStamp = packet.sniff_time
+        payLoadLength = packet.length
+        packetHeader = [srcAddress, srcPort, destAddress, dstPort, timeStamp, protocol, payLoadLength]
+        payload = packet.tcp.payload
+        createdPacket = (packetHeader, payload)
+        
+        return createdPacket
+    elif(protocol == 'UDP'):
+        srcAddress = packet.ip.src
+        srcPort = packet[protocol].srcport
+        destAddress = packet.ip.dst
+        dstPort = packet[protocol].dstport
+        timeStamp = packet.sniff_time
+        payLoadLength = packet.length
+        packetHeader = [srcAddress, srcPort, destAddress, dstPort, timeStamp, protocol, payLoadLength]
+        payload = packet.tcp.payload
+        createdPacket = (packetHeader, payload)
+
+        return createdPacket
+
+
 def analyzePacket(packet, system_info):
-    # Check if the packet is an IP packet
-    if 'IP' in packet:
-        for i in system_info['whitelist']:
-            if packet['IP'].src == i or packet['IP'].dst == i:
+    for i, j in system_info.items():
+        for k in j['whitelist']:
+            if packet['IP'].src == k:
                 print("Packet in whitelist")
                 #send to whitelist storage
                 #createAlert(packet, system_info, "whitelist")
-                return
+                #storeWhitelistPackets()
+
             else:
                 print("Packet not in whitelist")
                 #send to malicious storage
                 #createAlert(packet, system_info, "unknown ip")
                 #storeMaliciousPackets()
                 #sendAlert()
-                
+                    
     raise ValueError('test')
 
 #storeMaliciousPackets()

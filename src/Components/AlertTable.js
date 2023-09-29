@@ -47,7 +47,7 @@ const AlertTable = () => {
   const [sortedColumn, setSortedColumn] = useState(null);
 
   useEffect(() =>{
-    fetch("/members").then(
+    fetch("/alerts").then(
       res => res.json()
     ).then(
       data => {

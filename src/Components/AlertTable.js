@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AlertTable.css'; 
 
 
@@ -42,9 +42,19 @@ const AlertTable = () => {
     // Add more data rows as needed
   ];
 
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState([{}]);
   const [sortDirection, setSortDirection] = useState('asc');
   const [sortedColumn, setSortedColumn] = useState(null);
+
+  useEffect(() =>{
+    fetch("/members").then(
+      res => res.json()
+    ).then(
+      data => {
+        setData(data)
+      }
+    )
+  },[])
 
   const compareLevels = (a, b) => {
     const levels = ['Low', 'Mid', 'High'];
@@ -97,7 +107,7 @@ const AlertTable = () => {
         <tbody>
           {data.map((item, index) => (
             <tr key={index}>
-              <td className={item.level.toLowerCase()}>{item.level}</td>
+              <td className={item.level?.toLowerCase()}>{item.level}</td>
               <td>{item.time}</td>
               <td>{item.ip}</td>
               <td>{item.port}</td>

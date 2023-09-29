@@ -84,37 +84,47 @@ const AlertTable = () => {
   const initialData = [
     {
       level: 'Low',
-      time: 8.233,
-      ip: '192.12.4.101',
-      port: 88,
+      timestamp: '2023-05-10 12:15:30',
+      source_ip: '192.12.4.101',
+      dest_ip: '192.12.8.151',
+      source_port: 88,
+      dest_port: 37,
       description: 'Multiple password attempts',
     },
     {
       level: 'Mid',
-      time: 7.653,
-      ip: '182.12.4.101',
-      port: 64,
+      timestamp: '2021-01-01 5:20:30',
+      source_ip: '192.10.14.3',
+      dest_ip: '192.13.12.1',
+      source_port: 77,
+      dest_port: 56,
       description: 'Account blocked',
     },
     {
       level: 'High',
-      time: 9.152,
-      ip: '192.12.03.101',
-      port: 99,
+      timestamp: '2022-06-15 09:10:20',
+      source_ip: '192.4.11.65',
+      dest_ip: '192.3.15.100',
+      source_port: 65,
+      dest_port: 76,
       description: 'Brute force connection',
     },
     {
       level: 'Low',
-      time: 2.233,
-      ip: '192.12.4.101',
-      port: 88,
+      timestamp: '2023-01-01 5:20:30',
+      source_ip: '192.2.10.75',
+      dest_ip: '192.12.4.98',
+      source_port: 23,
+      dest_port: 21,
       description: 'Multiple password attempts',
     },
     {
       level: 'Mid',
-      time: 5.312,
-      ip: '172.12.4.101',
-      port: 48,
+      timestamp: '2023-03-12 04:20:00',
+      source_ip: '192.12.4.31',
+      dest_ip: '192.2.8.101',
+      source_port: 88,
+      dest_port: 32,
       description: 'Multiple password attempts',
     }
     // Add more data rows as needed
@@ -135,15 +145,34 @@ const AlertTable = () => {
       return levelB - levelA;
     }
   };
+  // This section is used to sort timestamps based on date and time
+  const compareTimestamps = (a, b) => {
+    const timestampA = new Date(a.timestamp).getTime();
+    const timestampB = new Date(b.timestamp).getTime();
+
+    if (sortDirection === 'asc') {
+      return timestampA - timestampB;
+    } else {
+      return timestampB - timestampA;
+    }
+  };
 
   const handleSort = (columnName) => {
     const direction = sortedColumn === columnName && sortDirection === 'asc' ? 'desc' : 'asc';
 
     const sortedData = [...data].sort((a, b) => {
-      if (columnName === 'level') {
+      if (columnName === 'timestamp') {
+        return compareTimestamps(a, b);
+      } else if (columnName === 'level') {
         return compareLevels(a, b);
       } else {
-        return direction === 'asc' ? a[columnName] - b[columnName] : b[columnName] - a[columnName];
+        return direction === 'asc'
+          ? a[columnName] > b[columnName]
+            ? 1
+            : -1
+          : b[columnName] > a[columnName]
+          ? 1
+          : -1;
       }
     });
 
@@ -152,33 +181,64 @@ const AlertTable = () => {
     setSortedColumn(columnName);
   };
 
+  // This section is used to create the filter search bar
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Function to filter data based on search query
+  const filteredData = data.filter((item) => {
+    // You can customize this filter logic based on your needs
+    const searchString = `${item.level} ${item.timestamp} ${item.source_ip} ${item.dest_ip} ${item.source_port} ${item.dest_port} ${item.description}`;
+    return searchString.toLowerCase().includes(searchQuery.toLowerCase());
+  });
+
+  // Function to handle search input change
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
   return (
     <div className='table-container'>
+      <input
+        className = "filter-search-bar"
+        type="text"
+        placeholder="Search..."
+        value={searchQuery}
+        onChange={handleSearchChange}
+      />
       <table id='sortable-table'>
         <thead>
           <tr>
             <th onClick={() => handleSort('level')}>
               Lvl {sortedColumn === 'level' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
             </th>
-            <th data-sort="numeric" onClick={() => handleSort('time')}>
-              Time {sortedColumn === 'time' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
+            <th data-sort="date" onClick={() => handleSort('timestamp')}>
+              Timestamp {sortedColumn === 'timestamp' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
             </th>
-            <th data-sort="numeric" onClick={() => handleSort('ip')}>
-              IP {sortedColumn === 'ip' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
+            <th data-sort="string" onClick={() => handleSort('source_ip')}>
+              Source IP {sortedColumn === 'source_ip' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
             </th>
-            <th data-sort="numeric" onClick={() => handleSort('port')}>
-              Port {sortedColumn === 'port' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
+            <th data-sort="sting" onClick={() => handleSort('dest_ip')}>
+              Dest IP {sortedColumn === 'dest_ip' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
+            </th>
+            <th data-sort="numeric" onClick={() => handleSort('source_port')}>
+              Source Port {sortedColumn === 'source_port' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
+            </th>
+            <th data-sort="numeric" onClick={() => handleSort('dest_port')}>
+              Dest Port {sortedColumn === 'dest_port' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
             </th>
             <th>Description</th>
           </tr>
         </thead>
         <tbody>
-          {data.map((item, index) => (
+          
+          {filteredData.map((item, index) => (
             <tr key={index}>
               <td className={item.level.toLowerCase()}>{item.level}</td>
-              <td>{item.time}</td>
-              <td>{item.ip}</td>
-              <td>{item.port}</td>
+              <td>{item.timestamp}</td>
+              <td>{item.source_ip}</td>
+              <td>{item.dest_ip}</td>
+              <td>{item.source_port}</td>
+              <td>{item.dest_port}</td>
               <td>{item.description}</td>
             </tr>
           ))}

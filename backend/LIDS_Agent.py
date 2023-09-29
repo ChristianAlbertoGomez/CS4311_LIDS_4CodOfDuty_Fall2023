@@ -99,7 +99,7 @@ def connectServer(server_info: dict, system_info: dict):
 
 def sniffTraffic(server_info: dict, system_info: dict) -> None:
     # Set the interface to capture traffic on (e.g., 'eth0' for Ethernet or 'wlan0' for Wi-Fi)
-    capture_interface = 'Ethernet 4' 
+    capture_interface = 'Ethernet 2' 
 
     # Start capturing packets continuously
     capture = pyshark.LiveCapture(interface=capture_interface)
@@ -108,13 +108,29 @@ def sniffTraffic(server_info: dict, system_info: dict) -> None:
 
     try:
         for packet in capture.sniff_continuously():
-            # analyzePacket(packet, system_info)
-            print(packet)
+            analyzePacket(packet, system_info)
     except KeyboardInterrupt:
         print("Capture stopped by user.")
         
 #createPacket()
-#analyzePacket()
+def analyzePacket(packet, system_info):
+    # Check if the packet is an IP packet
+    if 'IP' in packet:
+        for i in system_info['whitelist']:
+            if packet['IP'].src == i or packet['IP'].dst == i:
+                print("Packet in whitelist")
+                #send to whitelist storage
+                #createAlert(packet, system_info, "whitelist")
+                return
+            else:
+                print("Packet not in whitelist")
+                #send to malicious storage
+                #createAlert(packet, system_info, "unknown ip")
+                #storeMaliciousPackets()
+                #sendAlert()
+                
+    raise ValueError('test')
+
 #storeMaliciousPackets()
 #createAlert(packet, system_info, "unknown ip")
 #saveAlert()
@@ -125,7 +141,7 @@ def sniffTraffic(server_info: dict, system_info: dict) -> None:
 
 if __name__ == "__main__":
     # Prompt the user to enter the configuration file path
-    CONFIG_FILE = 'config_file.xml'
+    CONFIG_FILE = 'C:\\Users\\chica\\OneDrive\\Documents\\G-SoftImplem\\Project\\CS4311_LIDS_4CodOfDuty_Fall2023\\backend\\config_file.xml'
     server_info, system_info, net_systems = ingestConfig(CONFIG_FILE)
     
     if server_info is not None and net_systems is not None:

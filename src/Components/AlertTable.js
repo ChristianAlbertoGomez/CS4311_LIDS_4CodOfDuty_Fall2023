@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './AlertTable.css'; 
+import { AlertInfo } from '../AlertInfo';
 
 const AlertTable = () => {
   const initialData = [
@@ -102,15 +103,18 @@ const AlertTable = () => {
       time: 5.312,
       port: 48,
       description: 'Multiple password attempts',
+
       ipSource: '182.12.4.101',
       ipDestination: '152.13.1.101',
       date: '09-28-2023',
       details: 'We have identified a concerning pattern in our system - multiple attempts to access an account with different passwords. This behavior raises alarms as it indicates a potential unauthorized access attempt. It poses a significant risk to the security of your data and our network. Our dedicated security team is already in action, implementing measures to protect your information and thoroughly investigate this incident.',
 
+
     },
     {
       level: 'Low',
       time: 8.233,
+
       port: 88,
       description: 'Multiple password attempts',
       ipSource: '182.12.4.101',
@@ -118,10 +122,13 @@ const AlertTable = () => {
       date: '09-20-2023',
       details: 'We have identified a concerning pattern in our system - multiple attempts to access an account with different passwords. This behavior raises alarms as it indicates a potential unauthorized access attempt. It poses a significant risk to the security of your data and our network. Our dedicated security team is already in action, implementing measures to protect your information and thoroughly investigate this incident.',
 
+
+
     },
     {
       level: 'Mid',
       time: 7.653,
+
       port: 64,
       description: 'Account blocked',
       ipSource: '182.12.4.101',
@@ -129,6 +136,7 @@ const AlertTable = () => {
       date: '09-02-2023',
       details: 'Your account has been temporarily restricted, and here is why: We have detected unusual activity, particularly a series of failed login attempts. To safeguard your account from potential unauthorized access, we have taken the precautionary step of blocking access. Think of it as your bank card being temporarily blocked after entering the wrong PIN multiple times.',
 
+
     },
     {
       level: 'High',
@@ -140,10 +148,13 @@ const AlertTable = () => {
       date: '09-28-2023',
       details: 'Brace yourself for a digital onslaught - a "Brute Force Connection" is underway. An attacker is systematically trying every possible combination of usernames and passwords to gain access to our system. It is like a relentless digital burglar attempting every conceivable key until they break in. We have fortified our defenses to detect and thwart such brute force attacks, as they are inherently malicious in nature and pose a severe threat to our security.',
 
+
+
     },
     {
       level: 'Low',
       time: 2.233,
+
       port: 88,
       description: 'Multiple password attempts',
       ipSource: '182.12.4.101',
@@ -151,10 +162,13 @@ const AlertTable = () => {
       date: '09-28-2023',
       details: 'We have identified a concerning pattern in our system - multiple attempts to access an account with different passwords. This behavior raises alarms as it indicates a potential unauthorized access attempt. It poses a significant risk to the security of your data and our network. Our dedicated security team is already in action, implementing measures to protect your information and thoroughly investigate this incident.',
 
+
+
     },
     {
       level: 'Mid',
       time: 5.312,
+
       port: 48,
       description: 'Multiple password attempts',
       ipSource: '182.12.4.101',
@@ -162,10 +176,12 @@ const AlertTable = () => {
       date: '09-28-2023',
       details: 'We have identified a concerning pattern in our system - multiple attempts to access an account with different passwords. This behavior raises alarms as it indicates a potential unauthorized access attempt. It poses a significant risk to the security of your data and our network. Our dedicated security team is already in action, implementing measures to protect your information and thoroughly investigate this incident.',
 
+
     },
     {
       level: 'Low',
       time: 8.233,
+
       port: 88,
       description: 'Multiple password attempts',
       ipSource: '182.12.4.101',
@@ -173,10 +189,13 @@ const AlertTable = () => {
       date: '09-28-2023',
       details: 'We have identified a concerning pattern in our system - multiple attempts to access an account with different passwords. This behavior raises alarms as it indicates a potential unauthorized access attempt. It poses a significant risk to the security of your data and our network. Our dedicated security team is already in action, implementing measures to protect your information and thoroughly investigate this incident.',
 
+
+
     },
     {
       level: 'Mid',
       time: 7.653,
+
       port: 64,
       description: 'Account blocked',
       ipSource: '182.12.4.101',
@@ -184,10 +203,12 @@ const AlertTable = () => {
       date: '09-28-2023',
       details: 'Your account has been temporarily restricted, and here is why: We have detected unusual activity, particularly a series of failed login attempts. To safeguard your account from potential unauthorized access, we have taken the precautionary step of blocking access. Think of it as your bank card being temporarily blocked after entering the wrong PIN multiple times.',
 
+
     },
     {
       level: 'High',
       time: 9.152,
+
       port: 99,
       description: 'Brute force connection',
       ipSource: '182.12.4.101',
@@ -199,6 +220,7 @@ const AlertTable = () => {
     {
       level: 'Low',
       time: 2.233,
+
       port: 88,
       description: 'Multiple password attempts',
       ipSource: '182.12.4.101',
@@ -206,17 +228,18 @@ const AlertTable = () => {
       date: '09-28-2023',
       details: 'We have identified a concerning pattern in our system - multiple attempts to access an account with different passwords. This behavior raises alarms as it indicates a potential unauthorized access attempt. It poses a significant risk to the security of your data and our network. Our dedicated security team is already in action, implementing measures to protect your information and thoroughly investigate this incident.',
 
+
     },
     {
       level: 'Mid',
       time: 5.312,
+
       port: 48,
       description: 'Multiple password attempts',
       ipSource: '182.12.4.101',
       ipDestination: '152.13.1.101',
       date: '09-28-2023',
       details: 'We have identified a concerning pattern in our system - multiple attempts to access an account with different passwords. This behavior raises alarms as it indicates a potential unauthorized access attempt. It poses a significant risk to the security of your data and our network. Our dedicated security team is already in action, implementing measures to protect your information and thoroughly investigate this incident.',
-
     }
     // Add more data rows as needed
   ];
@@ -294,8 +317,10 @@ const AlertTable = () => {
             <tr key={index}>
               <td className={item.level.toLowerCase()}>{item.level}</td>
               <td>{item.time}</td>
+
               <td>{item.ipSource}</td>
               <td>{item.ipDestination}</td>
+
               <td>{item.port}</td>
               <td>{item.description}</td>
               <td>

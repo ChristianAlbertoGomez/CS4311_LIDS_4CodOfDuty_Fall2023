@@ -97,7 +97,8 @@ def connectServer(server_info: dict, system_info: dict):
     # except socket.error as e:
     #     print("Error connecting to the server:", str(e))
 
-def sniffTraffic(server_info: dict, system_info: dict) -> None:
+
+def sniffTraffic(server_info: dict, system_info: dict):
     # Set the interface to capture traffic on (e.g., 'eth0' for Ethernet or 'wlan0' for Wi-Fi)
     capture_interface = 'Ethernet 2' 
 
@@ -108,12 +109,17 @@ def sniffTraffic(server_info: dict, system_info: dict) -> None:
 
     try:
         for packet in capture.sniff_continuously():
+
+            #create packet
             createdPacket = createPacket(packet)
+
+            #analyze packet
             analyzePacket(createdPacket, system_info)
     except KeyboardInterrupt:
         print("Capture stopped by user.")
         
 def createPacket(packet):
+    # get packet protocol
     protocol = packet.transport_layer
 
     #check if packet is TCP or UDP
@@ -170,21 +176,20 @@ def analyzePacket(packet, system_info):
     
     #check if packet is in whitelist
     for i, j in system_info.items():
-        
         for k in j['whitelist']:
 
             if packet['header']['srcIP'] == k:
                 print("Packet in whitelist")
 
                 #send to whitelist storage
-                #createAlert(packet, system_info, "whitelist")
+                #createAlert(packet,"whitelist")
                 #storeWhitelistPackets()
 
             else:
                 print("Packet not in whitelist")
 
                 #send to malicious storage
-                #createAlert(packet, system_info, "unknown ip")
+                #createAlert(packet,"unknown ip")
                 #storeMaliciousPackets()
                 #sendAlert()
 

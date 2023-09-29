@@ -4,10 +4,15 @@ import { AlertInfo } from '../AlertInfo';
 
 
 const AlertTable = () => {
+  
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime = date+' '+time;
   const initialData = [
     {
       level: 'Low',
-      time: 8.233,
+      time: dateTime,
       ip: '192.12.4.101',
       port: 88,
       description: 'Multiple password attempts',

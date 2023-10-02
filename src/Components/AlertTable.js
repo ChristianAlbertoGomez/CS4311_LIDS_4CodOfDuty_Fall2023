@@ -1,131 +1,246 @@
-// import React from 'react';
-// import './AlertTable.css'; 
-
-// document.addEventListener('DOMContentLoaded', function() {
-//   const table = document.getElementById('sortable-table');
-//   const thList = table.querySelectorAll('th');
-
-//   thList.forEach(function(th) {
-//       th.addEventListener('click', function() {
-//           const isNumeric = th.getAttribute('data-sort') === 'numeric';
-//           sortTable(table, th.cellIndex, isNumeric);
-//       });
-//   });
-
-//   function sortTable(table, columnIndex, isNumeric) {
-//       const tbody = table.querySelector('tbody');
-//       const rows = Array.from(tbody.querySelectorAll('tr'));
-
-//       rows.sort(function(rowA, rowB) {
-//           const cellA = rowA.cells[columnIndex].textContent;
-//           const cellB = rowB.cells[columnIndex].textContent;
-
-//           if (isNumeric) {
-//               return parseFloat(cellA) - parseFloat(cellB);
-//           } else {
-//               return cellA.localeCompare(cellB);
-//           }
-//       });
-
-//       rows.forEach(function(row) {
-//           tbody.appendChild(row);
-//       });
-//   }
-// });
-
-// const AlertTable = () => {
-//   return (
-    
-//     <div className='table-container'>
-//       <table id='sortable-table'>
-//       <thead>
-//         <tr>
-//           <th>Lvl</th>
-//           <th data-sort="numeric">Time</th>
-//           <th data-sort="numeric">IP</th>
-//           <th data-sort="numeric">Port</th>
-//           <th>Description</th>
-//         </tr>
-//       </thead>
-//       <tbody>
-//         {/* Add table rows and data here */}
-//         <tr>
-//           <td className='low'>Low</td>
-//           <td>8.233</td>
-//           <td>192.12.4.101</td>
-//           <td>88</td>
-//           <td>Multiple password attempts</td>
-//         </tr>
-//         <tr>
-//           <td className='mid'>Mid</td>
-//           <td>7.653</td>
-//           <td>182.12.4.101</td>
-//           <td>64</td>
-//           <td>Account blocked</td>
-//         </tr>
-//         <tr>
-//           <td className='high'>High</td>
-//           <td>9.152</td>
-//           <td>192.12.03.101</td>
-//           <td>99</td>
-//           <td>Brute force connection</td>
-//         </tr>
-//         {/* Add more rows as needed */}
-//       </tbody> 
-//     </table>
-//   </div>
-//   )
-// };
-import React, { useState } from 'react';
+import React, { useState,addEventListener } from 'react';
 import './AlertTable.css'; 
 
 
 const AlertTable = () => {
+  
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime = date+' '+time;
   const initialData = [
     {
-      level: 'Low',
-      timestamp: '2023-05-10 12:15:30',
-      source_ip: '192.12.4.101',
-      dest_ip: '192.12.8.151',
-      source_port: 88,
-      dest_port: 37,
-      description: 'Multiple password attempts',
-    },
-    {
       level: 'Mid',
-      timestamp: '2021-01-01 5:20:30',
-      source_ip: '192.10.14.3',
-      dest_ip: '192.13.12.1',
-      source_port: 77,
-      dest_port: 56,
+      time: dateTime,
+      port: 64,
       description: 'Account blocked',
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-24-2023',
+      details: 'Your account has been temporarily restricted, and here is why: We have detected unusual activity, particularly a series of failed login attempts. To safeguard your account from potential unauthorized access, we have taken the precautionary step of blocking access. Think of it as your bank card being temporarily blocked after entering the wrong PIN multiple times.',
     },
     {
       level: 'High',
-      timestamp: '2022-06-15 09:10:20',
-      source_ip: '192.4.11.65',
-      dest_ip: '192.3.15.100',
-      source_port: 65,
-      dest_port: 76,
+      time: dateTime,
+      port: 99,
       description: 'Brute force connection',
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-21-2023',
+      details: 'Brace yourself for a digital onslaught - a "Brute Force Connection" is underway. An attacker is systematically trying every possible combination of usernames and passwords to gain access to our system. It iss like a relentless digital burglar attempting every conceivable key until they break in. We have fortified our defenses to detect and thwart such brute force attacks, as they are inherently malicious in nature and pose a severe threat to our security.',
     },
     {
       level: 'Low',
-      timestamp: '2023-01-01 5:20:30',
-      source_ip: '192.2.10.75',
-      dest_ip: '192.12.4.98',
-      source_port: 23,
-      dest_port: 21,
+      time: dateTime,
+      port: 88,
       description: 'Multiple password attempts',
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-28-2023',
+      details: 'We have identified a concerning pattern in our system - multiple attempts to access an account with different passwords. This behavior raises alarms as it indicates a potential unauthorized access attempt. It poses a significant risk to the security of your data and our network. Our dedicated security team is already in action, implementing measures to protect your information and thoroughly investigate this incident.',
     },
     {
       level: 'Mid',
-      timestamp: '2023-03-12 04:20:00',
-      source_ip: '192.12.4.31',
-      dest_ip: '192.2.8.101',
-      source_port: 88,
-      dest_port: 32,
+      time: dateTime,
+      port: 48,
       description: 'Multiple password attempts',
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-22-2023',
+      details: 'We have identified a concerning pattern in our system - multiple attempts to access an account with different passwords. This behavior raises alarms as it indicates a potential unauthorized access attempt. It poses a significant risk to the security of your data and our network. Our dedicated security team is already in action, implementing measures to protect your information and thoroughly investigate this incident.',
+    },
+    {
+      level: 'Low',
+      time: dateTime,
+      port: 88,
+      description: 'Multiple password attempts',
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-12-2023',
+      details: 'We have identified a concerning pattern in our system - multiple attempts to access an account with different passwords. This behavior raises alarms as it indicates a potential unauthorized access attempt. It poses a significant risk to the security of your data and our network. Our dedicated security team is already in action, implementing measures to protect your information and thoroughly investigate this incident.',
+
+    },
+    {
+      level: 'Mid',
+      time: dateTime,
+      port: 64,
+      description: 'Account blocked',
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-15-2023',
+      details: 'Your account has been temporarily restricted, and here is why: We have detected unusual activity, particularly a series of failed login attempts. To safeguard your account from potential unauthorized access, we have taken the precautionary step of blocking access. Think of it as your bank card being temporarily blocked after entering the wrong PIN multiple times.',
+
+    },
+    {
+      level: 'High',
+      time: dateTime,
+      port: 99,
+      description: 'Brute force connection',
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-23-2023',
+      details: 'Brace yourself for a digital onslaught - a "Brute Force Connection" is underway. An attacker is systematically trying every possible combination of usernames and passwords to gain access to our system. It is like a relentless digital burglar attempting every conceivable key until they break in. We have fortified our defenses to detect and thwart such brute force attacks, as they are inherently malicious in nature and pose a severe threat to our security.',
+
+    },
+    {
+      level: 'Low',
+      time: dateTime,
+      port: 88,
+      description: 'Multiple password attempts',
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-28-2023',
+      details: 'We have identified a concerning pattern in our system - multiple attempts to access an account with different passwords. This behavior raises alarms as it indicates a potential unauthorized access attempt. It poses a significant risk to the security of your data and our network. Our dedicated security team is already in action, implementing measures to protect your information and thoroughly investigate this incident.',
+
+    },
+    {
+      level: 'Mid',
+      time: dateTime,
+      port: 48,
+      description: 'Multiple password attempts',
+
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-28-2023',
+      details: 'We have identified a concerning pattern in our system - multiple attempts to access an account with different passwords. This behavior raises alarms as it indicates a potential unauthorized access attempt. It poses a significant risk to the security of your data and our network. Our dedicated security team is already in action, implementing measures to protect your information and thoroughly investigate this incident.',
+
+
+    },
+    {
+      level: 'Low',
+      time: dateTime,
+
+      port: 88,
+      description: 'Multiple password attempts',
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-20-2023',
+      details: 'We have identified a concerning pattern in our system - multiple attempts to access an account with different passwords. This behavior raises alarms as it indicates a potential unauthorized access attempt. It poses a significant risk to the security of your data and our network. Our dedicated security team is already in action, implementing measures to protect your information and thoroughly investigate this incident.',
+
+
+
+    },
+    {
+      level: 'Mid',
+      time: dateTime,
+
+      port: 64,
+      description: 'Account blocked',
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-02-2023',
+      details: 'Your account has been temporarily restricted, and here is why: We have detected unusual activity, particularly a series of failed login attempts. To safeguard your account from potential unauthorized access, we have taken the precautionary step of blocking access. Think of it as your bank card being temporarily blocked after entering the wrong PIN multiple times.',
+
+
+    },
+    {
+      level: 'High',
+      time: dateTime,
+      port: 99,
+      description: 'Brute force connection',
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-28-2023',
+      details: 'Brace yourself for a digital onslaught - a "Brute Force Connection" is underway. An attacker is systematically trying every possible combination of usernames and passwords to gain access to our system. It is like a relentless digital burglar attempting every conceivable key until they break in. We have fortified our defenses to detect and thwart such brute force attacks, as they are inherently malicious in nature and pose a severe threat to our security.',
+
+
+
+    },
+    {
+      level: 'Low',
+      time: dateTime,
+      port: 88,
+      description: 'Multiple password attempts',
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-28-2023',
+      details: 'We have identified a concerning pattern in our system - multiple attempts to access an account with different passwords. This behavior raises alarms as it indicates a potential unauthorized access attempt. It poses a significant risk to the security of your data and our network. Our dedicated security team is already in action, implementing measures to protect your information and thoroughly investigate this incident.',
+
+
+
+    },
+    {
+      level: 'Mid',
+      time: dateTime,
+
+      port: 48,
+      description: 'Multiple password attempts',
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-28-2023',
+      details: 'We have identified a concerning pattern in our system - multiple attempts to access an account with different passwords. This behavior raises alarms as it indicates a potential unauthorized access attempt. It poses a significant risk to the security of your data and our network. Our dedicated security team is already in action, implementing measures to protect your information and thoroughly investigate this incident.',
+
+
+    },
+    {
+      level: 'Low',
+      time: dateTime,
+
+      port: 88,
+      description: 'Multiple password attempts',
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-28-2023',
+      details: 'We have identified a concerning pattern in our system - multiple attempts to access an account with different passwords. This behavior raises alarms as it indicates a potential unauthorized access attempt. It poses a significant risk to the security of your data and our network. Our dedicated security team is already in action, implementing measures to protect your information and thoroughly investigate this incident.',
+
+
+
+    },
+    {
+      level: 'Mid',
+      time: dateTime,
+
+      port: 64,
+
+      description: 'Account blocked',
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-28-2023',
+      details: 'Your account has been temporarily restricted, and here is why: We have detected unusual activity, particularly a series of failed login attempts. To safeguard your account from potential unauthorized access, we have taken the precautionary step of blocking access. Think of it as your bank card being temporarily blocked after entering the wrong PIN multiple times.',
+
+
+    },
+    {
+      level: 'High',
+
+      time: dateTime,
+
+      port: 99,
+
+      description: 'Brute force connection',
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-28-2023',
+      details: 'Brace yourself for a digital onslaught - a "Brute Force Connection" is underway. An attacker is systematically trying every possible combination of usernames and passwords to gain access to our system. It is like a relentless digital burglar attempting every conceivable key until they break in. We have fortified our defenses to detect and thwart such brute force attacks, as they are inherently malicious in nature and pose a severe threat to our security.',
+
+    },
+    {
+      level: 'Low',
+
+      time: dateTime,
+
+      port: 88,
+
+      description: 'Multiple password attempts',
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-28-2023',
+      details: 'We have identified a concerning pattern in our system - multiple attempts to access an account with different passwords. This behavior raises alarms as it indicates a potential unauthorized access attempt. It poses a significant risk to the security of your data and our network. Our dedicated security team is already in action, implementing measures to protect your information and thoroughly investigate this incident.',
+
+
+    },
+    {
+      level: 'Mid',
+
+      time: dateTime,
+
+      port: 48,
+
+      description: 'Multiple password attempts',
+      ipSource: '182.12.4.101',
+      ipDestination: '152.13.1.101',
+      date: '09-28-2023',
+      details: 'We have identified a concerning pattern in our system - multiple attempts to access an account with different passwords. This behavior raises alarms as it indicates a potential unauthorized access attempt. It poses a significant risk to the security of your data and our network. Our dedicated security team is already in action, implementing measures to protect your information and thoroughly investigate this incident.',
     }
     // Add more data rows as needed
   ];
@@ -133,6 +248,30 @@ const AlertTable = () => {
   const [data, setData] = useState(initialData);
   const [sortDirection, setSortDirection] = useState('asc');
   const [sortedColumn, setSortedColumn] = useState(null);
+  const [selectedAlert, setSelectedAlert] = useState(null);
+  const [exportModalVisible, setExportModalVisible] = useState(false);
+
+  const [columnVisibility, setColumnVisibility] = useState({
+    Lvl: true,
+    Time: true,
+    ipSource: true,
+    ipDestination: true,
+    Port: true,
+    Description: true
+  });
+
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuVisible(!menuVisible);
+  };
+  const handleCheckboxChange = (columnName) => {
+    setColumnVisibility((prevState) => ({
+      ...prevState,
+      [columnName]: !prevState[columnName],
+    }));
+  };
+
 
   const compareLevels = (a, b) => {
     const levels = ['Low', 'Mid', 'High'];
@@ -181,6 +320,7 @@ const AlertTable = () => {
     setSortedColumn(columnName);
   };
 
+
   // This section is used to create the filter search bar
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -196,54 +336,206 @@ const AlertTable = () => {
     setSearchQuery(event.target.value);
   };
 
-  return (
-    <div className='table-container'>
-      <input
+  const handleAlertClick = (alert) => {
+    setSelectedAlert(alert);
+  };
+
+  const handleExport = () => {
+    setExportModalVisible(true);
+  };
+
+
+
+
+
+return (
+  
+  <div className='table-container'>
+       <input
         className = "filter-search-bar"
         type="text"
         placeholder="Search..."
         value={searchQuery}
         onChange={handleSearchChange}
       />
-      <table id='sortable-table'>
-        <thead>
-          <tr>
-            <th onClick={() => handleSort('level')}>
-              Lvl {sortedColumn === 'level' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
-            </th>
-            <th data-sort="date" onClick={() => handleSort('timestamp')}>
-              Timestamp {sortedColumn === 'timestamp' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
-            </th>
-            <th data-sort="string" onClick={() => handleSort('source_ip')}>
-              Source IP {sortedColumn === 'source_ip' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
-            </th>
-            <th data-sort="sting" onClick={() => handleSort('dest_ip')}>
-              Dest IP {sortedColumn === 'dest_ip' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
-            </th>
-            <th data-sort="numeric" onClick={() => handleSort('source_port')}>
-              Source Port {sortedColumn === 'source_port' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
-            </th>
-            <th data-sort="numeric" onClick={() => handleSort('dest_port')}>
-              Dest Port {sortedColumn === 'dest_port' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
-            </th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
+    <button onClick={toggleMenu}>Toggle Menu</button>
+    {menuVisible && (
+    <div id='menu'>
+      <label>
+        <input
+          type="checkbox"
+          checked={columnVisibility.column1}
+          onChange={() => handleCheckboxChange('Lvl')}
+        />
+        Lvl
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          checked={columnVisibility.column2}
+          onChange={() => handleCheckboxChange('Time')}
+        />
+        Time
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          checked={columnVisibility.column3}
+          onChange={() => handleCheckboxChange('ipSource')}
+        />
+        IP Source
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          checked={columnVisibility.column3}
+          onChange={() => handleCheckboxChange('ipDestination')}
+        />
+        IP Destination
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          checked={columnVisibility.column3}
+          onChange={() => handleCheckboxChange('Port')}
+        />
+        Port
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          checked={columnVisibility.column3}
+          onChange={() => handleCheckboxChange('Description')}
+        />
+        Description
+      </label>
+      </div>
+      )}
+ 
+    <table id='sortable-table'>
+      <thead>
+          {columnVisibility.Lvl && <th onClick={() => handleSort('level')}>
+            Lvl {sortedColumn === 'level' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
+          </th> }
+
+          {columnVisibility.Time && <th data-sort="numeric" onClick={() => handleSort('time')}>
+            Time {sortedColumn === 'time' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
+          </th>}
+
+          {columnVisibility.ipSource && <th>IP Source</th>}
           
-          {filteredData.map((item, index) => (
-            <tr key={index}>
-              <td className={item.level.toLowerCase()}>{item.level}</td>
-              <td>{item.timestamp}</td>
-              <td>{item.source_ip}</td>
-              <td>{item.dest_ip}</td>
-              <td>{item.source_port}</td>
-              <td>{item.dest_port}</td>
-              <td>{item.description}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+          {columnVisibility.ipDestination && <th>IP Destination</th>}
+         
+          
+          {columnVisibility.Port && <th data-sort="numeric" onClick={() => handleSort('port')}>
+            Port {sortedColumn === 'port' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
+          </th>}
+         
+          {columnVisibility.Description && <th>Description</th>}
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((item, index) => (
+          <tr key={index}>
+            {columnVisibility.Lvl &&<td className={item.level.toLowerCase()}>{item.level}</td>}
+            {columnVisibility.Time && <td>{item.time}</td>}
+
+            {columnVisibility.ipSource &&<td>{item.ipSource}</td>}
+
+
+            {columnVisibility.ipDestination &&<td>{item.ipDestination}</td>}
+          
+        
+            {columnVisibility.Port && <td>{item.port}</td>}
+        
+            {columnVisibility.Description && <td >{item.description}</td>}
+            <td>
+              <button onClick={() => handleExport()}>Export</button>
+              <button onClick={() => handleAlertClick(item)}>Details</button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    {selectedAlert && (
+      <AlertDetailsModal
+        alert={selectedAlert}
+        onClose={() => setSelectedAlert(null)}
+        onExport={() => handleExport()}
+      />
+    )}
+    {exportModalVisible && (
+      <ExportOptionsModal
+        onClose={() => setExportModalVisible(false)}
+      />
+    )}
+  </div>
+);
+};
+
+
+const AlertDetailsModal = ({ alert, onClose, onExport }) => {
+  return (
+    <div className="alert-details-modal">
+      <div className="modal-content">
+        <span className="close-button" onClick={onClose}>
+          &times;
+        </span>
+        <h3>Alert Details</h3>
+        <p><strong>Level:</strong> {alert.level}</p>
+        <p><strong>Time:</strong> {alert.time}</p>
+        <p><strong>IP Source:</strong> {alert.ipSource}</p>
+        <p><strong>IP Destination:</strong> {alert.ipDestination}</p>
+        <p><strong>Port:</strong> {alert.port}</p>
+        <p><strong>Description:</strong> {alert.description}</p>
+        <p><strong>Details:</strong> {alert.details}</p>
+        <button onClick={onExport}>Export</button>
+      </div>
+    </div>
+  );
+};
+
+const ExportOptionsModal = ({ onClose }) => {
+  return (
+    <div className="export-options-modal">
+      <div className="modal-content2">
+        <span className="close-button" onClick={onClose}>
+          &times;
+        </span>
+        <h3>Export Options</h3>
+        <div className="export-options">
+          <div className="export-option">
+            <label>Export As:</label>
+            <div className="export-as-options">
+              <input
+                type="radio"
+                id="export-pdf"
+                name="export-as"
+                value="PDF"
+              />
+              <label htmlFor="export-pdf">PDF</label>
+
+              <input
+                type="radio"
+                id="export-xml"
+                name="export-as"
+                value="XML"
+              />
+              <label htmlFor="export-xml">XML</label>
+            </div>
+          </div>
+
+          <div className="export-option">
+            <label>Save In:</label>
+            <div className="save-in-options">
+              <button>Browse</button>
+              {/* You can add a section for browse options here */}
+            </div>
+          </div>
+        </div>
+        <button>Export</button>
+      </div>
     </div>
   );
 };

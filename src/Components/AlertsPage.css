@@ -1,85 +1,26 @@
-.table-container {
+/* AlertsPage.css */
+.AlertsPage {
+  display: grid;
+  grid-template-columns: 100%; /* Sidebar and Content columns */
+  gap: 20px; /* Adjust the gap between columns */
+  justify-content: flex-end; /* Align content to the right */
 
-  max-height: 500px;
-  overflow: scroll;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 5px 5px 5px rgba(0,0,0,.25);
-  font-size: 15px;
-  max-height: 500px;
-  overflow: scroll;
 }
 
-th, td {
-  border: 1px solid rgba(255, 255, 255, 1);
-  padding: 8px;
-  text-align: left;
-  color: rgba(0,0,0,1);
-  border-radius: 5px;
-}
-td:hover {
-  background-color: whitesmoke;
+/* Define styles for the sidebar */
+.Sidebar {
+  /* Add your sidebar styles here */
+  width: 30%; /* Adjust as needed, e.g., 30% for the sidebar */
 }
 
-th {
-  background-color: #25374d;
-  cursor: pointer;
-  color: white;
-  position: sticky;
-  top: 0px;
-  margin: 0 0 0 0;
+.content {
+  /* Add your content styles here */
+  display: flex;
+  flex-direction: column; /* Content in a column layout */
+  padding: 20px; /* Add padding for spacing (adjust as needed) */
+  overflow: auto; /* Enable scrolling for content if needed */
 }
 
-th:hover {
-  background-color: rgba(37,55,77,.85);
-  color: white;
-}
-
-.low {
-  background-color: rgba(0, 255, 0, .65);
-}
-.low:hover {
-  background-color: rgb(4, 243, 4);
-}
-.mid {
-  background-color: rgba(255, 255, 3, 0.751);
-}
-.mid:hover {
-  background-color: rgb(244, 244, 7);
-}
-.high {
-  background-color: rgba(255, 0, 0, .75);
-} 
-.high:hover{
-  background-color: rgba(255, 0, 0, .9);
-}
-
-.filter-search-bar{
-  font-size: 15px;
-  margin: 0;
-  background-color: white;
-  border-style: solid;
-  border-color: rgba(0,0,0,.25);
-  border-width: 1px;
-  border-radius: 5px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  padding-left: 6px;
-  width: 250px;
-  margin-bottom: 10px;
-}
-.filter-search-bar:focus{
-  outline: none;
-  box-shadow: 1px 1px 1px rgba(0,0,0,.1);
-}
-
-
-
-/*My part --> Christian*/
 /* Alert Details Modal */
 .alert-details-modal {
   display: block;
@@ -195,26 +136,3 @@ input[type="text"] {
 .export-button:hover {
   background-color: #0056b3; /* Change the background color on hover */
 }
-
-
-
-.menu {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  padding: 10px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.menu li {
-  margin: 5px 0;
-  cursor: pointer;
-}
-
-.menu li:hover {
-  background-color: #ddd;
-}
-

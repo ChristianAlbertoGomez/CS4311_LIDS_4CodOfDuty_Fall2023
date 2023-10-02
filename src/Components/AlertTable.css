@@ -58,6 +58,26 @@ th:hover {
   background-color: rgba(255, 0, 0, .9);
 }
 
+.filter-search-bar{
+  font-size: 15px;
+  margin: 0;
+  background-color: white;
+  border-style: solid;
+  border-color: rgba(0,0,0,.25);
+  border-width: 1px;
+  border-radius: 5px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 6px;
+  width: 250px;
+  margin-bottom: 10px;
+}
+.filter-search-bar:focus{
+  outline: none;
+  box-shadow: 1px 1px 1px rgba(0,0,0,.1);
+}
+
+
 
 /*My part --> Christian*/
 /* Alert Details Modal */
@@ -197,3 +217,4 @@ input[type="text"] {
 .menu li:hover {
   background-color: #ddd;
 }
+

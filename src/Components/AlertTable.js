@@ -149,7 +149,6 @@ var dateTime = date+' '+time;
     {
       level: 'Low',
       time: dateTime,
-
       port: 88,
       description: 'Multiple password attempts',
       ipSource: '182.12.4.101',
@@ -192,6 +191,7 @@ var dateTime = date+' '+time;
       time: dateTime,
 
       port: 64,
+
       description: 'Account blocked',
       ipSource: '182.12.4.101',
       ipDestination: '152.13.1.101',
@@ -202,9 +202,11 @@ var dateTime = date+' '+time;
     },
     {
       level: 'High',
+
       time: dateTime,
 
       port: 99,
+
       description: 'Brute force connection',
       ipSource: '182.12.4.101',
       ipDestination: '152.13.1.101',
@@ -214,9 +216,11 @@ var dateTime = date+' '+time;
     },
     {
       level: 'Low',
+
       time: dateTime,
 
       port: 88,
+
       description: 'Multiple password attempts',
       ipSource: '182.12.4.101',
       ipDestination: '152.13.1.101',
@@ -227,9 +231,11 @@ var dateTime = date+' '+time;
     },
     {
       level: 'Mid',
+
       time: dateTime,
 
       port: 48,
+
       description: 'Multiple password attempts',
       ipSource: '182.12.4.101',
       ipDestination: '152.13.1.101',
@@ -278,21 +284,56 @@ var dateTime = date+' '+time;
       return levelB - levelA;
     }
   };
+  // This section is used to sort timestamps based on date and time
+  const compareTimestamps = (a, b) => {
+    const timestampA = new Date(a.timestamp).getTime();
+    const timestampB = new Date(b.timestamp).getTime();
+
+    if (sortDirection === 'asc') {
+      return timestampA - timestampB;
+    } else {
+      return timestampB - timestampA;
+    }
+  };
 
   const handleSort = (columnName) => {
     const direction = sortedColumn === columnName && sortDirection === 'asc' ? 'desc' : 'asc';
 
     const sortedData = [...data].sort((a, b) => {
-      if (columnName === 'level') {
+      if (columnName === 'timestamp') {
+        return compareTimestamps(a, b);
+      } else if (columnName === 'level') {
         return compareLevels(a, b);
       } else {
-        return direction === 'asc' ? a[columnName] - b[columnName] : b[columnName] - a[columnName];
+        return direction === 'asc'
+          ? a[columnName] > b[columnName]
+            ? 1
+            : -1
+          : b[columnName] > a[columnName]
+          ? 1
+          : -1;
       }
     });
 
     setData(sortedData);
     setSortDirection(direction);
     setSortedColumn(columnName);
+  };
+
+
+  // This section is used to create the filter search bar
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Function to filter data based on search query
+  const filteredData = data.filter((item) => {
+    // You can customize this filter logic based on your needs
+    const searchString = `${item.level} ${item.timestamp} ${item.source_ip} ${item.dest_ip} ${item.source_port} ${item.dest_port} ${item.description}`;
+    return searchString.toLowerCase().includes(searchQuery.toLowerCase());
+  });
+
+  // Function to handle search input change
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
   };
 
   const handleAlertClick = (alert) => {
@@ -310,6 +351,13 @@ var dateTime = date+' '+time;
 return (
   
   <div className='table-container'>
+       <input
+        className = "filter-search-bar"
+        type="text"
+        placeholder="Search..."
+        value={searchQuery}
+        onChange={handleSearchChange}
+      />
     <button onClick={toggleMenu}>Toggle Menu</button>
     {menuVisible && (
     <div id='menu'>
@@ -366,7 +414,6 @@ return (
  
     <table id='sortable-table'>
       <thead>
-        <tr>
           {columnVisibility.Lvl && <th onClick={() => handleSort('level')}>
             Lvl {sortedColumn === 'level' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
           </th> }

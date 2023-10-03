@@ -187,7 +187,84 @@ def connect_server(server_info: dict, system_info: dict):
     # except socket.error as e:
     #     print("Error connecting to the server:", str(e))
 
-#analyze_packet()
+def createPacket(packet):
+    # get packet protocol
+    protocol = packet.transport_layer
+
+    #check if packet is TCP or UDP
+    if(protocol == 'TCP'):
+
+        #get packet header information
+        srcAddress = packet.ip.src
+        srcPort = packet[protocol].srcport
+        dstAddress = packet.ip.dst
+        dstPort = packet[protocol].dstport
+        timeStamp = packet.sniff_time
+        payLoadLength = packet.length
+
+        #create packet header
+        packetHeader = {'SrcIP': srcAddress, 'SrcPort': srcPort, 'DstIP': dstAddress, 'dstPort':dstPort, 'time':timeStamp, 'protocol':protocol, 'payLoadLen':payLoadLength}
+
+        #get packet payload
+        payload = packet.tcp.payload
+
+        #create packet
+        createdPacket = {}
+        createdPacket['header'] = packetHeader
+        createdPacket['payload'] = payload
+
+        #return packet
+        return createdPacket
+
+    elif(protocol == 'UDP'):
+
+        #get packet header information
+        srcAddress = packet.ip.src
+        srcPort = packet[protocol].srcport
+        dstAddress = packet.ip.dst
+        dstPort = packet[protocol].dstport
+        timeStamp = packet.sniff_time
+        payLoadLength = packet.length
+
+        #create packet header
+        packetHeader = {'srcIP': srcAddress, 'srcPort': srcPort, 'dstIP': dstAddress, 'dstPort':dstPort, 'time':timeStamp, 'protocol':protocol, 'payLoadLen':payLoadLength}
+
+        #get packet payload
+        payload = packet.udp.payload
+
+        #create packet
+        createdPacket = {}
+        createdPacket['header'] = packetHeader
+        createdPacket['payload'] = payload
+
+        #return packet
+        return createdPacket
+
+
+def analyzePacket(packet, system_info):
+    
+    #check if packet is in whitelist
+    for i, j in system_info.items():
+        for k in j['whitelist']:
+
+            if packet['header']['srcIP'] == k:
+                print("Packet in whitelist")
+
+                #send to whitelist storage
+                #createAlert(packet,"whitelist")
+                #storeWhitelistPackets()
+
+            else:
+                print("Packet not in whitelist")
+
+                #send to malicious storage
+                #createAlert(packet,"unknown ip")
+                #storeMaliciousPackets()
+                #sendAlert()
+
+    raise ValueError('test')
+
+
 #store_malicious_packets()
 #create_alert(packet, system_info, "unknown ip")
 #save_alert()

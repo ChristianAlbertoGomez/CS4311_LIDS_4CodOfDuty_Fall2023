@@ -1,21 +1,26 @@
-from parse_config import *
-from monitor_network import *
+from config import *
+from Alerts import *
+from PCAP import *
 
-# Ask user to provide name of config file
-config_file_name = input("Enter a name for the configuration file: ")
-
-# Ask enter system to monitor
-sys_name = input("Name of system to monitor: ")
-
-# Parse configuration file for the network
-server_info, systems_on_net = parse_config_file(config_file_name)
-
-# Find the target system to monitor in list of systems on the network
-for sys in enumerate(systems_on_net):
-    if sys[1]['name'] == sys_name:
-        target_sys = systems_on_net[sys[0]]
-
-print(f"Target System: {target_sys}")
-
-print("Monitoring network...\n")
-monitor_network(target_sys)
+  
+while True:
+  try:
+    print('Welcome, please select one of the following options (1-6)')
+    userInp = int(input("1) Configuration File\n2) Show PCAP\n3) Select PCAP\n4) Alerts\n5) Help\n6) Exit\n"))
+    if userInp > 6 or userInp < 1:
+      print("Please select a valid option")
+    elif userInp == 1:
+      setConfigFile()
+    elif userInp == 2:
+      pcapTable() 
+    elif userInp == 3:
+      print("You'll be able to search for a specific PCAP")
+    elif userInp == 4:
+      alertTable()
+    elif userInp == 5:
+      print("You'll find help options here")
+    elif userInp == 6:
+      print("Have a nice day")
+      break
+  except ValueError:
+    print("Invalid input. Please enter a number (1-6).")

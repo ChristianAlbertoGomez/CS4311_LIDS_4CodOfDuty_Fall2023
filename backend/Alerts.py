@@ -16,8 +16,8 @@ if __name__=="__main__":
     app.run(debug=True)
 
 def createAlerts(packet,whitelist):
-    for i,v in packet['header']:
-        i+=1
+    """for i,v in packet['header']:
+        i+=1"""
     return packet['header']
 
 # Define your data as a list of lists (each inner list represents a row)

@@ -273,6 +273,14 @@ def analyzePacket(packet, system_info):
 #send_alert()
 #display_alert()
 
+alerts=[]
+
+def getAlerts():
+    return alerts
+
+def createAlert(packet, whitelist):
+    return packet['header']
+
 if __name__ == "__main__":
     # Prompt the user to enter the configuration file path
     CONFIG_FILE = 'config_file.xml'

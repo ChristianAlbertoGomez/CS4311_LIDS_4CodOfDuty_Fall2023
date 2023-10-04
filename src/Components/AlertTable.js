@@ -433,7 +433,6 @@ return (
          
           {columnVisibility.Description && <th>Description</th>}
           <th>Actions</th>
-        </tr>
       </thead>
       <tbody>
         {data.map((item, index) => (
@@ -451,8 +450,8 @@ return (
         
             {columnVisibility.Description && <td >{item.description}</td>}
             <td>
-              <button onClick={() => handleExport()}>Export</button>
-              <button onClick={() => handleAlertClick(item)}>Details</button>
+              <button className = "actions-export-button" onClick={() => handleExport()}>Export</button>
+              <button className = "actions-details-button" onClick={() => handleAlertClick(item)}>Details</button>
             </td>
           </tr>
         ))}

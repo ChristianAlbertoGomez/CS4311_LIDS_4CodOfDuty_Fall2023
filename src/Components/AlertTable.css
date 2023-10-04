@@ -113,6 +113,29 @@ th:hover {
   cursor: pointer;
 }
 
+.actions-export-button {
+  color: white;
+  background-color: #25374d;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border-style: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+.actions-details-button {
+  color: white;
+  background-color: #25374d;
+  border-style: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+
 /* Additional Styles for Alert Details Content */
 .alert-details-modal h3 {
   font-size: 18px;

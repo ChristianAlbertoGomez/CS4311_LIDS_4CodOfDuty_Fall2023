@@ -281,7 +281,6 @@ def getAlerts():
 def createAlert(packet, whitelist):
     res={'level':'Mid','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date':'placeholder','details':'placeholder'}
     alerts.append(res)
-    return res
 
 if __name__ == "__main__":
     # Prompt the user to enter the configuration file path

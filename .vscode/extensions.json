@@ -1,0 +1,6 @@
+{
+    "recommendations": [
+        "xdebug.php-debug",
+        "satiromarra.vscode-php-test-explorer-docker"
+    ]
+}

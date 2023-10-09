@@ -5,8 +5,12 @@ import Loading from './Components/loading';
 import AlertTable from './Components/AlertTable';
 import NotificationsTable from './Components/NotificationsTable';
 import ErrorTable from './Components/ErrorTable';
-import KeyTable from './Components/KeyTable';
 import SetConfigFile from './SetConfigFile';
+
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import AlertsPage from './Components/AlertsPage';
+
+
 const App = () => {
   const [loading, setLoading] = useState(true);
   
@@ -35,9 +39,6 @@ const App = () => {
               <div className="table-2">
                 <ErrorTable />
               </div>
-              <div className="table-3">
-                <KeyTable />
-              </div>
             </div>
           </main> 
        </div>
@@ -45,15 +46,6 @@ const App = () => {
       
     </div>
   );
-
-  // return(
-  //   <div>
-  //      <Sidebar />
-  //     <main className="mainBody">
-  //       <AlertTable />
-  //     </main> 
-  //   </div>
-  // );
 };
 
 

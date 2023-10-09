@@ -433,7 +433,6 @@ return (
          
           {columnVisibility.Description && <th>Description</th>}
           <th>Actions</th>
-        </tr>
       </thead>
       <tbody>
         {data.map((item, index) => (

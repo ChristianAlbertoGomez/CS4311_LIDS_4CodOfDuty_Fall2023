@@ -1,5 +1,5 @@
 import React, { useState,addEventListener } from 'react';
-import './AlertTable.css'; 
+import './CSS Files/AlertTable.css';
 
 
 const AlertTable = () => {

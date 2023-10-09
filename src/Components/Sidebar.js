@@ -1,5 +1,5 @@
 import React from 'react';
-import './Sidebar.css';
+import './CSS Files/Sidebar.css';
 import { Link } from 'react-router-dom';
 
 import {
@@ -18,7 +18,7 @@ const Sidebar = () => {
       <ul className="nav-links">
         <li><Link to='/home'><BsHouseFill /> Home</Link></li>
         <li><Link to="/AlertsPage"><BsFillExclamationCircleFill /> Alerts</Link></li>
-        <li><BsDiagram2 /> Network</li>
+        <li><Link to="/NetworkPage"><BsDiagram2 /> Network</Link></li>
         <li><BsGearFill /> Settings</li>
         <li><BsCloudHaze /> Disconnect</li>
       </ul>

@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import './AlertTable.css'; 
+import './CSS Files/AlertTable.css'; 
 
 
 const NotificationsTable = () => {
   const initialData = [
     {
-      notification: 'New detection: 8:00AM',
+      notification: 'New detection: 09-24-2023 13:25 MST',
     },
     {
-      notification: 'New detection: 8:05AM ',
+      notification: 'New detection: 09-21-2023 12:45 MST ',
     },
     {
       notification: 'LIDS-D disconnected',
     },
     {
-      notification: 'New detection: 1:00PM',
+      notification: 'New detection: 09-20-2023 17:15 MST',
     },
     {
       notification: 'LIDS-D connected',

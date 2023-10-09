@@ -5,7 +5,7 @@ import Sidebar from './Sidebar';
 import AlertTable from './AlertTable';
 import KnownDevices from './KnownDevices';
 import UnknownDevices from './UnknownDevices';
-import './NetworkPage.css';
+import './CSS Files/NetworkPage.css';
 
 const NetworkPage = () => {
   return (

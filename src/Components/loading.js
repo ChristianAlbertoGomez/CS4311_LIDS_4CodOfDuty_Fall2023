@@ -1,5 +1,5 @@
 import React from 'react';
-import './loading.css'; // You'll create this CSS file in the next step
+import './CSS Files/loading.css'; // You'll create this CSS file in the next step
 
 const Loading = () => {
   return (

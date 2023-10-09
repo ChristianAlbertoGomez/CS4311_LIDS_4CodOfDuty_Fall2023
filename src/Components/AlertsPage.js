@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import AlertTable from './AlertTable';
 
-import './AlertsPage.css';
+import './CSS Files/AlertsPage.css';
 
 const AlertsPage = () => {
   return (

@@ -1,4 +1,5 @@
-import React, { useState,addEventListener } from 'react';
+
+import React, { useState,addEventListener, useEffect } from 'react';
 import './CSS Files/AlertTable.css';
 
 
@@ -245,7 +246,8 @@ var dateTime = date+' '+time;
     // Add more data rows as needed
   ];
 
-  const [data, setData] = useState(initialData);
+
+  const [data, setData] = useState([{}]);
   const [sortDirection, setSortDirection] = useState('asc');
   const [sortedColumn, setSortedColumn] = useState(null);
   const [selectedAlert, setSelectedAlert] = useState(null);
@@ -272,6 +274,16 @@ var dateTime = date+' '+time;
     }));
   };
 
+
+  useEffect(() =>{
+    fetch("/alerts").then(
+      res => res.json()
+    ).then(
+      data => {
+        setData(data)
+      }
+    )
+  },[])
 
   const compareLevels = (a, b) => {
     const levels = ['Low', 'Mid', 'High'];
@@ -457,6 +469,22 @@ return (
               <button onClick={() => handleAlertClick(item)}>Details</button>
             </td>
           </tr>
+             
+
+//         </thead>
+//         <tbody>
+//           {data.map((item, index) => (
+//             <tr key={index}>
+//               <td className={item.level?.toLowerCase()}>{item.level}</td>
+//               <td>{item.time}</td>
+//               <td>{item.ip}</td>
+//               <td>{item.port}</td>
+//               <td>{item.description}</td>
+//             </tr>
+//           ))}
+//         </tbody>
+//       </table>
+
         ))}
       </tbody>
       

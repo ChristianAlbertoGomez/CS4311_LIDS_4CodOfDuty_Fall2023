@@ -433,10 +433,9 @@ return (
          
           {columnVisibility.Description && <th>Description</th>}
           <th>Actions</th>
-        </tr>
       </thead>
       <tbody>
-        {data.map((item, index) => (
+        {filteredData.map((item, index) => (
           <tr key={index}>
             {columnVisibility.Lvl &&<td className={item.level.toLowerCase()}>{item.level}</td>}
             {columnVisibility.Time && <td>{item.time}</td>}

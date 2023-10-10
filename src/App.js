@@ -7,6 +7,7 @@ import NotificationsTable from './Components/NotificationsTable';
 import ErrorTable from './Components/ErrorTable';
 import KeyTable from './Components/KeyTable';
 import SetConfigFile from './SetConfigFile';
+import IPAddressDisplay from './Components/IPAddressDisplay';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import AlertsPage from './Components/AlertsPage';
@@ -44,6 +45,7 @@ const App = () => {
                 <KeyTable />
               </div>
             </div>
+            <IPAddressDisplay />
           </main> 
        </div>
       )}

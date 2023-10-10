@@ -1,5 +1,5 @@
 import React, { useState,addEventListener } from 'react';
-import './AlertTable.css'; 
+import './CSS Files/AlertTable.css';
 
 
 const AlertTable = () => {
@@ -315,6 +315,7 @@ var dateTime = date+' '+time;
       }
     });
 
+
     setData(sortedData);
     setSortDirection(direction);
     setSortedColumn(columnName);
@@ -327,7 +328,7 @@ var dateTime = date+' '+time;
   // Function to filter data based on search query
   const filteredData = data.filter((item) => {
     // You can customize this filter logic based on your needs
-    const searchString = `${item.level} ${item.timestamp} ${item.source_ip} ${item.dest_ip} ${item.source_port} ${item.dest_port} ${item.description}`;
+    const searchString = `${item.level} ${item.time} ${item.ipSource} ${item.ipDestination} ${item.port} ${item.dest_port} ${item.description}`;
     return searchString.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
@@ -414,6 +415,7 @@ return (
  
     <table id='sortable-table'>
       <thead>
+        <tr>
           {columnVisibility.Lvl && <th onClick={() => handleSort('level')}>
             Lvl {sortedColumn === 'level' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
           </th> }
@@ -433,9 +435,10 @@ return (
          
           {columnVisibility.Description && <th>Description</th>}
           <th>Actions</th>
+          </tr>
       </thead>
       <tbody>
-        {data.map((item, index) => (
+        {filteredData.map((item, index) => (
           <tr key={index}>
             {columnVisibility.Lvl &&<td className={item.level.toLowerCase()}>{item.level}</td>}
             {columnVisibility.Time && <td>{item.time}</td>}
@@ -456,6 +459,7 @@ return (
           </tr>
         ))}
       </tbody>
+      
     </table>
     {selectedAlert && (
       <AlertDetailsModal

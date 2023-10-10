@@ -354,7 +354,7 @@ return (
        <input
         className = "filter-search-bar"
         type="text"
-        placeholder="Search..."
+        placeholder="Search"
         value={searchQuery}
         onChange={handleSearchChange}
       />

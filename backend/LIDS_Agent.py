@@ -147,6 +147,7 @@ def create_packet(packet):
     return packet_info
 
 def sniff_traffic(server_info: dict, system_info: dict, capture_interface: str) -> None:
+
     """
     Sniffs live network traffic on the specified interface and prints the captured packets.
     Args:

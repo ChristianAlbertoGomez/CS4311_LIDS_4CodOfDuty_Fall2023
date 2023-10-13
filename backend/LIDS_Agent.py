@@ -134,12 +134,12 @@ def analyze_packet(packet, system_info):
     # Check if packet is in whitelist
     if packet['header']['srcIP'] not in system_info['whitelist']:
         print("ALERT: Source IP is not in whitelist.\n"
-              f"{packet['header']['srcIP']} not in {system_info['whitelist']}")
+            f"{packet['header']['srcIP']} not in {system_info['whitelist']}")
         
     # Check if the destination port is in expected ports
     if packet['header']['dstPort'] not in system_info['ports']:
         print("ALERT: Destination Port is not in list of expected ports.\n"
-              f"{packet['header']['dstPort']} not in {system_info['ports']}")
+            f"{packet['header']['dstPort']} not in {system_info['ports']}")
 
 def sniff_traffic(server_info: dict, system_info: dict, capture_interface: str) -> None:
     """

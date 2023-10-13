@@ -1,4 +1,3 @@
-
 import React, { useState,addEventListener, useEffect } from 'react';
 import './CSS Files/AlertTable.css';
 
@@ -247,7 +246,8 @@ var dateTime = date+' '+time;
   ];
 
 
-  const [data, setData] = useState([{}]);
+  const [dataM, setData] = useState([{}]);
+  // const [data, setData] = useState(initialData);
   const [sortDirection, setSortDirection] = useState('asc');
   const [sortedColumn, setSortedColumn] = useState(null);
   const [selectedAlert, setSelectedAlert] = useState(null);
@@ -279,8 +279,8 @@ var dateTime = date+' '+time;
     fetch("/alerts").then(
       res => res.json()
     ).then(
-      data => {
-        setData(data)
+      dataM => {
+        setData(dataM)
       }
     )
   },[])
@@ -311,7 +311,7 @@ var dateTime = date+' '+time;
   const handleSort = (columnName) => {
     const direction = sortedColumn === columnName && sortDirection === 'asc' ? 'desc' : 'asc';
 
-    const sortedData = [...data].sort((a, b) => {
+    const sortedData = [...dataM].sort((a, b) => {
       if (columnName === 'timestamp') {
         return compareTimestamps(a, b);
       } else if (columnName === 'level') {
@@ -338,7 +338,7 @@ var dateTime = date+' '+time;
   const [searchQuery, setSearchQuery] = useState('');
 
   // Function to filter data based on search query
-  const filteredData = data.filter((item) => {
+  const filteredData = dataM.filter((item) => {
     // You can customize this filter logic based on your needs
     const searchString = `${item.level} ${item.time} ${item.ipSource} ${item.ipDestination} ${item.port} ${item.dest_port} ${item.description}`;
     return searchString.toLowerCase().includes(searchQuery.toLowerCase());
@@ -452,7 +452,7 @@ return (
       <tbody>
         {filteredData.map((item, index) => (
           <tr key={index}>
-            {columnVisibility.Lvl &&<td className={item.level.toLowerCase()}>{item.level}</td>}
+            {columnVisibility.Lvl &&<td className={item.level?.toLowerCase()}>{item.level}</td>}
             {columnVisibility.Time && <td>{item.time}</td>}
 
             {columnVisibility.ipSource &&<td>{item.ipSource}</td>}

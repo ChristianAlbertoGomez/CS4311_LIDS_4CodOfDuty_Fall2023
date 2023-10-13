@@ -452,7 +452,7 @@ return (
       <tbody>
         {filteredData.map((item, index) => (
           <tr key={index}>
-            {columnVisibility.Lvl &&<td className={item.level.toLowerCase()}>{item.level}</td>}
+            {columnVisibility.Lvl &&<td className={item.level?.toLowerCase()}>{item.level}</td>}
             {columnVisibility.Time && <td>{item.time}</td>}
 
             {columnVisibility.ipSource &&<td>{item.ipSource}</td>}

@@ -134,6 +134,7 @@ def alerts():
 def createAlerts(packet,whitelist):
     alert.append({"level": 'Mid',"time": 7.653,"ip": '182.12.4.101',"port": 64,"description": 'Account blocked',})
     #return packet['header']
+
 if __name__=="__main__":
     app.run(debug=True)
     createAlerts(0,1)

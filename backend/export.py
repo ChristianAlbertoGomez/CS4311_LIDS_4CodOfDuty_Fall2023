@@ -4,5 +4,11 @@ def create_alert(packet, whitelist):
     alerts.append(res)
     
 
+def exportJSON(alerts):
+    x = json.dumps(alerts, indent=4)
+    
+    with open('alerts.json', 'w') as outfile:
+        outfile.write(x)
+        outfile.close()
 
     

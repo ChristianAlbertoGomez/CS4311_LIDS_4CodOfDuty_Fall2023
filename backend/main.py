@@ -1,17 +1,17 @@
 from config import *
 from Alerts import *
 from PCAP import *
-import LIDS_D as lidsD
+import LIDS as lids
 
 if __name__ == "__main__":
     # Set configuration file
     CONFIG_FILE = 'config_file.xml' 
     print(f"Using configuration file: {CONFIG_FILE}")
-    server_info, net_systems = lidsD.ingest_config(CONFIG_FILE)
+    server_info, net_systems = lids.ingest_config(CONFIG_FILE)
 
     if server_info is not None and net_systems is not None:
         # Call connect_server with the server_info dictionary and capture_interface
-        lidsD.manage_connections(server_info)
+        lids.connect_server(server_info)
 
 while True:
   try:

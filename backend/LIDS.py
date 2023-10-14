@@ -131,34 +131,32 @@ def create_packet(packet):
 def analyze_packet(packet, system_info):
     # Check if packet is in whitelist
     if packet['header']['srcIP'] not in system_info['whitelist']:
-        print("ALERT: Source IP is not in whitelist.\n"
-              f"{packet['header']['srcIP']} not in {system_info['whitelist']}")
+        # print("ALERT: Source IP is not in whitelist.\n"
+        #       f"{packet['header']['srcIP']} not in {system_info['whitelist']}")
+        create_alert(packet)
         
     # Check if the destination port is in expected ports
     if packet['header']['dstPort'] not in system_info['ports']:
-        print("ALERT: Destination Port is not in list of expected ports.\n"
-              f"{packet['header']['dstPort']} not in {system_info['ports']}")
+        # print("ALERT: Destination Port is not in list of expected ports.\n"
+        #       f"{packet['header']['dstPort']} not in {system_info['ports']}")
+        create_alert(packet)
         
     # Check for SSH failed login attempts 
     if packet['header']['srcPort'] == '22' and "Permission denied" in packet['payload']:
-        print("ALERT: Failed SSH login detected.")
+        # print("ALERT: Failed SSH login detected.")
+        create_alert(packet)
         
     # Check for RDP failed login attempts 
     if packet['header']['srcPort'] == '3389' and "Failed login" in packet['payload']:
-        print("ALERT: Failed RDP login detected.")
+        # print("ALERT: Failed RDP login detected.")
+        create_alert(packet)
         
     # Check for FTP failed login attempts 
     if packet['header']['srcPort'] == '21' and "530 Login incorrect" in packet['payload']:
-        print("ALERT: Failed FTP login detected.")
+        # print("ALERT: Failed FTP login detected.")
+        create_alert(packet)
 
-def sniff_traffic(server_info: dict, system_info: dict, capture_interface: str) -> None:
-    """
-    Sniffs live network traffic on the specified interface and prints the captured TCP and UDP packets.
-    Args:
-        server_info (dict): Information about the server.
-        system_info (dict): Information about the system.
-        capture_interface (str): The interface to capture traffic on (e.g., 'eth0' for Ethernet or 'wlan0' for Wi-Fi).
-    """
+async def sniff_traffic(server_info: dict, system_info: dict, capture_interface: str) -> None:
     # Replace 'your_file.pcap' with the path to your PCAP file
     pcap_file = 'traffic/nmap_scan.pcapng'
 
@@ -170,12 +168,12 @@ def sniff_traffic(server_info: dict, system_info: dict, capture_interface: str) 
 
     # Replay packets on the specified network interface
     send(packets, iface=interface)
-    
+
     try:
         # Create 'capture' object with specified interface and display filter
         with pyshark.LiveCapture(interface=capture_interface, display_filter='tcp or udp') as capture:
             print("Capturing live network traffic. Press Ctrl+C to stop...")
-            
+
             # Start capturing packets continuously using capture object
             for captured_packet in capture.sniff_continuously():
                 try:
@@ -219,18 +217,19 @@ alerts=[]
 def get_alerts():
     return alerts
 
-def create_alert(packet, whitelist):
+def create_alert(packet):
     res={'level':'Mid','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date':'placeholder','details':'placeholder'}
     alerts.append(res)
 
 
-if __name__ == "__main__":
-    # Need config file from frontend sent here
-    CONFIG_FILE = 'config_file.xml'
+# if __name__ == "__main__":
+#     # Need config file from frontend sent here
+#     CONFIG_FILE = 'config_file.xml'
     
-    #print(f"Using configuration file: {CONFIG_FILE}")
-    server_info, net_systems, system_info = ingest_config(CONFIG_FILE)
+#     #print(f"Using configuration file: {CONFIG_FILE}")
+#     server_info, net_systems, system_info = ingest_config(CONFIG_FILE)
 
-    if server_info is not None and net_systems is not None:
-        # Call connect_server with the server_info dictionary and system information
-        connect_server(server_info, system_info)
+#     if server_info is not None and net_systems is not None:
+#         # Call connect_server with the server_info dictionary and system information
+#         connect_server(server_info, system_info)
+        

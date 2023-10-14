@@ -1,10 +1,9 @@
 import pyshark, socket, defusedxml.ElementTree as ET
+from scapy.all import *
 
 # STIGFile
-# CONFIG_FILE
-# malicious_packets
-# alert_list
-# SERVER_ADDRESS
+# malicious_packets = []
+# alert_list = []
 # alert
 
 def get_current_ip() -> str:
@@ -143,17 +142,14 @@ def analyze_packet(packet, system_info):
     # Check for SSH failed login attempts 
     if packet['header']['srcPort'] == '22' and "Permission denied" in packet['payload']:
         print("ALERT: Failed SSH login detected.")
-        create_alert(packet, system_info)
-
+        
     # Check for RDP failed login attempts 
     if packet['header']['srcPort'] == '3389' and "Failed login" in packet['payload']:
         print("ALERT: Failed RDP login detected.")
-        create_alert(packet, system_info)
-
+        
     # Check for FTP failed login attempts 
     if packet['header']['srcPort'] == '21' and "530 Login incorrect" in packet['payload']:
         print("ALERT: Failed FTP login detected.")
-        create_alert(packet, system_info)
 
 def sniff_traffic(server_info: dict, system_info: dict, capture_interface: str) -> None:
     """
@@ -163,6 +159,18 @@ def sniff_traffic(server_info: dict, system_info: dict, capture_interface: str) 
         system_info (dict): Information about the system.
         capture_interface (str): The interface to capture traffic on (e.g., 'eth0' for Ethernet or 'wlan0' for Wi-Fi).
     """
+    # Replace 'your_file.pcap' with the path to your PCAP file
+    pcap_file = 'traffic/nmap_scan.pcapng'
+
+    # Read packets from the PCAP file
+    packets = rdpcap(pcap_file)
+
+    # Define the network interface to send packets (e.g., 'eth0' for Ethernet)
+    interface = capture_interface
+
+    # Replay packets on the specified network interface
+    send(packets, iface=interface)
+    
     try:
         # Create 'capture' object with specified interface and display filter
         with pyshark.LiveCapture(interface=capture_interface, display_filter='tcp or udp') as capture:
@@ -183,21 +191,21 @@ def sniff_traffic(server_info: dict, system_info: dict, capture_interface: str) 
         print(f"Capture error occurred: {str(e)}") # Handle capture errors, such as TShark not found or crashing
 
 def connect_server(server_info: dict, system_info: dict):
-    try:
+    # try:
         #Testing purposes only
         # server_address = (get_current_ip(), int(server_info['port']))
         
         # Create a socket connection to the server
-        server_address = (server_info['ip'], int(server_info['port']))
-        connection_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        connection_socket.connect(server_address)
+        # server_address = (server_info['ip'], int(server_info['port']))
+        # connection_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # connection_socket.connect(server_address)
 
-        # Start sniffing traffic
-        capture_interface = 'Wi-Fi'
-        sniff_traffic(server_info, system_info, capture_interface)
+    # Start sniffing traffic
+    capture_interface = 'Wi-Fi'
+    sniff_traffic(server_info, system_info, capture_interface)
 
-    except socket.error as e:
-        print("Error connecting to the server:", str(e))
+    # except socket.error as e:
+    #     print("Error connecting to the server:", str(e))
 
 #store_malicious_packets()
 #save_alert()

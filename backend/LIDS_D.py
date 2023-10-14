@@ -1,4 +1,5 @@
 import socket, defusedxml.ElementTree as ET
+import json
 
 # config_file
 # node_list
@@ -88,9 +89,7 @@ def ingest_config(config: str):
 # notify_alert()
 # display_alert()
 # display_node_list()
-# convert_alert_XML()
-# convert_alert_JSON()
-# convert_alert_CSV()
+
 
 def manage_connections(server_info: dict):
     # Testing purposes only
@@ -131,6 +130,35 @@ def receive_alert(client_socket):
 
 def save_alert(alert_data):
     print(f"Received Alert: {alert_data}")
+
+def convert_alert_XML(alerts):
+    root = ET.Element("root")
+
+    for alert in alerts:
+        alertElement = ET.SubElement(root, "alert")
+        for i,j in alert.items():    
+            ET.SubElement(alertElement, i).text = str(j)
+    xmlstr = minidom.parseString(ET.tostring(root)).toprettyxml(indent="   ")
+    with open("alerts.xml", "w") as f:
+        f.write(xmlstr)
+        f.close()
+
+def convert_alert_JSON(alerts):
+    x = json.dumps(alerts, indent=4)
+
+    with open('alerts.json', 'w') as outfile:
+        outfile.write(x)
+        outfile.close()
+
+def convert_alert_CSV(alerts):
+    header = ['level','time','port','description','ipSource','ipDestination','date','details']
+
+    with open('alerts.csv', 'w') as f:
+        f.write(','.join(header) + '\n')
+        for alert in alerts:
+            for i,j in alert.items():
+                f.write(str(j) + ',')
+            f.write('\n')
 
 if __name__ == "__main__":
     # Set configuration file

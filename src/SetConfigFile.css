@@ -33,7 +33,7 @@
   opacity: 25%;
   color: white;
 }
-.submit-button:disabled hover{
+.submit-button:hover:disabled {
   opacity: 25%;
   color: white;
 }
@@ -43,5 +43,3 @@
 .submit-button:active:enabled {
   opacity: 75%;
 }
-
-

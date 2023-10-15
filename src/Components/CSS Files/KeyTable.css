@@ -1,20 +1,21 @@
-.notifications-table {
+.key-table {
+    width: 40%;
     margin: 20px;
     padding: 20px;
   }
   
-  .notifications-table h2 {
+  .key-table h2 {
     margin-bottom: 10px;
     color: #333; /* Change the color to your preference */
   }
   
-  .notifications-table table {
+  .key-table table {
     width: 30%; /* Adjust the width as needed */
     border-collapse: collapse;
     border-color: #f2f2f2;
   }
   
-  .notifications-table th, .notifications-table td {
+  .key-table th, .notifications-table td {
     border: 1px solid #ddd;
     padding: 4px; /* Reduce padding to make cells shorter */
     text-align: left;
@@ -25,11 +26,11 @@
     text-overflow: ellipsis;
   }
   
-  .notifications-table th {
+  .key-table th {
     background-color: #f2f2f2;
     color: black;
   }
   
-  .notifications-table th:hover {
+  .key-table th:hover {
     background-color: cadetblue;
   }

@@ -5,6 +5,7 @@ import Loading from './Components/loading';
 import AlertTable from './Components/AlertTable';
 import NotificationsTable from './Components/NotificationsTable';
 import ErrorTable from './Components/ErrorTable';
+import KeyTable from './Components/KeyTable';
 import SetConfigFile from './SetConfigFile';
 import IPAddressDisplay from './Components/IPAddressDisplay';
 
@@ -39,6 +40,9 @@ const App = () => {
               </div>
               <div className="table-2">
                 <ErrorTable />
+              </div>
+              <div className="table-3">
+                <KeyTable />
               </div>
             </div>
             <IPAddressDisplay />

@@ -8,7 +8,6 @@ var today = new Date();
 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 var dateTime = date+' '+time;
-  
   const initialData = [
     {
       level: 'Mid',
@@ -329,7 +328,7 @@ var dateTime = date+' '+time;
   // Function to filter data based on search query
   const filteredData = data.filter((item) => {
     // You can customize this filter logic based on your needs
-    const searchString = `${item.level} ${item.time} ${item.ipSource} ${item.ipDestination} ${item.port} ${item.description}`;
+    const searchString = `${item.level} ${item.time} ${item.ipSource} ${item.ipDestination} ${item.port} ${item.dest_port} ${item.description}`;
     return searchString.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
@@ -353,13 +352,13 @@ var dateTime = date+' '+time;
 return (
   
   <div className='table-container'>
-    <input
-    className = "filter-search-bar"
-    type="text"
-    placeholder="Search..."
-    value={searchQuery}
-    onChange={handleSearchChange}
-    />
+       <input
+        className = "filter-search-bar"
+        type="text"
+        placeholder="Search..."
+        value={searchQuery}
+        onChange={handleSearchChange}
+      />
     <button onClick={toggleMenu}>Toggle Menu</button>
     {menuVisible && (
     <div id='menu'>
@@ -416,6 +415,7 @@ return (
  
     <table id='sortable-table'>
       <thead>
+        <tr>
           {columnVisibility.Lvl && <th onClick={() => handleSort('level')}>
             Lvl {sortedColumn === 'level' && <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>}
           </th> }
@@ -435,6 +435,7 @@ return (
          
           {columnVisibility.Description && <th>Description</th>}
           <th>Actions</th>
+          </tr>
       </thead>
       <tbody>
         {filteredData.map((item, index) => (
@@ -452,22 +453,11 @@ return (
         
             {columnVisibility.Description && <td >{item.description}</td>}
             <td>
-              <button className = "actions-export-button" onClick={() => handleExport()}>Export</button>
-              <button className = "actions-details-button" onClick={() => handleAlertClick(item)}>Details</button>
+              <button onClick={() => handleExport()}>Export</button>
+              <button onClick={() => handleAlertClick(item)}>Details</button>
             </td>
           </tr>
         ))}
-        {filteredData.map((item, index) => (
-            <tr key={index}>
-              <td className={item.level.toLowerCase()}>{item.level}</td>
-              <td>{item.time}</td>
-              <td>{item.ipSource}</td>
-              <td>{item.ipDestination}</td>
-              <td>{item.port}</td>
-              <td>{item.description}</td>
-            </tr>
-          ))}
-        
       </tbody>
       
     </table>
@@ -503,7 +493,7 @@ const AlertDetailsModal = ({ alert, onClose, onExport }) => {
         <p><strong>Port:</strong> {alert.port}</p>
         <p><strong>Description:</strong> {alert.description}</p>
         <p><strong>Details:</strong> {alert.details}</p>
-        <button className="modal-button-export" onClick={onExport}>Export</button>
+        <button onClick={onExport}>Export</button>
       </div>
     </div>
   );
@@ -542,12 +532,12 @@ const ExportOptionsModal = ({ onClose }) => {
           <div className="export-option">
             <label>Save In:</label>
             <div className="save-in-options">
-              <button className="modal-button-browse">Browse</button>
+              <button>Browse</button>
               {/* You can add a section for browse options here */}
-              <button className="modal-button-export">Export</button>
             </div>
           </div>
         </div>
+        <button>Export</button>
       </div>
     </div>
   );

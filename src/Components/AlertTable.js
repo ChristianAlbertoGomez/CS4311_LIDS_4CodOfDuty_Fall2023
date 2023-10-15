@@ -327,7 +327,7 @@ var dateTime = date+' '+time;
   // Function to filter data based on search query
   const filteredData = data.filter((item) => {
     // You can customize this filter logic based on your needs
-    const searchString = `${item.level} ${item.timestamp} ${item.source_ip} ${item.dest_ip} ${item.source_port} ${item.dest_port} ${item.description}`;
+    const searchString = `${item.level} ${item.time} ${item.ipSource} ${item.ipDestination} ${item.port} ${item.description}`;
     return searchString.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
@@ -455,6 +455,17 @@ return (
             </td>
           </tr>
         ))}
+        {filteredData.map((item, index) => (
+            <tr key={index}>
+              <td className={item.level.toLowerCase()}>{item.level}</td>
+              <td>{item.time}</td>
+              <td>{item.ipSource}</td>
+              <td>{item.ipDestination}</td>
+              <td>{item.port}</td>
+              <td>{item.description}</td>
+            </tr>
+          ))}
+        
       </tbody>
     </table>
     {selectedAlert && (

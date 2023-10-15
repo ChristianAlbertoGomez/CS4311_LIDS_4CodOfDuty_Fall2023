@@ -1,4 +1,3 @@
-
 import React, { useState,addEventListener, useEffect } from 'react';
 import './CSS Files/AlertTable.css';
 
@@ -247,7 +246,8 @@ var dateTime = date+' '+time;
   ];
 
 
-  const [data, setData] = useState([{}]);
+  const [dataM, setData] = useState([{}]);
+  // const [data, setData] = useState(initialData);
   const [sortDirection, setSortDirection] = useState('asc');
   const [sortedColumn, setSortedColumn] = useState(null);
   const [selectedAlert, setSelectedAlert] = useState(null);
@@ -279,8 +279,8 @@ var dateTime = date+' '+time;
     fetch("/alerts").then(
       res => res.json()
     ).then(
-      data => {
-        setData(data)
+      dataM => {
+        setData(dataM)
       }
     )
   },[])
@@ -311,7 +311,7 @@ var dateTime = date+' '+time;
   const handleSort = (columnName) => {
     const direction = sortedColumn === columnName && sortDirection === 'asc' ? 'desc' : 'asc';
 
-    const sortedData = [...data].sort((a, b) => {
+    const sortedData = [...dataM].sort((a, b) => {
       if (columnName === 'timestamp') {
         return compareTimestamps(a, b);
       } else if (columnName === 'level') {
@@ -338,7 +338,7 @@ var dateTime = date+' '+time;
   const [searchQuery, setSearchQuery] = useState('');
 
   // Function to filter data based on search query
-  const filteredData = data.filter((item) => {
+  const filteredData = dataM.filter((item) => {
     // You can customize this filter logic based on your needs
     const searchString = `${item.level} ${item.time} ${item.ipSource} ${item.ipDestination} ${item.port} ${item.dest_port} ${item.description}`;
     return searchString.toLowerCase().includes(searchQuery.toLowerCase());
@@ -364,66 +364,72 @@ var dateTime = date+' '+time;
 return (
   
   <div className='table-container'>
-       <input
-        className = "filter-search-bar"
-        type="text"
-        placeholder="Search..."
-        value={searchQuery}
-        onChange={handleSearchChange}
-      />
-    <button onClick={toggleMenu}>Toggle Menu</button>
-    {menuVisible && (
-    <div id='menu'>
-      <label>
+    <div class="flex-container">
+      <div>
         <input
-          type="checkbox"
-          checked={columnVisibility.column1}
-          onChange={() => handleCheckboxChange('Lvl')}
+          className = "filter-search-bar"
+          type="text"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={handleSearchChange}
         />
-        Lvl
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={columnVisibility.column2}
-          onChange={() => handleCheckboxChange('Time')}
-        />
-        Time
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={columnVisibility.column3}
-          onChange={() => handleCheckboxChange('ipSource')}
-        />
-        IP Source
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={columnVisibility.column3}
-          onChange={() => handleCheckboxChange('ipDestination')}
-        />
-        IP Destination
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={columnVisibility.column3}
-          onChange={() => handleCheckboxChange('Port')}
-        />
-        Port
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={columnVisibility.column3}
-          onChange={() => handleCheckboxChange('Description')}
-        />
-        Description
-      </label>
       </div>
-      )}
+      <div>
+        <button className="filter-options-button" onClick={toggleMenu}>Filter</button>
+      {menuVisible && (
+      <div id='menu'>
+        <label>
+          <input
+            type="checkbox"
+            checked={columnVisibility.column1}
+            onChange={() => handleCheckboxChange('Lvl')}
+          />
+          Lvl
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={columnVisibility.column2}
+            onChange={() => handleCheckboxChange('Time')}
+          />
+          Time
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={columnVisibility.column3}
+            onChange={() => handleCheckboxChange('ipSource')}
+          />
+          IP Source
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={columnVisibility.column3}
+            onChange={() => handleCheckboxChange('ipDestination')}
+          />
+          IP Destination
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={columnVisibility.column3}
+            onChange={() => handleCheckboxChange('Port')}
+          />
+          Port
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={columnVisibility.column3}
+            onChange={() => handleCheckboxChange('Description')}
+          />
+          Description
+        </label>
+        </div>
+        )}
+      </div>
+    </div>
  
     <table id='sortable-table'>
       <thead>
@@ -465,8 +471,8 @@ return (
         
             {columnVisibility.Description && <td >{item.description}</td>}
             <td>
-              <button onClick={() => handleExport()}>Export</button>
-              <button onClick={() => handleAlertClick(item)}>Details</button>
+              <button className = "actions-export-button" onClick={() => handleExport()}>Export</button>
+              <button className = "actions-details-button" onClick={() => handleAlertClick(item)}>Details</button>
             </td>
           </tr>
              
@@ -521,7 +527,7 @@ const AlertDetailsModal = ({ alert, onClose, onExport }) => {
         <p><strong>Port:</strong> {alert.port}</p>
         <p><strong>Description:</strong> {alert.description}</p>
         <p><strong>Details:</strong> {alert.details}</p>
-        <button onClick={onExport}>Export</button>
+        <button className="modal-button-export" onClick={onExport}>Export</button>
       </div>
     </div>
   );
@@ -560,12 +566,12 @@ const ExportOptionsModal = ({ onClose }) => {
           <div className="export-option">
             <label>Save In:</label>
             <div className="save-in-options">
-              <button>Browse</button>
+              <button className="modal-button-browse">Browse</button>
               {/* You can add a section for browse options here */}
+              <button className="modal-button-export">Export</button>
             </div>
           </div>
         </div>
-        <button>Export</button>
       </div>
     </div>
   );

@@ -24,6 +24,7 @@
 .table-2 {
   flex: 1;
   margin-left: 25px;
+  margin-right: 25px;
 }
 /* table {
   width: 100%;

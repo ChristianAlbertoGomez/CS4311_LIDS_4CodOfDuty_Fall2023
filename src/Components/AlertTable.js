@@ -418,66 +418,6 @@ return (
         )}
       </div>
     </div>
-       {/* <input
-        className = "filter-search-bar"
-        type="text"
-        placeholder="Search..."
-        value={searchQuery}
-        onChange={handleSearchChange}
-      />
-    <button onClick={toggleMenu}>Toggle Menu</button>
-    {menuVisible && (
-    <div id='menu'>
-      <label>
-        <input
-          type="checkbox"
-          checked={columnVisibility.column1}
-          onChange={() => handleCheckboxChange('Lvl')}
-        />
-        Lvl
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={columnVisibility.column2}
-          onChange={() => handleCheckboxChange('Time')}
-        />
-        Time
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={columnVisibility.column3}
-          onChange={() => handleCheckboxChange('ipSource')}
-        />
-        IP Source
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={columnVisibility.column3}
-          onChange={() => handleCheckboxChange('ipDestination')}
-        />
-        IP Destination
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={columnVisibility.column3}
-          onChange={() => handleCheckboxChange('Port')}
-        />
-        Port
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={columnVisibility.column3}
-          onChange={() => handleCheckboxChange('Description')}
-        />
-        Description
-      </label>
-      </div>
-      )} */}
  
     <table id='sortable-table'>
       <thead>

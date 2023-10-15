@@ -105,6 +105,13 @@ th:hover {
   overflow-y: auto; /* Enable scrolling for long content */
 }
 
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
 
 /* Additional Styles for Alert Details Content */
 .alert-details-modal h3 {
@@ -189,24 +196,29 @@ input[type="text"] {
   background-color: #0056b3; /* Change the background color on hover */
 }
 
-
-
+/* Style for the menu */
 .menu {
-  display: none;
+  display: flex;
+  flex-direction: column;
   position: absolute;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  padding: 10px;  
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   list-style: none;
+  padding: 10px;
   margin: 0;
+  border-radius: 5px;
+  z-index: 1;
+  min-width: 150px; /* Adjust the width as needed */
 }
 
+/* Style for each menu item */
 .menu li {
-  margin: 5px 0;
+  padding: 8px 0;
   cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .menu li:hover {
-  background-color: #ddd;
+  background-color: #f0f0f0;
 }
-

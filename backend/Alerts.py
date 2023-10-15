@@ -17,7 +17,7 @@ def alerts():
 def get_data():
     # Implement logic to fetch and return the updated data
     data = {"value":"New data from the backend"}
-    return alert
+    return jsonify(alert)
 
 def createAlerts(packet,whitelist):
     alert.append({"level": 'Mid',"time": 7.653,"ip": '182.12.4.101',"port": 64,"description": 'Account blocked',})

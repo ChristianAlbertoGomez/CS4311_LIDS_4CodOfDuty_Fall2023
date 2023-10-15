@@ -52,6 +52,7 @@ class AlertTable extends Component {
       .then(response => response.json())
       .then(data => {
         this.setState({ data: data.value });
+        //console.log(this.state.data);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -83,14 +84,15 @@ class AlertTable extends Component {
   const [menuVisible, setMenuVisible] = useState(false);*/
 
   toggleMenu() {
-    this.state.menuVisible=!this.state.menuVisible;
+    this.state.menuVisible.setState(!this.state.menuVisible);
   };
   handleCheckboxChange(columnName) {
     /*setColumnVisibility((prevState) => ({
       ...prevState,
       [columnName]: !prevState[columnName],
     }));*/
-    this.state.columnVisibility[columnName]= !this.state.columnVisibility
+    //this.state.columnVisibility[columnName]= !this.state.columnVisibility
+    this.state.columnVisibility.setState(!this.state.columnVisibility);
   };
 
 

@@ -1,7 +1,7 @@
 from tabulate import tabulate
 from flask import Flask
 
-import test2 as lids
+import LIDS as lids
 
 app = Flask(__name__)
 

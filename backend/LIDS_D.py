@@ -1,7 +1,6 @@
 import socket, defusedxml.ElementTree as ET
 import json
 
-
 # config_file
 # node_list
 # node

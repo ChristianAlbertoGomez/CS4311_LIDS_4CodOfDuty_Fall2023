@@ -8,6 +8,7 @@ var today = new Date();
 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 var dateTime = date+' '+time;
+  
   const initialData = [
     {
       level: 'Mid',
@@ -351,13 +352,13 @@ var dateTime = date+' '+time;
 return (
   
   <div className='table-container'>
-       <input
-        className = "filter-search-bar"
-        type="text"
-        placeholder="Search..."
-        value={searchQuery}
-        onChange={handleSearchChange}
-      />
+    <input
+    className = "filter-search-bar"
+    type="text"
+    placeholder="Search..."
+    value={searchQuery}
+    onChange={handleSearchChange}
+    />
     <button onClick={toggleMenu}>Toggle Menu</button>
     {menuVisible && (
     <div id='menu'>
@@ -435,7 +436,7 @@ return (
           <th>Actions</th>
       </thead>
       <tbody>
-        {data.map((item, index) => (
+        {filteredData.map((item, index) => (
           <tr key={index}>
             {columnVisibility.Lvl &&<td className={item.level.toLowerCase()}>{item.level}</td>}
             {columnVisibility.Time && <td>{item.time}</td>}
@@ -500,7 +501,7 @@ const AlertDetailsModal = ({ alert, onClose, onExport }) => {
         <p><strong>Port:</strong> {alert.port}</p>
         <p><strong>Description:</strong> {alert.description}</p>
         <p><strong>Details:</strong> {alert.details}</p>
-        <button onClick={onExport}>Export</button>
+        <button className="modal-button-export" onClick={onExport}>Export</button>
       </div>
     </div>
   );
@@ -539,12 +540,12 @@ const ExportOptionsModal = ({ onClose }) => {
           <div className="export-option">
             <label>Save In:</label>
             <div className="save-in-options">
-              <button>Browse</button>
+              <button className="modal-button-browse">Browse</button>
               {/* You can add a section for browse options here */}
+              <button className="modal-button-export">Export</button>
             </div>
           </div>
         </div>
-        <button>Export</button>
       </div>
     </div>
   );

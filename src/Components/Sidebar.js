@@ -19,8 +19,8 @@ const Sidebar = () => {
         <li ><Link to='/home' className="sidebar-link"><BsHouseFill /> Home</Link></li>
         <li ><Link to="/AlertsPage" className="sidebar-link"><BsFillExclamationCircleFill /> Alerts</Link></li>
         <li ><Link to="/NetworkPage" className="sidebar-link"><BsDiagram2 /> Network</Link></li>
-        <li ><BsGearFill /> Settings</li>
-        <li ><BsCloudHaze /> Disconnect</li>
+        <li ><Link to="/SettingsPage" className="sidebar-link"><BsGearFill /> Settings</Link></li>
+        <li ><Link to="/SetConfigFilePage" className="sidebar-link"><BsCloudHaze /> Disconnect</Link></li>
       </ul>
     </div>
   );

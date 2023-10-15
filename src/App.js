@@ -41,7 +41,7 @@ const App = () => {
               <div className="table-2">
                 <ErrorTable />
               </div>
-              <div className="table-2">
+              <div className="table-3">
                 <KeyTable />
               </div>
             </div>

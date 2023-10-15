@@ -1,4 +1,5 @@
 import pyshark, socket, defusedxml.ElementTree as ET
+from flask import Flask, request, jsonify
 from sys import exit, argv
 
 # STIGFile

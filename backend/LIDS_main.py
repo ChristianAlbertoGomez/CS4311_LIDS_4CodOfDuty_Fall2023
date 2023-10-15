@@ -156,7 +156,7 @@ def analyze_packet(packet, system_info):
         # print("ALERT: Failed FTP login detected.")
         create_alert(packet)
 
-async def sniff_traffic(server_info: dict, system_info: dict, capture_interface: str) -> None:
+def sniff_traffic(server_info: dict, system_info: dict, capture_interface: str) -> None:
     # Replace 'your_file.pcap' with the path to your PCAP file
     pcap_file = 'traffic/nmap_scan.pcapng'
 
@@ -168,9 +168,6 @@ async def sniff_traffic(server_info: dict, system_info: dict, capture_interface:
 
     # Replay packets on the specified network interface
     send(packets, iface=interface)
-
-    #create error log
-    file = open('error_log.db', 'a')
 
     try:
         # Create 'capture' object with specified interface and display filter
@@ -184,12 +181,12 @@ async def sniff_traffic(server_info: dict, system_info: dict, capture_interface:
                     created_packet = create_packet(captured_packet)
                     analyze_packet(created_packet, system_info)
                 except AttributeError as e: # Handle errors that may occur during packet analysis
-                    file.write(f"An error occurred during packet analysis: {str(e)}\n")
+                    print(f"An error occurred during packet analysis: {str(e)}")
                 except KeyboardInterrupt: # Handle user interruption (Ctrl+C)
-                    print("Capture stopped by user.\n")
+                    print("Capture stopped by user.")
 
     except (pyshark.capture.capture.TSharkVersionException, pyshark.capture.capture.TSharkCrashException) as e:
-        file.write(f"Capture error occurred: {str(e)}\n") # Handle capture errors, such as TShark not found or crashing
+        print(f"Capture error occurred: {str(e)}") # Handle capture errors, such as TShark not found or crashing
 
 def connect_server(server_info: dict, system_info: dict):
     # try:
@@ -220,30 +217,18 @@ alerts=[]
 def get_alerts():
     return alerts
 
-def create_alert(packet, num):
-    
-    if num == 1:
-        res={'level':'High','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date': packet['header']['time'],'details':'Not a whitelisted packet'}
-    elif num == 2:
-        res={'level':'High','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date':packet['header']['time'],'details':'Destination Port is not in list of expected ports'}
-    elif num == 3:
-        res={'level':'High','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date':packet['header']['time'],'details':'Failed SSH login detected.'}
-    elif num == 4:
-        res={'level':'High','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date':packet['header']['time'],'details':'Failed RDP login detected.'}
-    elif num == 5:
-        res={'level':'High','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date':packet['header']['time'],'details':'Failed FTP login detected.'}
-
+def create_alert(packet):
+    res={'level':'Mid','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date':'placeholder','details':'placeholder'}
     alerts.append(res)
 
-
-# if __name__ == "__main__":
-#     # Need config file from frontend sent here
-#     CONFIG_FILE = 'config_file.xml'
+if __name__ == "__main__":
+    # Need config file from frontend sent here
+    CONFIG_FILE = 'config_file.xml'
     
-#     #print(f"Using configuration file: {CONFIG_FILE}")
-#     server_info, net_systems, system_info = ingest_config(CONFIG_FILE)
+    #print(f"Using configuration file: {CONFIG_FILE}")
+    server_info, net_systems, system_info = ingest_config(CONFIG_FILE)
 
-#     if server_info is not None and net_systems is not None:
-#         # Call connect_server with the server_info dictionary and system information
-#         connect_server(server_info, system_info)
+    if server_info is not None and net_systems is not None:
+        # Call connect_server with the server_info dictionary and system information
+        connect_server(server_info, system_info)
         

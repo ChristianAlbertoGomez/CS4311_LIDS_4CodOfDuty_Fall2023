@@ -1,19 +1,8 @@
-# from config import *
-# from Alerts import *
-# from PCAP import *
 import LIDS as lids
+import asyncio
+import multiprocessing
 
-if __name__ == "__main__":
-    # Need config file from frontend sent here
-    CONFIG_FILE = 'config_file.xml'
-    
-    #print(f"Using configuration file: {CONFIG_FILE}")
-    server_info, net_systems, system_info = lids.ingest_config(CONFIG_FILE)
-
-    # if server_info is not None and net_systems is not None:
-    #     # Call connect_server with the server_info dictionary and system information
-    #     lids.connect_server(server_info, system_info)
-
+async def main_menu_async():
     while True:
         try:
             print('Welcome, please select one of the following options (1-6)')
@@ -38,3 +27,22 @@ if __name__ == "__main__":
                 break
         except ValueError:
             print("Invalid input. Please enter a number (1-6).")
+            
+def capture_traffic(server_info, system_info):
+    capture_interface = 'Wi-Fi'  # Replace with your network interface
+    lids.sniff_traffic(server_info, system_info, capture_interface)
+
+if __name__ == "__main__":
+    # Set configuration file
+    CONFIG_FILE = 'config_file.xml'
+    print(f"Using configuration file: {CONFIG_FILE}")
+    server_info, net_systems, system_info = lids.ingest_config(CONFIG_FILE)
+
+    if server_info is not None and net_systems is not None:
+        # Create a process for traffic capture
+        capture_process = multiprocessing.Process(target=capture_traffic, args=(server_info, system_info))
+        capture_process.start()
+
+        # Run the main menu in the main thread
+        asyncio.run(main_menu_async())
+

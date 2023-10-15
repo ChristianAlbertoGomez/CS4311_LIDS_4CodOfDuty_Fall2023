@@ -69,7 +69,7 @@ th:hover {
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 6px;
-  width: 250px;
+  width: 100px;
   margin-bottom: 10px;
 }
 .filter-search-bar:focus{
@@ -77,7 +77,19 @@ th:hover {
   box-shadow: 1px 1px 1px rgba(0,0,0,.1);
 }
 
-
+.filter-options-button{
+  color: white;
+  font-weight: bold;
+  background-color: #25374d;
+  border-radius: 3px;
+  border-style: none;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+  margin-bottom: 18px;
+}
 
 /*My part --> Christian*/
 /* Alert Details Modal */
@@ -216,4 +228,68 @@ input[type="text"] {
 
 .menu li:hover {
   background-color: #ddd;
+}
+
+.actions-export-button {
+  color: white;
+  background-color: #25374d;
+  border-radius: 3px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border-style: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+.actions-export-button:active{
+  opacity: 75%;
+}
+.actions-details-button {
+  color: white;
+  background-color: #25374d;
+  border-radius: 3px;
+  border-style: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+
+.actions-details-button:active {
+  opacity: 75%;
+}
+
+.modal-button-browse {
+  color: white;
+  background-color: #25374d;
+  border-radius: 3px;
+  border-style: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.modal-button-browse:active{
+  opacity: 75%;
+}
+.modal-button-export {
+  color: white;
+  background-color: #25374d;
+  border-radius: 3px;
+  border-style: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+.modal-button-export:active{
+  opacity: 75%;
 }

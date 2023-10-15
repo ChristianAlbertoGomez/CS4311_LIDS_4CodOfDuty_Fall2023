@@ -1,5 +1,5 @@
 from tabulate import tabulate
-from flask import Flask
+from flask import Flask, jsonify
 
 app = Flask(__name__)
 
@@ -13,7 +13,11 @@ alert=[{"level": 'Low',"time": 8.233,"ip": '192.12.4.101',"port": 88,"descriptio
 def alerts():
     return alert
 
-
+@app.route("/getData",methods=['GET'])
+def get_data():
+    # Implement logic to fetch and return the updated data
+    data = {"value":"New data from the backend"}
+    return alert
 
 def createAlerts(packet,whitelist):
     alert.append({"level": 'Mid',"time": 7.653,"ip": '182.12.4.101',"port": 64,"description": 'Account blocked',})

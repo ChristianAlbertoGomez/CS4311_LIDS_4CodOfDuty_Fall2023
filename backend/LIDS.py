@@ -1,4 +1,5 @@
 import pyshark, socket, defusedxml.ElementTree as ET
+from flask import Flask, request, jsonify
 from sys import exit, argv
 
 # STIGFile
@@ -74,12 +75,12 @@ def ingest_config(config: str):
         system_ip = system.findtext('ip')  # Extract system IP
         net_systems[system_ip] = system_dict  # Store system information in a dictionary
 
-    # Simulate getting the current IP (replace this line with your actual method)
+    # Simulate getting the current IP 
     current_ip = get_current_ip()
     print(f"Current IP is {current_ip}")
-    current_ip = "10.0.0.2"
+    current_ip = "10.0.0.2" # For testing purposes
 
-        # Use the actual current_ip value here
+    # Use the actual current_ip value here
     if current_ip in net_systems:
         return server_info, net_systems, net_systems[current_ip]  # Return server, network systems, and current system info
     else:
@@ -140,6 +141,21 @@ def analyze_packet(packet, system_info):
     if packet['header']['dstPort'] not in system_info['ports']:
         print("ALERT: Destination Port is not in list of expected ports.\n"
             f"{packet['header']['dstPort']} not in {system_info['ports']}")
+        
+    # Check for SSH failed login attempts 
+    if packet['header']['srcPort'] == '22' and "Permission denied" in packet['payload']:
+        print("ALERT: Failed SSH login detected.")
+        create_alert(packet, system_info)
+
+    # Check for RDP failed login attempts 
+    if packet['header']['srcPort'] == '3389' and "Failed login" in packet['payload']:
+        print("ALERT: Failed RDP login detected.")
+        create_alert(packet, system_info)
+
+    # Check for FTP failed login attempts 
+    if packet['header']['srcPort'] == '21' and "530 Login incorrect" in packet['payload']:
+        print("ALERT: Failed FTP login detected.")
+        create_alert(packet, system_info)
 
 def sniff_traffic(server_info: dict, system_info: dict, capture_interface: str) -> None:
     """
@@ -157,9 +173,8 @@ def sniff_traffic(server_info: dict, system_info: dict, capture_interface: str) 
             # Start capturing packets continuously using capture object
             for captured_packet in capture.sniff_continuously():
                 try:
-                    # Create and print the packet
+                    # Create packet from captured packet and send to be analyzed
                     created_packet = create_packet(captured_packet)
-                    # print(created_packet)
                     analyze_packet(created_packet, system_info)
                 except (AttributeError) as e: # Handle errors that may occur during packet analysis
                     print(f"An error occurred during packet analysis: {str(e)}")
@@ -184,7 +199,6 @@ def connect_server(server_info: dict, system_info: dict):
     #     print("Error connecting to the server:", str(e))
 
 #store_malicious_packets()
-#create_alert(packet, system_info, "unknown ip")
 #save_alert()
 #notify_alert()
 #encrypt_alert()

@@ -85,7 +85,7 @@ You may also see any lint errors in the console.
 
 #### npm install
 
-Installs the necessary files so t hat you are able to run the app in developement mode.
+Installs the necessary files so that you are able to run the app in developement mode.
 
 ## Date:
 

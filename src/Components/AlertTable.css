@@ -116,6 +116,7 @@ th:hover {
 .actions-export-button {
   color: white;
   background-color: #25374d;
+  border-radius: 3px;
   margin-right: 5px;
   margin-bottom: 5px;
   border-style: none;
@@ -128,6 +129,7 @@ th:hover {
 .actions-details-button {
   color: white;
   background-color: #25374d;
+  border-radius: 3px;
   border-style: none;
   padding-left: 10px;
   padding-right: 10px;

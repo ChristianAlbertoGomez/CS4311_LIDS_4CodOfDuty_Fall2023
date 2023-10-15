@@ -18,12 +18,3 @@ def setConfigFile():
 
   print("Monitoring network...\n")
   monitor_network(target_sys)
-
-
-    
-
-  
-
-      
-
-  

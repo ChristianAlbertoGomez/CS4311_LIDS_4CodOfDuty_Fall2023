@@ -69,7 +69,7 @@ th:hover {
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 6px;
-  width: 100px;
+  width: 75px;
   margin-bottom: 10px;
 }
 .filter-search-bar:focus{
@@ -89,6 +89,8 @@ th:hover {
   padding-bottom: 10px;
   cursor: pointer;
   margin-bottom: 18px;
+  display: flex;
+  position: relative;
 }
 
 /*My part --> Christian*/

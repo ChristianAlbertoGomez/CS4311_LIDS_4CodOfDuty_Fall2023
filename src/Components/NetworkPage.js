@@ -16,6 +16,9 @@ const NetworkPage = () => {
         Network Map
         </div>
         <main className='mainBody'>
+          <div className='AlertTable'>
+            <AlertTable/>
+          </div>
           <div className='tables'>
             <div className='table-1'>
               <KnownDevices/>
@@ -23,9 +26,6 @@ const NetworkPage = () => {
             <div className='table-2'>
               <UnknownDevices />
             </div>
-          </div>
-          <div className='AlertTable'>
-            <AlertTable/>
           </div>
         </main>
       </div>

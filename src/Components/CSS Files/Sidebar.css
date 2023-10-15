@@ -19,7 +19,7 @@
 .sidebar-link{
   color:white;
   text-decoration: none;
-  padding-right: 50px;
+  padding-right: 35px;
   padding-top: 8px;
   padding-bottom: 8px;
 }
@@ -35,7 +35,7 @@
   text-decoration: none;
 }
 .sidebar-link:hover{
-  color: black;
+  color: rgba(0, 0, 0, .75);
   text-decoration: none;
 }
 .nav-links {

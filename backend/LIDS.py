@@ -169,6 +169,9 @@ async def sniff_traffic(server_info: dict, system_info: dict, capture_interface:
     # Replay packets on the specified network interface
     send(packets, iface=interface)
 
+    #create error log
+    file = open('error_log.db', 'a')
+
     try:
         # Create 'capture' object with specified interface and display filter
         with pyshark.LiveCapture(interface=capture_interface, display_filter='tcp or udp') as capture:
@@ -181,12 +184,12 @@ async def sniff_traffic(server_info: dict, system_info: dict, capture_interface:
                     created_packet = create_packet(captured_packet)
                     analyze_packet(created_packet, system_info)
                 except AttributeError as e: # Handle errors that may occur during packet analysis
-                    print(f"An error occurred during packet analysis: {str(e)}")
+                    file.write(f"An error occurred during packet analysis: {str(e)}\n")
                 except KeyboardInterrupt: # Handle user interruption (Ctrl+C)
-                    print("Capture stopped by user.")
+                    print("Capture stopped by user.\n")
 
     except (pyshark.capture.capture.TSharkVersionException, pyshark.capture.capture.TSharkCrashException) as e:
-        print(f"Capture error occurred: {str(e)}") # Handle capture errors, such as TShark not found or crashing
+        file.write(f"Capture error occurred: {str(e)}\n") # Handle capture errors, such as TShark not found or crashing
 
 def connect_server(server_info: dict, system_info: dict):
     # try:
@@ -217,8 +220,19 @@ alerts=[]
 def get_alerts():
     return alerts
 
-def create_alert(packet):
-    res={'level':'Mid','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date':'placeholder','details':'placeholder'}
+def create_alert(packet, num):
+    
+    if num == 1:
+        res={'level':'High','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date': packet['header']['time'],'details':'Not a whitelisted packet'}
+    elif num == 2:
+        res={'level':'High','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date':packet['header']['time'],'details':'Destination Port is not in list of expected ports'}
+    elif num == 3:
+        res={'level':'High','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date':packet['header']['time'],'details':'Failed SSH login detected.'}
+    elif num == 4:
+        res={'level':'High','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date':packet['header']['time'],'details':'Failed RDP login detected.'}
+    elif num == 5:
+        res={'level':'High','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date':packet['header']['time'],'details':'Failed FTP login detected.'}
+
     alerts.append(res)
 
 

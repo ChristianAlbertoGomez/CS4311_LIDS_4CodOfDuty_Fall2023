@@ -1,5 +1,8 @@
 import socket, defusedxml.ElementTree as ET
+import xml.etree.cElementTree as ETE
+
 import json
+from xml.dom import minidom
 
 # config_file
 # node_list
@@ -131,41 +134,44 @@ def receive_alert(client_socket):
 def save_alert(alert_data):
     print(f"Received Alert: {alert_data}")
 
-def convert_alert_XML(alerts):
-    root = ET.Element("root")
+def export_alerts(alerts, format):
+    
+    if format.lower() == 'xml':
+        root = ETE.Element("root")
 
-    for alert in alerts:
-        alertElement = ET.SubElement(root, "alert")
-        for i,j in alert.items():    
-            ET.SubElement(alertElement, i).text = str(j)
-    xmlstr = minidom.parseString(ET.tostring(root)).toprettyxml(indent="   ")
-    with open("alerts.xml", "w") as f:
-        f.write(xmlstr)
-        f.close()
-
-def convert_alert_JSON(alerts):
-    x = json.dumps(alerts, indent=4)
-
-    with open('alerts.json', 'w') as outfile:
-        outfile.write(x)
-        outfile.close()
-
-def convert_alert_CSV(alerts):
-    header = ['level','time','port','description','ipSource','ipDestination','date','details']
-
-    with open('alerts.csv', 'w') as f:
-        f.write(','.join(header) + '\n')
         for alert in alerts:
-            for i,j in alert.items():
-                f.write(str(j) + ',')
-            f.write('\n')
+            alertElement = ETE.SubElement(root, "alert")
+            for i,j in alert.items():    
+                ETE.SubElement(alertElement, i).text = str(j)
+        xmlstr = minidom.parseString(ETE.tostring(root)).toprettyxml(indent="   ")
+        with open("alerts.xml", "w") as f:
+            f.write(xmlstr)
+            f.close()
+    elif format.lower() == 'json':
+        x = json.dumps(alerts, indent=4)
 
-if __name__ == "__main__":
-    # Set configuration file
-    CONFIG_FILE = 'config_file.xml' 
-    print(f"Using configuration file: {CONFIG_FILE}")
-    server_info, net_systems = ingest_config(CONFIG_FILE)
+        with open('alerts.json', 'w') as outfile:
+            outfile.write(x)
+            outfile.close()
+    elif format.lower() == 'csv':
+        header = ['level','time','port','description','ipSource','ipDestination','date','details']
 
-    if server_info is not None and net_systems is not None:
-        # Call connect_server with the server_info dictionary and capture_interface
-        manage_connections(server_info)
+        with open('alerts.csv', 'w') as f:
+            f.write(','.join(header) + '\n')
+            for alert in alerts:
+                for i,j in alert.items():
+                    f.write(str(j) + ',')
+                f.write('\n')
+    else:
+        print('Invalid format')
+
+
+# if __name__ == "__main__":
+#     # Set configuration file
+#     CONFIG_FILE = 'config_file.xml' 
+#     print(f"Using configuration file: {CONFIG_FILE}")
+#     server_info, net_systems = ingest_config(CONFIG_FILE)
+
+#     if server_info is not None and net_systems is not None:
+#         # Call connect_server with the server_info dictionary and capture_interface
+#         manage_connections(server_info)

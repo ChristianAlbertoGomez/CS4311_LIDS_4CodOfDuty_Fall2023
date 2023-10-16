@@ -92,6 +92,8 @@ def create_packet(packet):
     Returns:
         dict: A dictionary representing the created packet, containing the header information and payload data.
     """
+    file = open('./LNIDS database.db', 'a')
+
     # Determine the transport layer protocol (e.g., TCP or UDP)
     protocol = packet.transport_layer
 
@@ -125,7 +127,7 @@ def create_packet(packet):
         'header': packetHeader,
         'payload': payload
     }
-
+    file.write(str(createdPacket))
     return createdPacket
 
 def analyze_packet(packet, system_info):
@@ -133,32 +135,35 @@ def analyze_packet(packet, system_info):
     if packet['header']['srcIP'] not in system_info['whitelist']:
         # print("ALERT: Source IP is not in whitelist.\n"
         #       f"{packet['header']['srcIP']} not in {system_info['whitelist']}")
-        create_alert(packet)
-        
+        create_alert(packet, 1)
+
     # Check if the destination port is in expected ports
     if packet['header']['dstPort'] not in system_info['ports']:
         # print("ALERT: Destination Port is not in list of expected ports.\n"
         #       f"{packet['header']['dstPort']} not in {system_info['ports']}")
-        create_alert(packet)
-        
+        create_alert(packet,2)
+
     # Check for SSH failed login attempts 
     if packet['header']['srcPort'] == '22' and "Permission denied" in packet['payload']:
         # print("ALERT: Failed SSH login detected.")
-        create_alert(packet)
+        create_alert(packet,3)
+    
+    if (packet['header']['srcPort'] == '22' and packet['header']['srcIP'] in system_info['whitelist']) and  "Permission denied" in packet['payload']:
+        create_alert(packet,4)
         
     # Check for RDP failed login attempts 
-    if packet['header']['srcPort'] == '3389' and "Failed login" in packet['payload']:
+    if packet['header']['srcPort'] == '3389`' and "Failed login" in packet['payload']:
         # print("ALERT: Failed RDP login detected.")
-        create_alert(packet)
+        create_alert(packet,5)
         
     # Check for FTP failed login attempts 
     if packet['header']['srcPort'] == '21' and "530 Login incorrect" in packet['payload']:
         # print("ALERT: Failed FTP login detected.")
-        create_alert(packet)
+        create_alert(packet,6)
 
-async def sniff_traffic(server_info: dict, system_info: dict, capture_interface: str) -> None:
+def sniff_traffic(server_info: dict, system_info: dict, capture_interface: str) -> None:
     # Replace 'your_file.pcap' with the path to your PCAP file
-    pcap_file = 'traffic/nmap_scan.pcapng'
+    pcap_file = './traffic/nmap scan.pcapng'
 
     # Read packets from the PCAP file
     packets = rdpcap(pcap_file)
@@ -167,18 +172,21 @@ async def sniff_traffic(server_info: dict, system_info: dict, capture_interface:
     interface = capture_interface
 
     # Replay packets on the specified network interface
-    send(packets, iface=interface)
+    sendp(packets, iface=interface)
 
     #create error log
     file = open('error_log.db', 'a')
 
     try:
         # Create 'capture' object with specified interface and display filter
-        with pyshark.LiveCapture(interface=capture_interface, display_filter='tcp or udp') as capture:
+        # with pyshark.LiveCapture(interface=capture_interface, display_filter='tcp or udp') as capture:
+        #     print("Capturing live network traffic. Press Ctrl+C to stop...")
+        with pyshark.FileCapture(pcap_file, keep_packets=True) as capture:
             print("Capturing live network traffic. Press Ctrl+C to stop...")
-
+            
             # Start capturing packets continuously using capture object
-            for captured_packet in capture.sniff_continuously():
+            #for captured_packet in capture.sniff_continuously():
+            for captured_packet in capture:
                 try:
                     # Create packet from captured packet and send to be analyzed
                     created_packet = create_packet(captured_packet)
@@ -221,20 +229,21 @@ def get_alerts():
     return alerts
 
 def create_alert(packet, num):
-    
     if num == 1:
-        res={'level':'High','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date': packet['header']['time'],'details':'Not a whitelisted packet'}
+        res={ 'level':'Mid','time':str(packet['header']['time']),'SrcPort':packet['header']['srcPort'],'DstPort':packet['header']['dstPort'],'description': packet['header']['srcPort']+' -> '+packet['header']['dstPort'],'ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'reason':'Not a whitelisted packet'}
     elif num == 2:
-        res={'level':'High','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date':packet['header']['time'],'details':'Destination Port is not in list of expected ports'}
+        res={'level':'High','time':str(packet['header']['time']),'SrcPort':packet['header']['srcPort'],'DstPort':packet['header']['dstPort'],'description': packet['header']['srcPort']+' -> '+packet['header']['dstPort'],'ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'reason':'Destination Port is not in list of expected ports'}
     elif num == 3:
-        res={'level':'High','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date':packet['header']['time'],'details':'Failed SSH login detected.'}
+        res={'level':'High','time':str(packet['header']['time']),'SrcPort':packet['header']['srcPort'],'DstPort':packet['header']['dstPort'],'description': packet['header']['srcPort']+' -> '+packet['header']['dstPort'],'ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'reason':'Failed SSH login detected.'}
     elif num == 4:
-        res={'level':'High','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date':packet['header']['time'],'details':'Failed RDP login detected.'}
+        res = {'level':'Mid','time':str(packet['header']['time']),'SrcPort':packet['header']['srcPort'],'DstPort':packet['header']['dstPort'],'description': packet['header']['srcPort']+' -> '+packet['header']['dstPort'],'ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'reason':'Failed login detected from whitelisted IP.'}
     elif num == 5:
-        res={'level':'High','time':packet['header']['time'],'port':packet['header']['srcPort'],'description':'Placeholder','ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'date':packet['header']['time'],'details':'Failed FTP login detected.'}
+        res={'level':'High','time':str(packet['header']['time']),'SrcPort':packet['header']['srcPort'],'DstPort':packet['header']['dstPort'],'description': packet['header']['srcPort']+' -> '+packet['header']['dstPort'],'ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'reason':'Failed RDP login detected.'}
+    elif num == 6:
+        res={'level':'High','time':str(packet['header']['time']),'SrcPort':packet['header']['srcPort'],'DstPort':packet['header']['dstPort'],'description': packet['header']['srcPort']+' -> '+packet['header']['dstPort'],'ipSource':packet['header']['srcIP'],'ipDestination':packet['header']['dstIP'],'reason':'Failed FTP login detected.'}
+    #alertID = alertID + 1
 
     alerts.append(res)
-
 
 # if __name__ == "__main__":
 #     # Need config file from frontend sent here

@@ -25,7 +25,7 @@ def get_data():
 
 # def createAlerts(packet,whitelist):
 #     alert.append({"level": 'Mid',"time": 7.653,"ip": '182.12.4.101',"port": 64,"description": 'Account blocked',})
-#     #return packet['header']
+#     #return packet['header']f
 
 # if __name__=="__main__":
 #     app.run(debug=True)

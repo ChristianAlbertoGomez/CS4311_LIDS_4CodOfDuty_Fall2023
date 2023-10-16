@@ -1,0 +1,23 @@
+/* SettingsPage.css */
+.settings-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.headerSettings {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 20px;
+}
+
+.mainBodySettings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* You can add more CSS for other components like Sidebar and FontSettings if needed */

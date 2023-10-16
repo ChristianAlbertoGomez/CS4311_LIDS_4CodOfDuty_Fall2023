@@ -16,7 +16,7 @@
 
 .tables {
   display: flex;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .table-1 {
@@ -31,5 +31,5 @@
 
 /* Add some space below the tables */
 .AlertTable {
-  margin-top: 40px; /* Adjust the margin-top as needed */
+  margin-top: 10px; /* Adjust the margin-top as needed */
 }

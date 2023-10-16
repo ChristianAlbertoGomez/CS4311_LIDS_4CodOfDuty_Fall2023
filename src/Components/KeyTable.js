@@ -19,6 +19,19 @@ const KeyTable = () => {
 
   const [key, setKey] = useState(initialData);
 
+  // Define a function to determine the row color based on the content
+  const getRowColor = (content) => {
+    if (content.includes('Low = Low-Risk')) {
+      return 'low';
+    } else if (content.includes('Mid = Medium-Risk')) {
+      return 'mid';
+    } else if (content.includes('High = High-Risk')) {
+      return 'high';
+    }
+    // Default to no background color
+    return '';
+  };
+
   return (
     <div className="key-table">
       <h2>    </h2>
@@ -30,7 +43,7 @@ const KeyTable = () => {
         </thead>
         <tbody>
           {key.map((item, index) => (
-            <tr key={index}>
+            <tr key={index} className={getRowColor(item.key)}>
               <td>{item.key}</td>
             </tr>
           ))}

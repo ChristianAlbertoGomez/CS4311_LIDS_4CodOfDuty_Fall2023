@@ -60,7 +60,6 @@ th:hover {
 
 .filter-search-bar{
   font-size: 15px;
-  margin: 0;
   background-color: white;
   border-style: solid;
   border-color: rgba(0,0,0,.25);
@@ -69,8 +68,11 @@ th:hover {
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 6px;
-  width: 75px;
+  width: 100%; /* Adjust the width as needed */
+  max-width: 500px; /* Set a maximum width if necessary */
   margin-bottom: 10px;
+  margin-right: 100px;
+  
 }
 .filter-search-bar:focus{
   outline: none;
@@ -80,13 +82,14 @@ th:hover {
 .filter-options-button{
   color: white;
   font-weight: bold;
+  font-size: 13px;
   background-color: #25374d;
   border-radius: 3px;
   border-style: none;
   padding-left: 30px;
   padding-right: 30px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 11px;
+  padding-bottom: 12px;
   cursor: pointer;
   margin-bottom: 18px;
   display: flex;
@@ -210,17 +213,28 @@ input[type="text"] {
   background-color: #0056b3; /* Change the background color on hover */
 }
 
-
+.menu-item{
+  margin-right: 8px;
+  margin-left: 15px;
+}
 
 .menu {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  padding: 10px;
+  display: flex;
+  position: sticky;
+  font-size: 15px;
+  border-radius: 4px;
+  background-color: white;
+  border-style: solid;
+  border-color: rgba(0,0,0,.25);
+  border-width: 1px;
+  padding-top:10px;
+  padding-bottom: 10px;
   list-style: none;
-  margin: 0;
-  padding: 0;
+  margin-bottom: 15px;
+  top: 20px;
+  left: 0;
+  width: 620px;
+  z-index: 1;
 }
 
 .menu li {
@@ -294,4 +308,60 @@ input[type="text"] {
 }
 .modal-button-export:active{
   opacity: 75%;
+}
+.grid {
+  display: grid;
+  grid-template-columns:100px 1fr;
+}
+
+.actions-export-button {
+  color: white;
+  background-color: #25374d;
+  border-radius: 3px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border-style: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+.actions-details-button {
+  color: white;
+  background-color: #25374d;
+  border-radius: 3px;
+  border-style: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+
+.modal-button-browse {
+  color: white;
+  background-color: #25374d;
+  border-radius: 3px;
+  border-style: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+
+}
+.modal-button-export {
+  color: white;
+  background-color: #25374d;
+  border-radius: 3px;
+  border-style: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 5px;
+  cursor: pointer;
 }

@@ -13,7 +13,7 @@ const ConfigServerModal = ({ onClose }) => {
     window.location.href = '/home';
   };
 
-  const browseForFile = () => {
+  const browserForFile = () => {
     fileInputRef.current.click(); // Accede al elemento input a través de la referencia
   };
 
@@ -36,10 +36,10 @@ const ConfigServerModal = ({ onClose }) => {
           />
           <button
             type='button'
-            onClick={browseForFile}
+            onClick={browserForFile}
             className='modal-browser-button'
           >
-            Browse
+            Browser
           </button>
           <button type='submit' style={{ display: 'none' }} />
         </form>

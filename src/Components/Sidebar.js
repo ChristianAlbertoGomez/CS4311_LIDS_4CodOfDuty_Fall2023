@@ -19,7 +19,7 @@ const Sidebar = () => {
         <li><Link to='/home'><BsHouseFill /> Home</Link></li>
         <li><Link to="/AlertsPage"><BsFillExclamationCircleFill /> Alerts</Link></li>
         <li><Link to="/NetworkPage"><BsDiagram2 /> Network</Link></li>
-        <li><Link to="/SettingsPage"><BsGearFill /> Settings</Link></li>
+        <li><BsGearFill /> Settings</li>
         <li><BsCloudHaze /> Disconnect</li>
       </ul>
     </div>

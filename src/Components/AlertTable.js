@@ -513,11 +513,11 @@ const ExportOptionsModal = ({ onClose }) => {
             <div className="export-as-options">
               <input
                 type="radio"
-                id="export-pdf"
+                id="export-json"
                 name="export-as"
-                value="PDF"
+                value="JSON"
               />
-              <label htmlFor="export-pdf">PDF</label>
+              <label htmlFor="export-json">JSON</label>
 
               <input
                 type="radio"
@@ -526,6 +526,14 @@ const ExportOptionsModal = ({ onClose }) => {
                 value="XML"
               />
               <label htmlFor="export-xml">XML</label>
+
+              <input
+                type="radio"
+                id="export-csv"
+                name="export-as"
+                value="CSV"
+              />
+              <label htmlFor="export-csv">CSV</label>
             </div>
           </div>
 

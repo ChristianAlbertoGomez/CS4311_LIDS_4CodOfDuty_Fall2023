@@ -202,7 +202,7 @@ def analyze_packet(packet, system_info, host_ip):
             if packet[TCP].flags == 'S':
                 try:
                     freqIP[dst_port] += 1
-                except: 
+                except:
                     freqIP[dst_port] = 1
         
         for port in freqIP:

@@ -262,6 +262,19 @@ var dateTime = date+' '+time;
     Description: true
   });
 
+
+  // Function to reset filter selections
+  const resetFilters = () => {
+    setColumnVisibility({
+      Lvl: true,
+      Time: true,
+      ipSource: true,
+      ipDestination: true,
+      Port: true,
+      Description: true
+    });
+  };
+
   const [menuVisible, setMenuVisible] = useState(false);
 
   const toggleMenu = () => {
@@ -359,11 +372,20 @@ var dateTime = date+' '+time;
 
 
 
-
+{/* <button className="filter-options-button" onClick={resetFilters}>Reset</button> */}
 
 return (
   
   <div className='table-container'>
+    <div>
+        <input
+        className = "filter-search-bar"
+        type="text"
+        placeholder="Search"
+        value={searchQuery}
+        onChange={handleSearchChange}
+      />
+      </div>
     <div className="grid">
     <div>
         <button className="filter-options-button" onClick={toggleMenu}>Filter</button>
@@ -421,6 +443,9 @@ return (
         )}
       </div>
       <div>
+        <button className="filter-options-button" onClick={resetFilters}>Reset</button>
+      </div>
+      {/* <div>
         <input
         className = "filter-search-bar"
         type="text"
@@ -428,8 +453,7 @@ return (
         value={searchQuery}
         onChange={handleSearchChange}
       />
-      </div>
-      <div></div>
+      </div> */}
     </div>
     {/* <button className="filter-options-button" onClick={toggleMenu}>Filter</button>
     {menuVisible && (

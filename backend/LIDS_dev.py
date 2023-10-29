@@ -1,10 +1,13 @@
-import time, socket, defusedxml.ElementTree as ET
+import time, socket, threading, tabulate, defusedxml.ElementTree as ET
 from scapy.all import sniff, sendp, rdpcap
 from scapy.layers.inet import IP, TCP, UDP
 
 #Global Variables
 alert_id_counter = 0
 alerts = []
+
+# Add a lock to ensure thread-safety when updating alerts
+alerts_lock = threading.Lock()
 
 def log_error(error_message):
     """
@@ -158,8 +161,6 @@ def analyze_packet(packet, system_info, host_ip):
     Returns:
         None
     """
-    freqIP = {}
-    
     if IP in packet and packet[IP].dst == host_ip:
         src_ip, dst_ip = packet[IP].src, packet[IP].dst
         protocol, src_port, dst_port, payload = get_protocol_info(packet)
@@ -198,24 +199,6 @@ def analyze_packet(packet, system_info, host_ip):
             else:
                 if '530 Login incorrect' in payload:
                     create_alert(packet, 'high', 'Failed login attempt from non-whitelisted IP')
-        if packet.haslayer(TCP):
-            if packet[TCP].flags == 'S':
-                try:
-                    freqIP[dst_port] += 1
-                except:
-                    freqIP[dst_port] = 1
-        elif packet.haslayer(UDP):
-            try:
-                freqIP[(dst_port, dst_port)] += 1
-            except:
-                freqIP[(dst_port, dst_port)] = 1
-        
-        for i in freqIP:
-            if freqIP[i] > 10:
-                create_alert(packet, 'high', 'Port scanning detected')
-                
-                #reset the value of the port and ip to 0
-                freqIP[i] = 0
 
 # Inside the sniff_live_traffic function, add host_ip as an argument:
 def sniff_live_traffic(capture_interface, system_info, host_ip):
@@ -232,7 +215,15 @@ def sniff_live_traffic(capture_interface, system_info, host_ip):
         Exception: If an error occurs during live traffic capture.
     """
     try:
-        sniff(iface=capture_interface, prn=lambda packet: analyze_packet(packet, system_info, host_ip), filter="tcp or udp")
+        # Define a custom function to analyze packets and filter for TCP and UDP
+        def custom_analyze(packet):
+            if IP in packet:
+                protocol = packet[IP].proto
+                if protocol in [6, 17]:  # TCP or UDP
+                    analyze_packet(packet, system_info, host_ip)
+
+        print("Capturing live traffic...")
+        sniff(iface=capture_interface, prn=custom_analyze)
     except KeyboardInterrupt:
         print("Capture stopped by the user.")
     except Exception as e:
@@ -240,7 +231,7 @@ def sniff_live_traffic(capture_interface, system_info, host_ip):
         print(error_message)
         log_error(error_message)
 
-def replay_pcap_file(pcap_file, capture_interface, system_info, host_ip):
+def replay_pcap_in_background(pcap_file, capture_interface, system_info, host_ip):
     """
     Replays a packet capture file by sending the captured packets to a specified network interface for analysis.
     Args:
@@ -254,20 +245,20 @@ def replay_pcap_file(pcap_file, capture_interface, system_info, host_ip):
     """
     try:
         packets = rdpcap(pcap_file)
-        sendp(packets, iface=capture_interface, filter="tcp or udp")  # Apply filter
 
         for captured_packet in packets:
             try:
                 analyze_packet(captured_packet, system_info, host_ip)
+                sendp(captured_packet, iface=capture_interface, filter='tcp or udp')
+                time.sleep(1)
             except AttributeError as e:
                 error_message = f"An error occurred during packet analysis: {str(e)}"
                 log_error(error_message)
     except Exception as e:
         error_message = f"An error occurred during PCAP file replay: {str(e)}"
-        print(error_message)
         log_error(error_message)
 
-def sniff_traffic(system_info):
+def sniff_traffic(analysis_method: int, capture_interface: str, pcap_file, system_info: dict):
     """
     Allows the user to choose between capturing live network traffic or replaying a packet capture file.
     Args:
@@ -275,24 +266,16 @@ def sniff_traffic(system_info):
     Returns:
         None
     """
-    print("Select an option:")
-    print("1. Capture Live Traffic")
-    print("2. Replay Packet Capture File")
-    choice = input()
-
-    if choice == "1":
-        capture_interface = input("Enter the capture interface: ")
+    if analysis_method == "1":
         sniff_live_traffic(capture_interface, system_info, '10.0.0.3')
-    elif choice == "2":
-        pcap_file = input("Enter the path to the PCAP file: ")
-        capture_interface = input("Enter the capture interface for replay: ")
-        replay_pcap_file(pcap_file, capture_interface, system_info, '10.0.0.3')
+    elif analysis_method == "2":
+        replay_pcap_in_background(pcap_file, capture_interface, system_info, '10.0.0.3')
     else:
         error_message = "Invalid choice."
         print(error_message)
         log_error(error_message)
         
-def connect_server(server_info: dict, system_info: dict):
+def connect_server(server_info: dict):
     # try:
         #Testing purposes only
         # server_address = (get_current_ip(), int(server_info['port']))
@@ -304,13 +287,18 @@ def connect_server(server_info: dict, system_info: dict):
 
     # Start sniffing traffic
     # capture_interface = 'Wi-Fi'
-    sniff_traffic(system_info)
+    # sniff_traffic(system_info)
+    
+    print("Connecting to Server...")
+    print("Connection to Server made")
 
     # except socket.error as e:
     #     print("Error connecting to the server:", str(e))
         
 def get_alerts():
-    return alerts
+    with alerts_lock:
+        return alerts[:]  # Return a copy of the alerts list to prevent modification outside
+
 
 def create_zulu_timestamp():
     """
@@ -334,6 +322,7 @@ def create_alert(packet, severity, description):
         None
     """
     global alert_id_counter
+    global alerts
     alert_id_counter += 1
     alert_id = alert_id_counter
     
@@ -379,4 +368,5 @@ def create_alert(packet, severity, description):
             'reason': description,
         }
     
-    alerts.append(res)
+    with alerts_lock:
+        alerts.append(res)  # Add the new alert to the list

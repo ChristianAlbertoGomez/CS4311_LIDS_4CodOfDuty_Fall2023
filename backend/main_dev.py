@@ -1,4 +1,4 @@
-import sys, threading, LIDST as lids, AlertsT as alert, LIDS_D as lids_d
+import sys, threading, LIDS_dev as lids, Alerts_dev as alert, LIDS_D as lids_d
 
 def print_help():
     """

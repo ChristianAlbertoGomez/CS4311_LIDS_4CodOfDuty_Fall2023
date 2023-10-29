@@ -204,10 +204,18 @@ def analyze_packet(packet, system_info, host_ip):
                     freqIP[dst_port] += 1
                 except:
                     freqIP[dst_port] = 1
+        elif packet.haslayer(UDP):
+            try:
+                freqIP[(dst_port, dst_port)] += 1
+            except:
+                freqIP[(dst_port, dst_port)] = 1
         
-        for port in freqIP:
-            if freqIP[port] > 5:
+        for i in freqIP:
+            if freqIP[i] > 10:
                 create_alert(packet, 'high', 'Port scanning detected')
+                
+                #reset the value of the port and ip to 0
+                freqIP[i] = 0
 
 # Inside the sniff_live_traffic function, add host_ip as an argument:
 def sniff_live_traffic(capture_interface, system_info, host_ip):

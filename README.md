@@ -97,7 +97,7 @@ Installs the necessary files so t hat you are able to run the app in developemen
 
 ## Synopsis
 
-python3 main_dev.py [tag][filename]
+python3 LIDS.py [tag][filename]
 
 ### **tag** 
 

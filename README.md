@@ -90,3 +90,22 @@ Installs the necessary files so t hat you are able to run the app in developemen
 ## Date:
 
 September 17, 2023,  3:42 PM
+
+## Synopsis
+
+python3 main_dev.py [tag][filename]
+
+### **tag** 
+
+#### **-c**
+
+Tag used for running the Command User Interface (CLI)
+
+#### **-g**
+
+Tag for running the GUI
+
+### filename
+
+the file path of where your current configuration file resides. 
+

@@ -6,9 +6,6 @@ from scapy.layers.inet import IP, TCP, UDP
 alert_id_counter = 0
 alerts = []
 
-# Add a lock to ensure thread-safety when updating alerts
-alerts_lock = threading.Lock()
-
 def log_error(error_message):
     """
     Logs an error message to the 'error_log.db' file.
@@ -245,18 +242,17 @@ def replay_pcap_in_background(pcap_file, capture_interface, system_info, host_ip
     """
     try:
         packets = rdpcap(pcap_file)
-
         for captured_packet in packets:
             try:
                 analyze_packet(captured_packet, system_info, host_ip)
-                sendp(captured_packet, iface=capture_interface, filter='tcp or udp')
                 time.sleep(1)
-            except AttributeError as e:
-                error_message = f"An error occurred during packet analysis: {str(e)}"
-                log_error(error_message)
+                sendp(captured_packet, iface=capture_interface, filter='tcp or udp', timeout=2)
+            except Exception as e:
+                # Log the exception
+                log_error(f"Error sending packet: {str(e)}")
     except Exception as e:
-        error_message = f"An error occurred during PCAP file replay: {str(e)}"
-        log_error(error_message)
+        # Log the exception
+        log_error(f"Error reading PCAP file: {str(e)}")
 
 def sniff_traffic(analysis_method: int, capture_interface: str, pcap_file, system_info: dict):
     """
@@ -296,9 +292,7 @@ def connect_server(server_info: dict):
     #     print("Error connecting to the server:", str(e))
         
 def get_alerts():
-    with alerts_lock:
-        return alerts[:]  # Return a copy of the alerts list to prevent modification outside
-
+    return alerts  # Return a copy of the alerts list
 
 def create_zulu_timestamp():
     """
@@ -367,6 +361,4 @@ def create_alert(packet, severity, description):
             'dst_ip': packet[IP].dst,
             'reason': description,
         }
-    get_alerts()
-    with alerts_lock:
-        alerts.append(res)  # Add the new alert to the list
+    alerts.append(res)  # Add the new alert to the list

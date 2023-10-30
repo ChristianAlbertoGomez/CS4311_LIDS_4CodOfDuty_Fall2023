@@ -18,7 +18,7 @@ def print_help():
         '''
 
     print(help_text)
-    
+
 def select_analysis_method():
     print("Select an option:")
     print("1. Capture Live Traffic")
@@ -45,9 +45,9 @@ def main_cli(xml_path):
     if server_info is not None and net_systems is not None:
         # Call connect_server with the server_info dictionary and system information
         lids.connect_server(server_info)
-        
+
     analysis_method, capture_interface, pcap_file = select_analysis_method()
-    
+
     # Start LIDS_dev.py in the background
     lids_thread = threading.Thread(target=lids.sniff_traffic, args=(analysis_method, capture_interface, pcap_file, system_info,))
     lids_thread.daemon = True

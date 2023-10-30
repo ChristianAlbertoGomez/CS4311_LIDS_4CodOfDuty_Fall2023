@@ -367,6 +367,6 @@ def create_alert(packet, severity, description):
             'dst_ip': packet[IP].dst,
             'reason': description,
         }
-    
+    get_alerts()
     with alerts_lock:
         alerts.append(res)  # Add the new alert to the list

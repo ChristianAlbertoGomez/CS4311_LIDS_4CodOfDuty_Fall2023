@@ -21,7 +21,7 @@ Lightweight Intrusion Detection System Distributed (LIDS-D) Agent
 
 * Ms. Diana Ramírez 
 * Ms. Herandy Vázquez
-*  Mr. Sebastián Quiñones 
+* Mr. Sebastián Quiñones 
 * Dr. Gurijala
 
 ## Team #4: Code of Duty
@@ -73,6 +73,14 @@ Errors
 
 The CLI or Command Line Interface is mainly to start the program from the command line or terminal. Once the script is ran, it will open up the LIDS program where you will begin to detect.
 
+## Tools & Frameworks
+* Linux Lite 6.6
+* VMware 
+* Python v3.10.12
+* JavaScript v12.22.09
+* React v18.2.0
+* Flask v2.0.1
+
 ### Available Scripts
 
 #### npm start
@@ -86,10 +94,6 @@ You may also see any lint errors in the console.
 #### npm install
 
 Installs the necessary files so t hat you are able to run the app in developement mode.
-
-## Date:
-
-September 17, 2023,  3:42 PM
 
 ## Synopsis
 
@@ -108,4 +112,8 @@ Tag for running the GUI
 ### filename
 
 the file path of where your current configuration file resides. 
+
+## Date:
+
+October 30, 2023,  9:30 PM
 

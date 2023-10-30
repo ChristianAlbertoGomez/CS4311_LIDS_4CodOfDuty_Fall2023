@@ -1,10 +1,15 @@
-import time, socket, threading, tabulate, defusedxml.ElementTree as ET
+import json, time, socket, threading, tabulate, defusedxml.ElementTree as ET
 from scapy.all import sniff, sendp, rdpcap
 from scapy.layers.inet import IP, TCP, UDP
 
 #Global Variables
 alert_id_counter = 0
+lidsd_socket = None
 alerts = []
+freq_ip = {}
+
+# Simple encryption key used for testing 
+encryption_key = 0x5A
 
 def log_error(error_message):
     """
@@ -103,6 +108,17 @@ def ingest_config(config: str):
         return None, None, None
     
 def print_config_details(server_info: dict, net_systems: dict):
+    """
+    Prints the server information and network system information based on the provided dictionaries.
+    It also compares the current IP with the IP addresses in the network systems and indicates if there is a match.
+
+    Args:
+        server_info (dict): A dictionary containing the server information, including the IP address, port, and NIC.
+        net_systems (dict): A dictionary containing the network system information, including the IP address, name, MAC address, and ports.
+
+    Returns:
+        None
+    """
     # Simulate getting the current IP
     current_ip = get_current_ip()
     print(f"Current IP is {current_ip}")
@@ -130,6 +146,15 @@ def print_config_details(server_info: dict, net_systems: dict):
         print()
 
 def get_protocol_info(packet):
+    """
+    Extracts information about the protocol, source port, destination port, and payload from a network packet.
+
+    Args:
+        packet (object): The network packet object to extract information from.
+
+    Returns:
+        tuple: A tuple containing the protocol number (int), source port (str), destination port (str), and payload (bytes).
+    """
     protocol = packet[IP].proto
     src_port, dst_port, payload = None, None, None
     
@@ -196,6 +221,25 @@ def analyze_packet(packet, system_info, host_ip):
             else:
                 if '530 Login incorrect' in payload:
                     create_alert(packet, 'high', 'Failed login attempt from non-whitelisted IP')
+                    
+        if packet.haslayer(TCP):
+            if packet[TCP].flags == 'S':
+                try:
+                    freq_ip['dst_port'] += 1
+                except:
+                    freq_ip['dst_port'] = 1
+        elif packet.haslayer(UDP):
+            try:
+                freq_ip['dst_port'] += 1
+            except:
+                freq_ip['dst_port']= 1
+        
+        for key, val in freq_ip.items():
+             if val > 10:
+                 create_alert(packet, 'high', 'Port scanning detected')
+                 
+                 # Reset the value of the port and IP to 0
+                 freq_ip[key] = 0
 
 # Inside the sniff_live_traffic function, add host_ip as an argument:
 def sniff_live_traffic(capture_interface, system_info, host_ip):
@@ -271,32 +315,73 @@ def sniff_traffic(analysis_method: int, capture_interface: str, pcap_file, syste
         print(error_message)
         log_error(error_message)
         
-def connect_server(server_info: dict):
-    # try:
-        #Testing purposes only
-        # server_address = (get_current_ip(), int(server_info['port']))
-        
-        # Create a socket connection to the server
-        # server_address = (server_info['ip'], int(server_info['port']))
-        # connection_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # connection_socket.connect(server_address)
+def connect_to_lidsd(server_info):
+    """
+    Connects to a LIDS-D server using a socket.
+    Args:
+        server_info (dict): A dictionary containing the IP address and port number of the LIDS-D server.
+    Returns:
+        None
+    Raises:
+        socket.error: If there is an error connecting to the LIDS-D server.
 
-    # Start sniffing traffic
-    # capture_interface = 'Wi-Fi'
-    # sniff_traffic(system_info)
+    """
+    global lidsd_socket
+    try:
+        print("Connecting to LIDS-D Server...")
+        lidsd_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        lidsd_socket.connect((get_current_ip(), int(server_info['port'])))
+        print("Connected to LIDS-D Server")
+    except socket.error as e:
+        print("Error connecting to LIDS-D server:", str(e))
+
+def encrypt_alert(alert):
+    """
+    Encrypt an alert using XOR encryption.
+    Args:
+        alert (dict): The alert data to be encrypted.
+    Returns:
+        bytes: The encrypted alert.
+    """
+    alert_string = str(alert)
+    encrypted_alert = []
+    for char in alert_string:
+        encrypted_char = ord(char) ^ encryption_key
+        encrypted_alert.append(encrypted_char)
+    encrypted_alert_bytes = bytes(encrypted_alert)
+    return encrypted_alert_bytes
     
-    print("Connecting to Server...")
-    print("Connection to Server made")
-
-    # except socket.error as e:
-    #     print("Error connecting to the server:", str(e))
+def send_alert_to_lidsd(alert):
+    """
+    Sends an alert to the LIDS-D server.
+    Args:
+        alert (object): The alert object containing the information about the alert.
+    Raises:
+        Exception: If there is an error sending the alert to LIDS-D.
+    Returns:
+        None
+    """
+    global lidsd_socket
+    if lidsd_socket:
+        try:
+            encrypted_alert = encrypt_alert(alert)
+            lidsd_socket.send(encrypted_alert)
+        except Exception as e:
+            print("Error sending alert to LIDS-D:", str(e))
         
 def get_alerts():
+    """
+    Returns a copy of the alerts list.
+    Returns:
+        List
+    """
     return alerts  # Return a copy of the alerts list
 
 def create_zulu_timestamp():
     """
     Returns the current timestamp in Zulu (UTC) format.
+    Returns:
+        Timestamp
     """
     gmtime = time.gmtime()
     timestamp = "{:04d}-{:02d}-{:02d}T{:02d}:{:02d}:{:02d}Z".format(
@@ -325,40 +410,56 @@ def create_alert(packet, severity, description):
     # Create a Zulu (UTC) format timestamp
     timestamp = create_zulu_timestamp()
     
-    if severity == 'low':
-        res = {
-            'alert_id': alert_id,
-            'level': 'Low',
-            'time': timestamp,
-            'src_port': src_port,
-            'dst_port': dst_port,
-            'description': src_port + ' -> ' + dst_port,
-            'src_ip': packet[IP].src,
-            'dst_ip': packet[IP].dst,
-            'reason': description,
-        }
-    if severity == 'med':
-        res = {
-            'alert_id': alert_id,
-            'level': 'Medium',
-            'time': timestamp,
-            'src_port': src_port,
-            'dst_port': dst_port,
-            'description': src_port + ' -> ' + dst_port,
-            'src_ip': packet[IP].src,
-            'dst_ip': packet[IP].dst,
-            'reason': description,
-        }
-    if severity == 'high':
-        res = {
-            'alert_id': alert_id,
-            'level': 'High',
-            'time': timestamp,
-            'src_port': src_port,
-            'dst_port': dst_port,
-            'description': src_port + ' -> ' + dst_port,
-            'src_ip': packet[IP].src,
-            'dst_ip': packet[IP].dst,
-            'reason': description,
-        }
-    alerts.append(res)  # Add the new alert to the list
+    alert = {
+        'alert_id': alert_id,
+        'level': severity,
+        'time': timestamp,
+        'src_port': src_port,
+        'dst_port': dst_port,
+        'description': src_port + ' -> ' + dst_port,
+        'src_ip': packet[IP].src,
+        'dst_ip': packet[IP].dst,
+        'reason': description,
+    }
+    alerts.append(alert) # Add the new alert to the list
+    send_alert_to_lidsd(alert) # Send alert to LIDS-D server
+
+def export_alerts(alerts, format):
+    """
+    Exports alerts to different formats (XML, JSON, CSV) based on the specified format parameter.
+    Args:
+        alerts (list): A list of dictionaries representing the alerts to be exported. Each dictionary contains the alert details such as level, time, port, description, IP source, IP destination, date, and details.
+        format (str): The format in which the alerts should be exported. It can be 'xml', 'json', or 'csv'.
+    Returns:
+        None
+    Raises:
+        None
+    """
+    if format.lower() == 'xml':
+        root = ETE.Element("root")
+
+        for alert in alerts:
+            alertElement = ETE.SubElement(root, "alert")
+            for i, j in alert.items():
+                ETE.SubElement(alertElement, i).text = str(j)
+        xmlstr = minidom.parseString(ETE.tostring(root)).toprettyxml(indent="   ")
+        with open("alerts.xml", "w") as f:
+            f.write(xmlstr)
+            f.close()
+    elif format.lower() == 'json':
+        x = json.dumps(alerts, indent=4)
+
+        with open('alerts.json', 'w') as outfile:
+            outfile.write(x)
+            outfile.close()
+    elif format.lower() == 'csv':
+        header = ['level', 'time', 'port', 'description', 'ipSource', 'ipDestination', 'date', 'details']
+
+        with open('alerts.csv', 'w') as f:
+            f.write(','.join(header) + '\n')
+            for alert in alerts:
+                for i, j in alert.items():
+                    f.write(str(j) + ',')
+                f.write('\n')
+    else:
+        print('Invalid format')

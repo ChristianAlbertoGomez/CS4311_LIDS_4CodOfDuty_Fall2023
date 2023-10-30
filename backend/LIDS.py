@@ -1,4 +1,4 @@
-import sys, threading, backend as lids, alerts as alert, LIDS_D as lids_d
+import sys, threading, backend_test as lids, alerts as alert, LIDS_D as lids_d
 
 def print_help():
     """
@@ -20,6 +20,12 @@ def print_help():
     print(help_text)
     
 def select_analysis_method():
+    """
+    Allows the user to select an analysis method for the LIDS program.
+    The user can choose between capturing live traffic or replaying a packet capture file.
+    Returns:
+        User input
+    """
     print("Select an option:")
     print("1. Capture Live Traffic")
     print("2. Replay Packet Capture File")
@@ -38,17 +44,23 @@ def select_analysis_method():
         lids.log_error(error_message)
 
 def main_cli(xml_path):
-    # Your menu logic here
+    """
+    Process user commands, interact with other modules, and provide various functionalities.
+    Args:
+        xml_path (str): The path to the XML file containing the configuration.
+    Returns:
+        None
+    """
     print(f"Processing XML file: {xml_path}")
 
     server_info, net_systems, system_info = lids.ingest_config(xml_path)
     if server_info is not None and net_systems is not None:
         # Call connect_server with the server_info dictionary and system information
-        lids.connect_server(server_info)
+        lids.connect_to_lidsd(server_info)
         
     analysis_method, capture_interface, pcap_file = select_analysis_method()
     
-    # Start LIDS_dev.py in the background
+    # Start packet analysis in the background
     lids_thread = threading.Thread(target=lids.sniff_traffic, args=(analysis_method, capture_interface, pcap_file, system_info,))
     lids_thread.daemon = True
     lids_thread.start()
@@ -89,9 +101,8 @@ def main_cli(xml_path):
             log_error(f"Error processing command: {str(e)}")
             print('Invalid command. Please try again.')
 
-
 def main_gui():
-    # Your GUI interface logic here
+    # GUI interface logic here
     print("GUI interface")
 
 if __name__ == '__main__':

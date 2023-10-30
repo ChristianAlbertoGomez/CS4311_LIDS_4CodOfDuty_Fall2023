@@ -1,14 +1,13 @@
-import socket, defusedxml.ElementTree as ET
-import xml.etree.cElementTree as ETE
-
-import json
-from xml.dom import minidom
+import json, socket, defusedxml.ElementTree as ET
 
 # config_file
 # node_list
 # node
 # alert_list
 # alert
+
+# Simple encryption key used for testing 
+encryption_key = 0x5A
 
 def get_current_ip() -> str:
     """
@@ -92,86 +91,89 @@ def ingest_config(config: str):
 # notify_alert()
 # display_alert()
 # display_node_list()
-
+# convert_alert_XML()
+# convert_alert_JSON()
+# convert_alert_CSV()
 
 def manage_connections(server_info: dict):
+    """
+    Manages incoming connections to the server.
+    Args:
+        server_info (dict): A dictionary containing the server IP and port.
+    Returns:
+        None
+    """
     # Testing purposes only
-    # SERVER_IP, SERVER_PORT = get_current_ip(), int(server_info['port'])
+    SERVER_IP, SERVER_PORT = get_current_ip(), int(server_info['port'])
     
-    SERVER_IP, SERVER_PORT = server_info['ip'], int(server_info['port'])
+    # Real server implementation
+    # SERVER_IP, SERVER_PORT = server_info['ip'], int(server_info['port'])
     
     # Create a socket to listen for connections
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((SERVER_IP, SERVER_PORT))
-    server_socket.listen(5)  # Listen for up to 5 connection requests
+    server_socket.listen(5)
 
     print(f"Server is listening on {SERVER_IP}:{SERVER_PORT}")
 
     while True:
-        # Wait for a connection from a client
         client_socket, client_address = server_socket.accept()
         print(f"Accepted connection from {client_address}")
-
-        # Handle the client's data
         receive_alert(client_socket)
+        
+def decrypt_alert(encrypted_alert):
+    """
+    Decrypt an alert using XOR encryption.
+    Args:
+        encrypted_alert (bytes): The encrypted alert data.
+    Returns:
+        dict: The decrypted alert.
+    """
+    encrypted_alert_list = list(encrypted_alert)
+    decrypted_alert = []
+    for encrypted_char in encrypted_alert_list:
+        decrypted_char = chr(encrypted_char ^ encryption_key)
+        decrypted_alert.append(decrypted_char)
+    decrypted_alert_string = ''.join(decrypted_alert)
+    return eval(decrypted_alert_string)  # Convert the decrypted string back to a dictionary
 
 def receive_alert(client_socket):
+    """
+    Receives alerts from a client connected to a server.
+    Args:
+        client_socket (socket): A socket object representing the connection with the client.
+    Returns:
+        None
+    Raises:
+        None
+    """
     print("Client connected and has established a connection.")
-
     while True:
-        data = client_socket.recv(1024)  # Receive data from the client 
+        data = client_socket.recv(1024)  # Receive data from the client
 
         if not data:
             # If no data is received, the client has disconnected
             print("Client disconnected")
             break
 
-        # Process the received data 
-        save_alert(data.decode('utf-8'))
+        # Process the received data
+        alert_data = decrypt_alert(data)
+        process_alert(alert_data)
 
     client_socket.close()
 
-def save_alert(alert_data):
-    print(f"Received Alert: {alert_data}")
+def process_alert(alert):
+    # Process the received alert
+    print(f"Received Alert: {alert}")
+    # Add your code to process the alert here
 
-def export_alerts(alerts, format):
-    
-    if format.lower() == 'xml':
-        root = ETE.Element("root")
+# def save_alert(alert_data):
 
-        for alert in alerts:
-            alertElement = ETE.SubElement(root, "alert")
-            for i,j in alert.items():    
-                ETE.SubElement(alertElement, i).text = str(j)
-        xmlstr = minidom.parseString(ETE.tostring(root)).toprettyxml(indent="   ")
-        with open("alerts.xml", "w") as f:
-            f.write(xmlstr)
-            f.close()
-    elif format.lower() == 'json':
-        x = json.dumps(alerts, indent=4)
+if __name__ == "__main__":
+    # Set configuration file
+    CONFIG_FILE = 'config_file.xml' 
+    print(f"Using configuration file: {CONFIG_FILE}")
+    server_info, net_systems = ingest_config(CONFIG_FILE)
 
-        with open('alerts.json', 'w') as outfile:
-            outfile.write(x)
-            outfile.close()
-    elif format.lower() == 'csv':
-        header = ['level','time','port','description','ipSource','ipDestination','date','details']
-
-        with open('alerts.csv', 'w') as f:
-            f.write(','.join(header) + '\n')
-            for alert in alerts:
-                for i,j in alert.items():
-                    f.write(str(j) + ',')
-                f.write('\n')
-    else:
-        print('Invalid format')
-
-
-# if __name__ == "__main__":
-#     # Set configuration file
-#     CONFIG_FILE = 'config_file.xml' 
-#     print(f"Using configuration file: {CONFIG_FILE}")
-#     server_info, net_systems = ingest_config(CONFIG_FILE)
-
-#     if server_info is not None and net_systems is not None:
-#         # Call connect_server with the server_info dictionary and capture_interface
-#         manage_connections(server_info)
+    if server_info is not None and net_systems is not None:
+        manage_connections(server_info)

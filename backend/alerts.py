@@ -1,5 +1,5 @@
 from tabulate import tabulate
-import LIDS_dev as lids
+import backend as lids
 # from flask import Flask
 
 # app = Flask(__name__)

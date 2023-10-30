@@ -60,3 +60,9 @@
 .visible {
   display: block;
 }
+
+
+.modal-button {
+  display: inline-block; /* Agregar esta propiedad para hacer que los botones estén en línea */
+  margin-right: 10px; /* Opcional: Agregar margen entre los botones para separarlos */
+}

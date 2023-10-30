@@ -221,7 +221,7 @@ def analyze_packet(packet, system_info, host_ip):
             else:
                 if '530 Login incorrect' in payload:
                     create_alert(packet, 'high', 'Failed login attempt from non-whitelisted IP')
-                    
+
         if packet.haslayer(TCP):
             if packet[TCP].flags == 'S':
                 try:
@@ -235,11 +235,11 @@ def analyze_packet(packet, system_info, host_ip):
                 freq_ip['dst_port']= 1
         
         for key, val in freq_ip.items():
-             if val > 10:
-                 create_alert(packet, 'high', 'Port scanning detected')
-                 
-                 # Reset the value of the port and IP to 0
-                 freq_ip[key] = 0
+            if val > 10:
+                create_alert(packet, 'high', 'Port scanning detected')
+                
+                # Reset the value of the port and IP to 0
+                freq_ip[key] = 0
 
 # Inside the sniff_live_traffic function, add host_ip as an argument:
 def sniff_live_traffic(capture_interface, system_info, host_ip):

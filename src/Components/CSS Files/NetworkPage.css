@@ -1,0 +1,35 @@
+/* NetworkPage.css */
+
+.mainBody {
+  margin-left: 220px; /* Width of the sidebar */
+  padding: 20px;
+}
+
+.header {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-left: 240px;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+.tables {
+  display: flex;
+  margin-top: 15px;
+}
+
+.table-1 {
+  flex: 1;
+  margin-right: 10px; /* Add margin between the two top tables */
+}
+
+.table-2 {
+  flex: 1;
+  margin-left: 10px; /* Adjust margin to match the margin-right in .table-1 */
+}
+
+/* Add some space below the tables */
+.AlertTable {
+  margin-top: 40px; /* Adjust the margin-top as needed */
+}

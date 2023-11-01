@@ -287,7 +287,6 @@ class AlertTable extends Component {
               {this.state.columnVisibility?.ipSource && <th>IP Source</th>}
               
               {this.state.columnVisibility?.ipDestination && <th>IP Destination</th>}
-              {<th>IP Destination:{this.state.data?.port/*this should work? this.state.sortDirection works*/}</th>}
             
               
               {this.state.columnVisibility?.Port && <th data-sort="numeric" onClick={() => this.handleSort('port')}>

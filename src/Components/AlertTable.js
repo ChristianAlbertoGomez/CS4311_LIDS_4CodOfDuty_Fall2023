@@ -47,11 +47,11 @@ class AlertTable extends Component {
   }
 
   updateData = () => {
-    // Send a GET request to the Flask backend
+    // Send a GET request to the Flask backend, this works 100%
     fetch('/getData')
       .then(response => response.json())
-      .then(data => {
-        this.setState({ data: data.value,
+      .then(datas => {
+        this.setState({ data:datas,
           sortDirection:'asc',
           sortedColumn:null,
           selectedAlert:null,
@@ -287,6 +287,7 @@ class AlertTable extends Component {
               {this.state.columnVisibility?.ipSource && <th>IP Source</th>}
               
               {this.state.columnVisibility?.ipDestination && <th>IP Destination</th>}
+              {<th>IP Destination:{this.state.data?.port/*this should work? this.state.sortDirection works*/}</th>}
             
               
               {this.state.columnVisibility?.Port && <th data-sort="numeric" onClick={() => this.handleSort('port')}>
@@ -298,7 +299,7 @@ class AlertTable extends Component {
               </tr>
           </thead>
           <tbody>
-            {this.filteredData?.map((item, index) => (
+            {this.state.data?.map((item, index) => (//this.filteredData?.map((item, index) => (
               <tr key={index}>
                 {this.state.columnVisibility?.Lvl &&<td className={item.level?.toLowerCase()}>{item.level}</td>}
                 {this.state.columnVisibility?.Time && <td>{item.time}</td>}

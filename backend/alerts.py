@@ -11,9 +11,9 @@ def alerts():
 
 @app.route("/getData",methods=['GET'])
 def get_data():
-    data = {"level": 'High',"time": 9.152,"ipSource": '192.12.00.101',"port": 99,"description": 'Brute force connection',}
+    datas = [{"level": 'High',"time": 9.152,"ipSource": '192.12.00.101',"port": 99,"description": 'Brute force connection',}]
     #return jsonify(alert)
-    return jsonify(data)
+    return jsonify(datas)
 
 if __name__=="__main__":
     app.run(debug=True)

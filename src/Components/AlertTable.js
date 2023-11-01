@@ -12,7 +12,7 @@ class AlertTable extends Component {
   }
 
   state={
-    data:[{"level": 'Low',"time": 8.233,"ip": '192.12.4.101',"port": 88,"description": 'Multiple password attempts',}],
+    data:[{"level": 'Low',"time": 8.233,"ipSource": '192.12.4.101',"port": 88,"description": 'Multiple password attempts',}],
     sortDirection:'asc',
     sortedColumn:null,
     selectedAlert:null,
@@ -48,10 +48,31 @@ class AlertTable extends Component {
 
   updateData = () => {
     // Send a GET request to the Flask backend
-    fetch('/get-data')
+    fetch('/getData')
       .then(response => response.json())
       .then(data => {
-        this.setState({ data: data.value });
+        this.setState({ data: data.value,
+          sortDirection:'asc',
+          sortedColumn:null,
+          selectedAlert:null,
+          exportModalVisible:false,
+          columnVisibility:{
+          Lvl: true,
+          Time: true,
+          ipSource: true,
+          ipDestination: true,
+          Port: true,
+          Description: true, },
+          menuVisible:false,
+          searchQuery:'',
+  
+          today:null,
+          date: '',
+          time: '',
+          dateTime: '',
+  
+          //filteredData:[{}],
+          });
         //console.log(this.state.data);
       })
       .catch(error => {

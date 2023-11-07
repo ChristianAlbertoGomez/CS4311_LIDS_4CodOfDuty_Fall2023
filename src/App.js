@@ -1,3 +1,8 @@
+// Team 4 - Cod of Duty
+// Students: Christian Gomez and Carlos Cepeda
+// Customer: Devcom
+// Copyright © 2023 Team 4. All rights reserved.
+
 import './App.css';
 import Sidebar from './Components/Sidebar';
 import React, { useState, useEffect } from 'react';

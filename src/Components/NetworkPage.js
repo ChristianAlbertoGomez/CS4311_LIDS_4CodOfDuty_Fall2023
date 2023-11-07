@@ -1,4 +1,7 @@
-// NetworkPage.js
+// Team 4 - Cod of Duty
+// Students: Christian Gomez and Carlos Cepeda
+// Customer: Devcom
+// Copyright © 2023 Team 4. All rights reserved.
 
 // Import React and useState from React library
 import React, { useState } from 'react';

@@ -3,18 +3,19 @@ import './CSS Files/ConfigServerModal.css';
 import { BsFileText } from 'react-icons/bs';
 
 const ConfigServerModal = ({ onClose }) => {
-  const fileInputRef = useRef(null); // Crea una referencia para el elemento input
+  const fileInputRef = useRef(null); // Create a reference for the input element
 
   const handleFileSubmit = (event) => {
     event.preventDefault();
     const selectedFile = fileInputRef.current.files[0];
     console.log(selectedFile);
-    
+
+    // Redirect the user to '/home'
     window.location.href = '/home';
   };
 
   const browserForFile = () => {
-    fileInputRef.current.click(); // Accede al elemento input a través de la referencia
+    fileInputRef.current.click(); // Access the input element through the reference
   };
 
   return (
@@ -31,17 +32,17 @@ const ConfigServerModal = ({ onClose }) => {
             type='file'
             name='fileInput'
             id='fileInput'
-            ref={fileInputRef} // Asocia la referencia con el elemento input
-            style={{ display: 'none' }}
+            ref={fileInputRef} // Associate the reference with the input element
+            style={{ display: 'none' }} // Hide the file input visually
           />
           <button
             type='button'
             onClick={browserForFile}
             className='modal-browser-button'
           >
-            Browser
+            Browse
           </button>
-          <button type='submit' style={{ display: 'none' }} />
+          <button type='submit' style={{ display: 'none' }} /> // This button is hidden and triggers file submission
         </form>
       </div>
     </div>

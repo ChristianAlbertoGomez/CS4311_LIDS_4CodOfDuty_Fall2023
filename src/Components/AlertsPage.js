@@ -1,23 +1,27 @@
-import React, { useState } from 'react';
-import Sidebar from './Sidebar';
-import AlertTable from './AlertTable';
+import React from 'react';
+import Sidebar from './Sidebar'; // Import the Sidebar component
+import AlertTable from './AlertTable'; // Import the AlertTable component
+import './CSS Files/AlertsPage.css'; // Import CSS styles for the AlertsPage component
 
-import './CSS Files/AlertsPage.css';
-
+// Define the AlertsPage functional component
 const AlertsPage = () => {
+  // Render the AlertsPage component
   return (
     <div className="AlertsPage">
-        <div>        
-          <Sidebar />
-          <div className="header">
-            Alerts
-          </div>
-          <main className="mainBody">
-            <AlertTable />
-          </main> 
-       </div>
+      <div>        
+        {/* Render the Sidebar component */}
+        <Sidebar />
+        <div className="header">
+          Alerts {/* Display the "Alerts" heading in the header */}
+        </div>
+        <main className="mainBody">
+          {/* Render the AlertTable component in the mainBody */}
+          <AlertTable />
+        </main> 
+      </div>
     </div>
   );
 };
 
+// Export the AlertsPage component as the default export
 export default AlertsPage;

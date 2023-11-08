@@ -4,26 +4,6 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-
-
-// const SetConfigFile = () => {
-
-//   const [selectedFile, setSelectedFile] = useState(null);
-
-//   const handleFileChange = (event) => {
-//     setSelectedFile(event.target.files[0]);
-//     const submit = document.getElementById("targetInput");
-//     submit.removeAttribute("disabled");
-//   };
-
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-    
-    
-//     console.log('Selected file:', selectedFile);
-  
-//   };
-
 const SetConfigFile = () => {
 
   const [ file, setFile ] = useState(null);

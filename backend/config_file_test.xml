@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config>
     <server>
-        <ip>10.0.0.2</ip>
+        <ip>10.0.0.1</ip>
         <port>444</port>
         <nic>eth1</nic>
     </server>

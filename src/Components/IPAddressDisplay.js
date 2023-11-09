@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const IPAddressDisplay = () => {
+  // Use the useState hook to create a state variable called'ipAddress' and a function to set its value, 'setIpAdress'
   const [ipAddress, setIpAddress] = useState('');
-
+  // useEffect hook to perform side 
   useEffect(() => {
     // Make an HTTP request to fetch the user's public IP address
     axios.get('https://api.ipify.org?format=json')

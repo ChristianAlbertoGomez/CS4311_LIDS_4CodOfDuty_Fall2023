@@ -9,9 +9,11 @@ const IPAddressDisplay = () => {
     // Make an HTTP request to fetch the user's public IP address
     axios.get('https://api.ipify.org?format=json')
       .then((response) => {
+        //If the request is successful, update the 'ipAdress' state variale with retrieved IP address
         setIpAddress(response.data.ip);
       })
       .catch((error) => {
+        //If there is an error during request, log the errror to the console
         console.error('Error fetching IP address:', error);
       });
   }, []);

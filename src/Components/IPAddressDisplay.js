@@ -16,8 +16,8 @@ const IPAddressDisplay = () => {
         //If there is an error during request, log the errror to the console
         console.error('Error fetching IP address:', error);
       });
-  }, []);
-
+  }, []);// Empty dependency array []  ensures that this effect runs only onceafter the component is mounted
+//render the IP address on the component's UI
   return (
     <div style={{textAlign:'right',  paddingRight: '20px'}}>
       <p>IP: {ipAddress}</p>

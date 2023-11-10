@@ -56,8 +56,8 @@ def ingest_config(config: str):
     if server_element is not None:
         server_info = {
             'ip': server_element.findtext('ip'),  # Extract server IP
+            'mac': server_element.findtext('mac'),  #Extract server MAC address
             'port': server_element.findtext('port'),  # Extract server port
-            'nic': server_element.findtext('nic'),  # Extract server NIC
         }
 
     # Extract network system information from the XML
@@ -76,7 +76,7 @@ def ingest_config(config: str):
         net_systems[system_ip] = system_dict  # Store system information in a dictionary
 
     # Simulate getting the current IP 
-    current_ip = '10.0.0.1'
+    current_ip = '10.0.0.160'
     print(f"Current IP is {current_ip}")
 
     # Use the actual current_ip value here
@@ -96,13 +96,6 @@ def ingest_config(config: str):
 # convert_alert_CSV()
 
 def manage_connections(server_info: dict):
-    """
-    Manages incoming connections to the server.
-    Args:
-        server_info (dict): A dictionary containing the server IP and port.
-    Returns:
-        None
-    """
     # Testing purposes only
     SERVER_IP, SERVER_PORT = get_current_ip(), int(server_info['port'])
     
@@ -138,16 +131,8 @@ def decrypt_alert(encrypted_alert):
     return eval(decrypted_alert_string)  # Convert the decrypted string back to a dictionary
 
 def receive_alert(client_socket):
-    """
-    Receives alerts from a client connected to a server.
-    Args:
-        client_socket (socket): A socket object representing the connection with the client.
-    Returns:
-        None
-    Raises:
-        None
-    """
     print("Client connected and has established a connection.")
+
     while True:
         data = client_socket.recv(1024)  # Receive data from the client
 
@@ -171,7 +156,7 @@ def process_alert(alert):
 
 if __name__ == "__main__":
     # Set configuration file
-    CONFIG_FILE = 'config_file.xml' 
+    CONFIG_FILE = './../config_file2.xml' 
     print(f"Using configuration file: {CONFIG_FILE}")
     server_info, net_systems = ingest_config(CONFIG_FILE)
 

@@ -1,4 +1,21 @@
-import sys, threading, backend as lids, alerts as alert, LIDS_D as lids_d
+import os, sys, time, subprocess, threading, backend_test as lids, alerts as alert, LIDS_D as lids_d
+
+def log_error(error_message):
+    """
+    Logs an error message to the 'error_log.db' file.
+    Args:
+        error_message (str): The error message to be logged.
+    Returns:
+        None
+    """
+    with open('lids_main_error_log.db', 'a') as error_log_file:
+        error_log_file.write(error_message + '\n')
+
+def clear_terminal():
+    """
+    Clears the terminal screen.
+    """
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def print_help():
     """
@@ -8,24 +25,19 @@ def print_help():
     help_text = '''
         Command: Description of command
         
-        'config': Shows detailed report of the configuration file entered by the user.
-        'show pcap': Will show the most recent PCAP file.
-        'show pcap pcap_filename': Will show the specified PCAP file.
         'alerts': Shows a table of any generated alerts in real time.
+        'clear': Clear terminal.
+        'config': Shows detailed report of the configuration file entered by the user.
         'exit': Exit the program.
         'export': Will allow the user to export alerts.
         'help': Show system commands.
+        'show pcap': Will show the most recent PCAP file.
+        'show pcap pcap_filename': Will show the specified PCAP file.
         '''
 
     print(help_text)
     
 def select_analysis_method():
-    """
-    Allows the user to select an analysis method for the LIDS program.
-    The user can choose between capturing live traffic or replaying a packet capture file.
-    Returns:
-        User input
-    """
     print("Select an option:")
     print("1. Capture Live Traffic")
     print("2. Replay Packet Capture File")
@@ -44,23 +56,17 @@ def select_analysis_method():
         lids.log_error(error_message)
 
 def main_cli(xml_path):
-    """
-    Process user commands, interact with other modules, and provide various functionalities.
-    Args:
-        xml_path (str): The path to the XML file containing the configuration.
-    Returns:
-        None
-    """
+    # Your menu logic here
     print(f"Processing XML file: {xml_path}")
 
     server_info, net_systems, system_info = lids.ingest_config(xml_path)
     if server_info is not None and net_systems is not None:
         # Call connect_server with the server_info dictionary and system information
-        lids.connect_to_lidsd(server_info)
+        lids.connect_to_lidsd(server_info, system_info, 'c')
         
     analysis_method, capture_interface, pcap_file = select_analysis_method()
     
-    # Start packet analysis in the background
+    # Start capturing and analyzing traffic in the background
     lids_thread = threading.Thread(target=lids.sniff_traffic, args=(analysis_method, capture_interface, pcap_file, system_info,))
     lids_thread.daemon = True
     lids_thread.start()
@@ -69,27 +75,29 @@ def main_cli(xml_path):
     while True:
         try:
             user = input(">>  ")
-            if user.lower() == 'config':
+            if user.lower() == 'alerts':
+                alert.alert_table()
+            elif user.lower() == 'clear':
+                clear_terminal()
+            elif user.lower() == 'config':
                 lids.print_config_details(server_info, net_systems)
+            elif user.lower() == 'export':
+                exp = input('Enter format for export file: ')
+                if exp.lower() == 'xml':
+                    lids.export_alerts(lids.get_alerts(), exp.lower())
+                elif exp.lower() == 'json':
+                    lids.export_alerts(lids.get_alerts(), exp.lower())
+                elif exp.lower() == 'csv':
+                    lids.export_alerts(lids.get_alerts(), exp.lower())
+                else:
+                    log_error(f"Error processing command: {str(e)}")
+                    print('Invalid command. Please try again.')
+            elif user.lower() == 'help':
+                print_help()
             elif user.lower() == 'show pcap':
                 print(' will show most recent pcap')
             elif user.lower() == 'show pcap x':
                 print(' will show the specified pcap')
-            elif user.lower() == 'alerts':
-                alert.alert_table()
-            elif user.lower() == 'export':
-                exp = input('>>  ')
-
-                if exp.lower() == 'xml':
-                    lids_d.export_alerts(alert.get_alerts(), exp.lower())
-                elif exp.lower() == 'json':
-                    lids_d.export_alerts(alert.get_alerts(), exp.lower())
-                elif exp.lower() == 'csv':
-                    lids_d.export_alerts(alert.get_alerts(), exp.lower())
-                else:
-                    print('Invalid command. Please try again.')
-            elif user.lower() == 'help':
-                print_help()
             elif user.lower() == 'exit':
                 print('Exiting...')
                 break
@@ -102,9 +110,12 @@ def main_cli(xml_path):
             print('Invalid command. Please try again.')
 
 def main_gui():
-    # GUI interface logic here
-    print("GUI interface")
-
+    # Start the React application using 'npm start' in the background
+    react_process = subprocess.Popen(["npm", "start"], cwd="/home/arnim_zola/Desktop/lids/test_gui/src")
+    
+    # Run 'python file_upload.py' and capture the file path returned by the server
+    subprocess.check_output(["python", "file_upload.py"])
+        
 if __name__ == '__main__':
     try:
         # Get command-line arguments, excluding the script name

@@ -1,14 +1,22 @@
 from tabulate import tabulate
 import backend as lids
-# from flask import Flask
+from flask import Flask, jsonify
 
-# app = Flask(__name__)
-# alert = lids.get_alerts()
+app = Flask(__name__)
+#alert = lids.get_alerts()
 
 # @app.route("/alerts")
 def alerts():
     return lids.get_alerts()
 
+@app.route("/getData",methods=['GET'])
+def get_data():
+    datas = [{"level": 'High',"time": 9.152,"ipSource": '192.12.00.101',"port": 99,"description": 'Brute force connection',}]
+    #return jsonify(alert)
+    return jsonify(datas)
+
+if __name__=="__main__":
+    app.run(debug=True)
 
 def alert_table():
     """

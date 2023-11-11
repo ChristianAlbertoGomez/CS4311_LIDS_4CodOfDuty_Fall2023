@@ -241,7 +241,7 @@ def sniff_live_traffic(capture_interface, system_info, host_ip):
                     analyze_packet(packet, system_info, host_ip)
 
         print("Capturing live traffic...")
-        sniff(iface=capture_interface, prn=custom_analyze)
+        packet = sniff(iface=capture_interface, prn=custom_analyze)
     except KeyboardInterrupt:
         print("Capture stopped by the user.")
     except Exception as e:

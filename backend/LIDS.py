@@ -1,4 +1,4 @@
-import os, sys, time, subprocess, threading, backend_test as lids, alerts as alert, LIDS_D as lids_d
+import os, sys, time, subprocess, threading, backend_test as lids, backend_gui as alert, LIDS_D as lids_d
 
 def log_error(error_message):
     """
@@ -114,7 +114,7 @@ def main_gui():
     react_process = subprocess.Popen(["npm", "start"], cwd="/home/arnim_zola/Desktop/lids/test_gui/src")
     
     # Run 'python file_upload.py' and capture the file path returned by the server
-    subprocess.check_output(["python", "file_upload.py"])
+    subprocess.check_output(["python", "backend_gui.py"])
         
 if __name__ == '__main__':
     try:

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <config>
     <server>
-        <ip>10.0.0.1</ip>
+        <ip>10.0.0.160</ip>
+        <mac>09:25:20:07:01:15</mac>
         <port>444</port>
-        <nic>eth1</nic>
     </server>
     <network>
         <system>

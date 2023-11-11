@@ -156,7 +156,7 @@ def process_alert(alert):
 
 if __name__ == "__main__":
     # Set configuration file
-    CONFIG_FILE = './../config_file2.xml' 
+    CONFIG_FILE = 'config_file.xml'
     print(f"Using configuration file: {CONFIG_FILE}")
     server_info, net_systems = ingest_config(CONFIG_FILE)
 

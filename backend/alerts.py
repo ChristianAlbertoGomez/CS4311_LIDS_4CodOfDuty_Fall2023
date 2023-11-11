@@ -11,7 +11,8 @@ def alerts():
 
 @app.route("/getData",methods=['GET'])
 def get_data():
-    datas = [{"level": 'High',"time": 9.152,"ipSource": '192.12.00.101',"port": 99,"description": 'Brute force connection',}]
+    datas = [{"alert_id": '0',"level": 'Low',"time": 8.233,"src_port": 71,"dst_port": 88,"description": '71-->88',"src_ip": '192.12.4.101',"dst_ip": '196.02.4.231',"reson": 'Multiple password attempts'},
+             {"alert_id": '0',"level": 'Low',"time": 8.233,"src_port": 71,"dst_port": 88,"description": '71-->88',"src_ip": '192.12.4.101',"dst_ip": '196.02.4.231',"reson": 'Multiple password attempts'},]
     #return jsonify(alert)
     return jsonify(datas)
 

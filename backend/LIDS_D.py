@@ -1,4 +1,6 @@
-import json, socket, defusedxml.ElementTree as ET
+import sys, json, socket, defusedxml.ElementTree as ET
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.backends import default_backend
 
 # config_file
 # node_list
@@ -6,8 +8,8 @@ import json, socket, defusedxml.ElementTree as ET
 # alert_list
 # alert
 
-# Simple encryption key used for testing 
-encryption_key = 0x5A
+# AES encryption key used for testing
+encryption_key = b'0123456789ABCDEF'
 
 def get_current_ip() -> str:
     """
@@ -116,19 +118,27 @@ def manage_connections(server_info: dict):
         
 def decrypt_alert(encrypted_alert):
     """
-    Decrypt an alert using XOR encryption.
+    Decrypt an alert using AES decryption.
     Args:
         encrypted_alert (bytes): The encrypted alert data.
     Returns:
         dict: The decrypted alert.
     """
-    encrypted_alert_list = list(encrypted_alert)
-    decrypted_alert = []
-    for encrypted_char in encrypted_alert_list:
-        decrypted_char = chr(encrypted_char ^ encryption_key)
-        decrypted_alert.append(decrypted_char)
-    decrypted_alert_string = ''.join(decrypted_alert)
-    return eval(decrypted_alert_string)  # Convert the decrypted string back to a dictionary
+    backend = default_backend()
+    cipher = Cipher(algorithms.AES(encryption_key), modes.CFB(b'\0' * 16), backend=backend)
+    decryptor = cipher.decryptor()
+    decrypted_alert_json = decryptor.update(encrypted_alert) + decryptor.finalize()
+
+    # Strip padding characters
+    decrypted_alert_json = decrypted_alert_json.rstrip(b'\0')
+
+    try:
+        # Convert the decrypted JSON-formatted string back to a dictionary
+        decrypted_alert = json.loads(decrypted_alert_json.decode('utf-8', errors='replace'))
+        return decrypted_alert
+    except json.JSONDecodeError as e:
+        print(f"Error decoding JSON: {str(e)}")
+        return None
 
 def receive_alert(client_socket):
     print("Client connected and has established a connection.")
@@ -153,12 +163,21 @@ def process_alert(alert):
     # Add your code to process the alert here
 
 # def save_alert(alert_data):
+      
+if __name__ == '__main__':
+    try:
+        # Get command-line arguments, excluding the script name and get the XML path
+        xml_path = sys.argv[1:]
 
-if __name__ == "__main__":
-    # Set configuration file
-    CONFIG_FILE = './config_file2.xml' 
-    print(f"Using configuration file: {CONFIG_FILE}")
-    server_info, net_systems = ingest_config(CONFIG_FILE)
-
-    if server_info is not None and net_systems is not None:
-        manage_connections(server_info)
+        # Check if an argument exists at the expected index and if it ends with '.xml'
+        if len(xml_path) > 0 and xml_path[0].endswith('.xml'):
+            print(f"Using configuration file: {xml_path[0]}")
+            server_info, net_systems = ingest_config(xml_path[0])
+            
+            if server_info is not None and net_systems is not None:
+                manage_connections(server_info)
+        else:
+            # Print an error message if the argument is missing or invalid
+            print("Error: Invalid XML file path. Please provide a valid XML file path.")
+    except Exception as e:
+        print("An error occurred:", str(e))

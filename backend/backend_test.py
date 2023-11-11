@@ -1,4 +1,6 @@
 import csv, json, time, socket, threading, tabulate, defusedxml.ElementTree as ET
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.backends import default_backend
 from scapy.all import sniff, sendp, rdpcap
 from scapy.layers.inet import IP, TCP, UDP
 from xml.dom import minidom
@@ -9,8 +11,8 @@ lidsd_socket = None
 alerts = []
 freq_ip = {}
 
-# Simple encryption key used for testing 
-encryption_key = 0x5A
+# AES encryption key used for testing
+encryption_key = b'0123456789ABCDEF'
 
 def log_error(error_message):
     """
@@ -160,7 +162,7 @@ def analyze_packet(packet, system_info, host_ip):
     Returns:
         None
     """
-    if IP in packet and packet[IP].dst == host_ip:
+    if packet.haslayer(IP) and packet[IP].dst == host_ip:
         src_ip, dst_ip = packet[IP].src, packet[IP].dst
         protocol, src_port, dst_port, payload = get_protocol_info(packet)
 
@@ -233,15 +235,8 @@ def sniff_live_traffic(capture_interface, system_info, host_ip):
         Exception: If an error occurs during live traffic capture.
     """
     try:
-        # Define a custom function to analyze packets and filter for TCP and UDP
-        def custom_analyze(packet):
-            if IP in packet:
-                protocol = packet[IP].proto
-                if protocol in [6, 17]:  # TCP or UDP
-                    analyze_packet(packet, system_info, host_ip)
-
         print("Capturing live traffic...")
-        packet = sniff(iface=capture_interface, prn=custom_analyze)
+        packet = sniff(iface=capture_interface, filter="tcp or udp", prn=lambda pkt: analyze_packet(pkt, system_info, host_ip))
     except KeyboardInterrupt:
         print("Capture stopped by the user.")
     except Exception as e:
@@ -287,7 +282,7 @@ def sniff_traffic(analysis_method: int, capture_interface: str, pcap_file, syste
     """
     
     if analysis_method == "1":  # Option for sniffing live traffic on host machine
-        sniff_live_traffic(capture_interface, system_info, '10.0.0.3')
+        sniff_live_traffic(capture_interface, system_info, '127.0.0.1')
     elif analysis_method == "2":  # Option for replaying pcap file as live traffic
         replay_pcap_in_background(pcap_file, capture_interface, system_info, '10.0.0.3')
     else:
@@ -336,19 +331,18 @@ def disconnect_from_lidsd(socket, user_interface):
 
 def encrypt_alert(alert):
     """
-    Encrypt an alert using XOR encryption.
+    Encrypt an alert using AES encryption.
     Args:
         alert (dict): The alert data to be encrypted.
     Returns:
         bytes: The encrypted alert.
     """
-    alert_string = str(alert)  # Convert alert to string
-    encrypted_alert = []  # Will store the encrypted alert
-    for char in alert_string:
-        encrypted_char = ord(char) ^ encryption_key  # Perform XOR operation w/ char and key
-        encrypted_alert.append(encrypted_char)  # Store encrypted char 
-    encrypted_alert_bytes = bytes(encrypted_alert)  # Convert encrypted alert into bytes
-    return encrypted_alert_bytes
+    alert_json = json.dumps(alert, indent=None, separators=(',', ':'))
+    backend = default_backend()
+    cipher = Cipher(algorithms.AES(encryption_key), modes.CFB(b'\0' * 16), backend=backend)
+    encryptor = cipher.encryptor()
+    encrypted_alert = encryptor.update(alert_json.encode('utf-8')) + encryptor.finalize()
+    return encrypted_alert
     
 def send_alert_to_lidsd(alert):
     global lidsd_socket

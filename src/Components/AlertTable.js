@@ -12,7 +12,7 @@ class AlertTable extends Component {
   }
 
   state={
-    data:[{"alert_id": '0',"level": 'Low',"time": 8.233,"src_port": 71,"dst_port": 88,"description": '71-->88',"src_ip": '192.12.4.101',"dst_ip": '196.02.4.231',"reson": 'Multiple password attempts'}],
+    data:[{"level": 'Low',"time": 8.233,"ipSource": '192.12.4.101',"port": 88,"description": 'Multiple password attempts',}],
     sortDirection:'asc',
     sortedColumn:null,
     selectedAlert:null,
@@ -303,13 +303,13 @@ class AlertTable extends Component {
                 {this.state.columnVisibility?.Lvl &&<td className={item.level?.toLowerCase()}>{item.level}</td>}
                 {this.state.columnVisibility?.Time && <td>{item.time}</td>}
 
-                {this.state.columnVisibility?.ipSource &&<td>{item.src_ip}</td>}
+                {this.state.columnVisibility?.ipSource &&<td>{item.ipSource}</td>}
 
 
-                {this.state.columnVisibility?.ipDestination &&<td>{item.dst_ip}</td>}
+                {this.state.columnVisibility?.ipDestination &&<td>{item.ipDestination}</td>}
               
             
-                {this.state.columnVisibility?.Port && <td>{item.src_port}</td>}
+                {this.state.columnVisibility?.Port && <td>{item.port}</td>}
             
                 {this.state.columnVisibility?.Description && <td >{item.description}</td>}
                 <td>

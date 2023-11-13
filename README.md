@@ -45,7 +45,8 @@ Lightweight Intrusion Detection System Distributed (LIDS-D) Agent
 - [Contact Information](#contactinformation)
 - [Release Date](#releasedate)
 
-
+## Testing
+*For testing, Docker is employed. A Docker container encapsulating an operating system serves as a "mini network," executing the Docker file for config_file.xml to construct a mini network with a subnet of 10.0.0./24, featuring IP addresses aligning with the configuration file. Additional Docker containers include an analyst container equipped with lids, a server container, and a final container simulating an attacker transmitting data to the lids.
 ## Installation
 ### Tools & Frameworks
 

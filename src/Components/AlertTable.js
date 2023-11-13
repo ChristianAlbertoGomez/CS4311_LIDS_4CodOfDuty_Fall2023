@@ -303,13 +303,13 @@ class AlertTable extends Component {
                 {this.state.columnVisibility?.Lvl &&<td className={item.level?.toLowerCase()}>{item.level}</td>}
                 {this.state.columnVisibility?.Time && <td>{item.time}</td>}
 
-                {this.state.columnVisibility?.ipSource &&<td>{item.ipSource}</td>}
+                {this.state.columnVisibility?.ipSource &&<td>{item.src_ip}</td>}
 
 
-                {this.state.columnVisibility?.ipDestination &&<td>{item.ipDestination}</td>}
+                {this.state.columnVisibility?.ipDestination &&<td>{item.dst_ip}</td>}
               
             
-                {this.state.columnVisibility?.Port && <td>{item.port}</td>}
+                {this.state.columnVisibility?.Port && <td>{item.src_port}</td>}
             
                 {this.state.columnVisibility?.Description && <td >{item.description}</td>}
                 <td>

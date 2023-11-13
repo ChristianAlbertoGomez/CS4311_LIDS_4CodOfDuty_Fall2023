@@ -323,55 +323,62 @@ class AlertTable extends Component {
         <table id='sortable-table'>
           <thead>
             <tr>
-              {this.state.columnVisibility?.Lvl && <th onClick={() => this.handleSort('level')}>
+              {this.state.columnVisibility?.level && <th onClick={() => this.handleSort('level')}>
                 Level {this.state.sortedColumn === 'level' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
               </th> }
 
+              {this.state.columnVisibility?.alert_id && <th data-sort="numeric" onClick={() => this.handleSort('alert_id')}>
+                Alert ID {this.state.sortedColumn === 'alert_id' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
+              </th>}
 
-
-              {this.state.columnVisibility?.alert_id && <th>Alert ID</th>}
-
-              {this.state.columnVisibility?.Time && <th data-sort="numeric" onClick={() => this.handleSort('time')}>
+              {this.state.columnVisibility?.time && <th data-sort="numeric" onClick={() => this.handleSort('time')}>
                 Time {this.state.sortedColumn === 'time' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
               </th>}
 
-              {this.state.columnVisibility?.Port && <th data-sort="numeric" onClick={() => this.handleSort('port')}>
-                Port {this.state.sortedColumn === 'port' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
+              {this.state.columnVisibility?.src_port && <th data-sort="numeric" onClick={() => this.handleSort('src_port')}>
+                Src Port {this.state.sortedColumn === 'src_port' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
               </th>}
 
-              {this.state.columnVisibility?.Port && <th data-sort="numeric" onClick={() => this.handleSort('port')}>
-                Port {this.state.sortedColumn === 'port' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
+              {this.state.columnVisibility?.dst_port && <th data-sort="numeric" onClick={() => this.handleSort('dst_port')}>
+                Dst Port {this.state.sortedColumn === 'dst_port' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
               </th>}
 
-              {this.state.columnVisibility?.src_port && <th>Src Port</th>}
-              {this.state.columnVisibility?.dst_port && <th>Dst Port</th>}
-              
-              {this.state.columnVisibility?.ipDestination && <th>IP Destination</th>}
-            
-              
-              {this.state.columnVisibility?.Port && <th data-sort="numeric" onClick={() => this.handleSort('port')}>
-                Port {this.state.sortedColumn === 'port' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
+              {this.state.columnVisibility?.description && <th>Description</th>}
+
+              {this.state.columnVisibility?.src_ip && <th data-sort="numeric" onClick={() => this.handleSort('src_ip')}>
+                Src IP {this.state.sortedColumn === 'src_ip' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
+              </th>}
+
+              {this.state.columnVisibility?.dst_ip && <th data-sort="numeric" onClick={() => this.handleSort('dst_ip')}>
+                Dst IP {this.state.sortedColumn === 'dst_ip' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
               </th>}
             
-              {this.state.columnVisibility?.Description && <th>Description</th>}
+              {this.state.columnVisibility?.reason && <th>Alert Description</th>}
               <th>Actions</th>
               </tr>
           </thead>
           <tbody>
             {this.state.data?.map((item, index) => (//this.filteredData?.map((item, index) => (
               <tr key={index}>
-                {this.state.columnVisibility?.Lvl &&<td className={item.level?.toLowerCase()}>{item.level}</td>}
-                {this.state.columnVisibility?.Time && <td>{item.time}</td>}
+                {this.state.columnVisibility?.level &&<td className={item.level?.toLowerCase()}>{item.level}</td>}
 
-                {this.state.columnVisibility?.ipSource &&<td>{item.ipSource}</td>}
+                {this.state.columnVisibility?.alert_id && <td>{item.alert_id}</td>}
 
+                {this.state.columnVisibility?.time && <td>{item.time}</td>}
 
-                {this.state.columnVisibility?.ipDestination &&<td>{item.ipDestination}</td>}
-              
+                {this.state.columnVisibility?.src_port &&<td>{item.src_port}</td>}
+
+                {this.state.columnVisibility?.dst_port &&<td>{item.dst_port}</td>}
+
+                {this.state.columnVisibility?.description && <td >{item.description}</td>}
+
+                {this.state.columnVisibility?.src_ip && <td>{item.src_ip}</td>}
+
+                {this.state.columnVisibility?.dst_ip && <td>{item.dst_ip}</td>}
             
-                {this.state.columnVisibility?.Port && <td>{item.port}</td>}
+                {this.state.columnVisibility?.reason && <td>{item.reason}</td>}
             
-                {this.state.columnVisibility?.Description && <td >{item.description}</td>}
+                
                 <td>
                   <button onClick={() => this.handleExport()}>Export</button>
                   <button onClick={() => this.handleAlertClick(item)}>Details</button>

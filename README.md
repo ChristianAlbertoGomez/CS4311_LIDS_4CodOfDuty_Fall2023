@@ -81,20 +81,21 @@ Lightweight Intrusion Detection System Distributed (LIDS-D) Agent
      pip install pyshark==3.1.2
      ```
 
-### Troubleshooting
+## Troubleshooting
 
 If you encounter any issues during the installation process, consider the following:
 
 - **Linux Lite Installation Issues:**
-  - Check the official Linux Lite documentation and community forums for troubleshooting.
+  If you are facing problems with Linux Lite installation:
+  - Check the official [Linux Lite documentation](https://www.linuxliteos.com/manual/install.html) for comprehensive installation guidance.
+  - Visit the [Linux Lite Community Forums](https://www.linuxliteos.com/forums/) to seek assistance from the community.
+
 
 - **VMware Installation Issues:**
-  - Ensure your system meets VMware's requirements.
-  - Check the VMware documentation for troubleshooting steps.
+  - Ensure your system meets VMware's requirements. Refer to the official [VMware Compatibility Guide](https://www.vmware.com/resources/compatibility/search.php) for hardware compatibility.
+  - Check the [VMware Documentation](https://docs.vmware.com/en/VMware-Workstation-Pro/) for troubleshooting steps.
+
 
 - **Python Installation Issues:**
-  - Double-check that you downloaded the correct version.
-  - Refer to the Python documentation for installation troubleshooting.
-
-- **React Installation Issues:**
-  - Make sure you have Node.js and npm installed.
+  - Double-check that you downloaded the correct version from the [official Python website](https://www.python.org/downloads/).
+... (179 lines left)

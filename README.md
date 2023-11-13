@@ -44,11 +44,19 @@ Lightweight Intrusion Detection System Distributed (LIDS-D) Agent
 - [Available Scripts](#availablescripts)
 - [Contact Information](#contactinformation)
 - [Release Date](#releasedate)
-- [License](#license)
-- [Testing](#testing)
-
+- 
 ## Testing
-For testing we use a Docker container encapsulating an operating system serves as a "mini network," executing the Docker file for config_file.xml to construct a mini network with a subnet of 10.0.0./24, featuring IP addresses aligning with the configuration file. Additional Docker containers include an analyst container equipped with lids, a server container, and a final container simulating an attacker transmitting data to the lids.
+For testing we used a Docker container encapsulating an operating system serves as a "mini network," executing the Docker file for config_file.xml to construct a mini network with a subnet of 10.0.0./24, featuring IP addresses aligning with the configuration file. Additional Docker containers include an analyst container equipped with lids, a server container, and a final container simulating an attacker transmitting data to the lids.
+  1. **Builds Run Background** 
+    ```bash
+     sudo docker-compose up-d
+     ```
+ 2. **Analyst** 
+    ```bash
+     sudo docker exec -it my_att /bin/bash
+     ```
+
+
 ## Installation
 ### Tools & Frameworks
 
@@ -101,4 +109,182 @@ If you encounter any issues during the installation process, consider the follow
 
 - **Python Installation Issues:**
   - Double-check that you downloaded the correct version from the [official Python website](https://www.python.org/downloads/).
-... (179 lines left)
+  - Refer to the [Python Installation Guide](https://docs.python.org/3/using/index.html) for troubleshooting steps.
+  - Upgrade pip using:
+    ```bash
+    pip install --upgrade pip
+
+- **React Installation Issues:**
+  - Ensure you have Node.js and npm installed. You can install them using:
+    ```bash
+    sudo apt-get install nodejs
+    sudo apt-get install npm
+
+- **Flask Installation Issues:**
+  - Confirm that Python and pip are correctly installed. You can upgrade pip using:
+    ```bash
+    pip install --upgrade pip
+
+- **Pyshark Installation Issues:**
+  - Verify independencies.
+  - Confirm that Python and pip are correctly installed. Upgrade pip using:
+    ```bash
+    pip install --upgrade pip
+  - Refer to the Pyshark Documentation for troubleshooting guidance.
+  - Ensure that dependencies, such as the wireshark library, are installed. On Linux, you can use:
+    ```bash
+    sudo apt-get install libwireshark-dev
+
+# LIDS GUI Information
+
+The LIDS (Log-based Intrusion Detection System) GUI provides users with a user-friendly interface for managing system alerts. Here's an overview of the key features and functionalities:
+
+## Welcome Page
+
+On the first page of the LIDS GUI, users can upload a configuration file for the system to read.
+
+![image](https://github.com/ChristianAlbertoGomez/CS4311_LIDS_4CodOfDuty_Fall2023/assets/89657614/5f3c25d5-55b1-4496-ad3a-3d3aaf55f7ba)
+
+
+## Dashboard Page
+Once the configuration file is successfully processed, the LIDS GUI transfers to the second screen, where alerts are organized into data tables with the following information:
+
+### Level
+
+- Ranges from Low (least important) to High (most important).
+- Order can be customized from lowest to highest or highest to lowest.
+
+### Time
+
+- Represents the time it took to catch the alert.
+- Can be reordered from shortest to longest and vice versa.
+
+### IP
+
+- Displays the IP addresses of the connecting device.
+
+### Port
+
+- Shows the port numbers used by the connecting device.
+- Can be reordered from smallest to largest.
+
+### Description
+
+- Provides a description of the actions being taken by the connecting device.
+
+### Notifications
+
+- Highlights any notifications being sent to LIDS.
+
+### Errors
+
+- Lists any errors encountered by LIDS during its operation.
+
+![image](https://github.com/ChristianAlbertoGomez/CS4311_LIDS_4CodOfDuty_Fall2023/assets/89657614/03730729-afda-4178-a33a-f9465ed902f9)
+
+
+## Alerts Page
+### Level
+
+- Ranges from Low (least important) to High (most important).
+- Order can be customized from lowest to highest or highest to lowest.
+
+### Time
+
+- Represents the time it took to catch the alert.
+- Can be reordered from shortest to longest and vice versa.
+
+### IP
+
+- Displays the IP addresses of the connecting device.
+
+### Port
+
+- Shows the port numbers used by the connecting device.
+- Can be reordered from smallest to largest.
+
+### Description
+
+- Provides a description of the actions being taken by the connecting device.
+
+![image](https://github.com/ChristianAlbertoGomez/CS4311_LIDS_4CodOfDuty_Fall2023/assets/89657614/a87acf67-a951-475d-9dab-807904126d69)
+
+  
+## Network Map Page
+### Known Devices
+- A table that provides a list of all known devices that are connected in real time to the network. The table provides information such as id, user, protocol, operating system, date, and time.
+### Unknown Devices
+- A table that provides a list of all unknown devices that are connected in real time to the network. The table provides information such as id, user, protocol, operating system, date, and time.
+### Config Server
+- Button that allows the user to provide or change the current configuration file. Once the configuration file was changed, the server will be restarted.
+### Server Report
+- Button that provides a summary of the relevant information from the server to the user. Relevant information such as number of malicious packets, number of known/unknown devices, number of alerts, and the current configuration file.
+### Alerts
+- A table that provides a list of current detected alerts in the network.
+
+![image](https://github.com/ChristianAlbertoGomez/CS4311_LIDS_4CodOfDuty_Fall2023/assets/89657614/b6d65d18-ec8f-40cc-9f94-20066069acf7)
+
+## Settings Page
+- A page that provides multiple settings for the LIDS device.
+## Disconnect
+- A button that allows the user to disconnect or turn off the LIDS device.
+
+
+# CLI Information
+
+The CLI or Command Line Interface is mainly to start the program from the command line or terminal. Once the script is ran, it will open up the LIDS program where you will begin to detect.
+
+A Command Line Interface (CLI) is a text-based interface that enables users to interact with a computer or software application by entering commands into a terminal or command prompt. Unlike graphical user interfaces (GUIs), which rely on visual elements, CLIs operate solely through text-based commands.
+
+## Key Components of a CLI:
+
+1. **Commands:** Users communicate with the system by typing specific commands, usually followed by optional arguments and parameters. These commands instruct the computer to perform various tasks or operations.
+
+2. **Prompt:** The CLI displays a prompt, such as a dollar sign ('$') or a greater-than sign ('>'), indicating that the system is ready to receive a command.
+
+3. **Text Output:** The results of executed commands are displayed as text output in the same terminal. This output provides information about the success or failure of the command and any relevant data.
+
+
+# Available Scripts
+## npm start
+
+Runs the app in the development mode.
+Opens [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+The page will reload when you make changes.
+You may also see any lint errors in the console.
+
+## npm install
+
+Installs the necessary files so t hat you are able to run the app in developement mode.
+
+## Synopsis
+
+python3 main_dev.py [tag][filename]
+
+### **tag** 
+
+#### **-c**
+
+Tag used for running the Command User Interface (CLI)
+
+#### **-g**
+
+Tag for running the GUI
+
+### filename
+
+the file path of where your current configuration file resides. 
+
+# License
+
+This project is licensed under the terms of the license provided by The University of Texas at El Paso.
+
+
+# Contact Information
+
+- 
+
+# Release Date:
+
+November 12, 2023,  6:30 PM

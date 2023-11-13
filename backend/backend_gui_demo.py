@@ -30,10 +30,10 @@ def alert_table():
     This function uses the `tabulate` library to create the table and extracts the relevant information from a list of alerts.
     """
     # Defining the headers for the table
-    headers = ['Alert ID', 'Level', 'Time', 'Src Port', 'Dest Port', 'Port Description', 'Src IP', 'Dest IP', 'Alert Description']
+    headers = ['Level', 'Alert ID', 'Time', 'Src Port', 'Dest Port', 'Port Description', 'Src IP', 'Dest IP', 'Alert Description']
 
     # Extract the relevant information from the list of alerts
-    data = [[alert['alert_id'], alert['level'], alert['time'], alert['src_port'], alert['dst_port'], alert['description'], alert['src_ip'], alert['dst_ip'], alert['reason']] for alert in alerts()]
+    data = [[alert['level'], alert['alert_id'], alert['time'], alert['src_port'], alert['dst_port'], alert['description'], alert['src_ip'], alert['dst_ip'], alert['reason']] for alert in alerts()]
     
     # Use the tabulate function to format the table
     table = tabulate(data, headers=headers, tablefmt="grid")

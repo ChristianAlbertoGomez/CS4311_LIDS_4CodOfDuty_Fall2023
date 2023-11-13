@@ -42,6 +42,7 @@ Lightweight Intrusion Detection System Distributed (LIDS-D) Agent
 - [LIDS GUI Information](#lidsguiinformation)
 - [CLI Information](#cliinformation)
 - [Available Scripts](#availablescripts)
+- [Testing](#testing)
 - [Contact Information](#contactinformation)
 - [Release Date](#releasedate)
 
@@ -265,6 +266,9 @@ Tag for running the GUI
 
 the file path of where your current configuration file resides. 
 
+# Testing
+For testing we use a Docker container encapsulating an operating system serves as a "mini network," executing the Docker file for config_file.xml to construct a mini network with a subnet of 10.0.0./24, featuring IP addresses aligning with the configuration file. Additional Docker containers include an analyst container equipped with lids, a server container, and a final container simulating an attacker transmitting data to the lids.
+
 # License
 
 This project is licensed under the terms of the license provided by The University of Texas at El Paso.
@@ -272,7 +276,8 @@ This project is licensed under the terms of the license provided by The Universi
 
 # Contact Information
 
-- 
+- cagomez15@miners.utep.edu
+- dicarrascoc@miners.utep.edu
 
 # Release Date:
 

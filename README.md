@@ -25,7 +25,6 @@ Lightweight Intrusion Detection System Distributed (LIDS-D) Agent
 * Dr. Gurijala
 
 ## Team #4: Code of Duty
-
 ### Team members
 
 * Darinka Carrasco-Cardona
@@ -42,8 +41,9 @@ Lightweight Intrusion Detection System Distributed (LIDS-D) Agent
 - [Troubleshooting](#troubleshooting)
 - [LIDS GUI Information](#lidsguiinformation)
 - [CLI Information](#cliinformation)
-- [Tools & Framewords](#tools&frameworks)
 - [Available Scripts](#availablescripts)
+- [Contact Information](#contactinformation)
+- [Release Date](#releasedate)
 
 
 ## Installation
@@ -98,4 +98,3 @@ If you encounter any issues during the installation process, consider the follow
 
 - **React Installation Issues:**
   - Make sure you have Node.js and npm installed.
-... (89 lines left)

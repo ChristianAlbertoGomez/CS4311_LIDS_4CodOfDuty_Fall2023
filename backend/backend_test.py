@@ -25,6 +25,17 @@ def log_error(error_message):
     with open('lids_backend_error_log.db', 'a') as error_log_file:
         error_log_file.write(error_message + '\n')
 
+def storeLNIDS(packet):
+    """
+    Stores packets into the 'LNIDS database.db' file.
+    Args:
+        packet (str): The packet that is to be stored.
+    Returns:
+        None
+    """
+    with open('LNIDS database.db', 'a') as packets:
+        packets.write(packet + '\n')
+
 def get_current_ip() -> str:
     """
     Retrieves the current system's IP address.
@@ -162,6 +173,7 @@ def analyze_packet(packet, system_info, host_ip):
     Returns:
         None
     """
+    #storeLNIDS(packet)
     if packet.haslayer(IP) and packet[IP].dst == host_ip:
         src_ip, dst_ip = packet[IP].src, packet[IP].dst
         protocol, src_port, dst_port, payload = get_protocol_info(packet)
@@ -214,11 +226,11 @@ def analyze_packet(packet, system_info, host_ip):
                 freq_ip['dst_port']= 1
         
         for key, val in freq_ip.items():
-             if val > 10:
-                 create_alert(packet, 'high', 'Port scanning detected')
-                 
-                 # Reset the value of the port and IP to 0
-                 freq_ip[key] = 0
+            if val > 10:
+                create_alert(packet, 'high', 'Port scanning detected')
+
+                # Reset the value of the port and IP to 0
+                freq_ip[key] = 0
 
 # Inside the sniff_live_traffic function, add host_ip as an argument:
 def sniff_live_traffic(capture_interface, system_info, host_ip):

@@ -135,8 +135,7 @@ On the first page of the LIDS GUI, users can upload a configuration file for the
 ![image](https://github.com/ChristianAlbertoGomez/CS4311_LIDS_4CodOfDuty_Fall2023/assets/89657614/5f3c25d5-55b1-4496-ad3a-3d3aaf55f7ba)
 
 
-## Home Page
-
+## Dashboard Page
 Once the configuration file is successfully processed, the LIDS GUI transfers to the second screen, where alerts are organized into data tables with the following information:
 
 ### Level
@@ -170,6 +169,9 @@ Once the configuration file is successfully processed, the LIDS GUI transfers to
 
 - Lists any errors encountered by LIDS during its operation.
 
+![image](https://github.com/ChristianAlbertoGomez/CS4311_LIDS_4CodOfDuty_Fall2023/assets/89657614/03730729-afda-4178-a33a-f9465ed902f9)
+
+
 ## Alerts Page
 ### Level
 
@@ -193,6 +195,9 @@ Once the configuration file is successfully processed, the LIDS GUI transfers to
 ### Description
 
 - Provides a description of the actions being taken by the connecting device.
+
+![image](https://github.com/ChristianAlbertoGomez/CS4311_LIDS_4CodOfDuty_Fall2023/assets/89657614/a87acf67-a951-475d-9dab-807904126d69)
+
   
 ## Network Map Page
 ### Known Devices
@@ -205,6 +210,9 @@ Once the configuration file is successfully processed, the LIDS GUI transfers to
 - Button that provides a summary of the relevant information from the server to the user. Relevant information such as number of malicious packets, number of known/unknown devices, number of alerts, and the current configuration file.
 ### Alerts
 - A table that provides a list of current detected alerts in the network.
+
+![image](https://github.com/ChristianAlbertoGomez/CS4311_LIDS_4CodOfDuty_Fall2023/assets/89657614/b6d65d18-ec8f-40cc-9f94-20066069acf7)
+
 ## Settings Page
 - A page that provides multiple settings for the LIDS device.
 ## Disconnect

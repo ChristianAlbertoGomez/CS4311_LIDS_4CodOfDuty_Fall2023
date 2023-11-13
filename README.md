@@ -81,7 +81,7 @@ Lightweight Intrusion Detection System Distributed (LIDS-D) Agent
      pip install pyshark==3.1.2
      ```
 
-### Troubleshooting
+## Troubleshooting
 
 If you encounter any issues during the installation process, consider the following:
 
@@ -219,7 +219,7 @@ Once the configuration file is successfully processed, the LIDS GUI transfers to
 - A button that allows the user to disconnect or turn off the LIDS device.
 
 
-## CLI Information
+# CLI Information
 
 The CLI or Command Line Interface is mainly to start the program from the command line or terminal. Once the script is ran, it will open up the LIDS program where you will begin to detect.
 
@@ -234,8 +234,8 @@ A Command Line Interface (CLI) is a text-based interface that enables users to i
 3. **Text Output:** The results of executed commands are displayed as text output in the same terminal. This output provides information about the success or failure of the command and any relevant data.
 
 
-## Available Scripts
-### npm start
+# Available Scripts
+## npm start
 
 Runs the app in the development mode.
 Opens [http://localhost:3000](http://localhost:3000) to view it in your browser.
@@ -243,7 +243,7 @@ Opens [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.
 You may also see any lint errors in the console.
 
-### npm install
+## npm install
 
 Installs the necessary files so t hat you are able to run the app in developement mode.
 

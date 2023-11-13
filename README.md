@@ -279,6 +279,11 @@ For testing we use a Docker container encapsulating an operating system serves a
    sudo docker exec -it my_att /bin/bash
 ```
 
+**LIDS Agent**
+```bash
+   python3 LIDS_demo.py -c 'config_file.xml'
+```
+
 # License
 
 This project is licensed under the terms of the license provided by The University of Texas at El Paso.

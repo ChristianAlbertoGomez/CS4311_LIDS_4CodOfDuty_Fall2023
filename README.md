@@ -44,9 +44,9 @@ Lightweight Intrusion Detection System Distributed (LIDS-D) Agent
 - [Tools & Framewords](#tools&frameworks)
 - [Available Scripts](#availablescripts)
 
-## Installation {#installation}
+## Installation
 
-## LIDS GUI Information {#lidsguiinformation}
+## LIDS GUI Information
 
 First page, LIDS GUI allows the users to upload a configuration file for the system to read.  Once readable, it transfers to the second screen where the alerts are put into data tables where it shows the following:
 
@@ -78,11 +78,11 @@ Errors
 
 * Any errors that LIDS has ran into.
 
-## CLI Information {#cliinformation}
+## CLI Information
 
 The CLI or Command Line Interface is mainly to start the program from the command line or terminal. Once the script is ran, it will open up the LIDS program where you will begin to detect.
 
-## Tools & Frameworks {#tools&frameworks}
+## Tools & Frameworks
 * Linux Lite 6.6
 * VMware 
 * Python v3.10.12
@@ -90,7 +90,7 @@ The CLI or Command Line Interface is mainly to start the program from the comman
 * React v18.2.0
 * Flask v2.0.1
 
-### Available Scripts {#availablescripts}
+### Available Scripts
 
 #### npm start
 

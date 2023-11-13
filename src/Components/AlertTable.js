@@ -284,12 +284,12 @@ class AlertTable extends Component {
                 Time {this.state.sortedColumn === 'time' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
               </th>}
 
-              {this.state.columnVisibility?.src_ip && <th>IP Source</th>}
+              {this.state.columnVisibility?.ipSource && <th>IP Source</th>}
               
-              {this.state.columnVisibility?.dst_ip && <th>IP Destination</th>}
+              {this.state.columnVisibility?.ipDestination && <th>IP Destination</th>}
             
               
-              {this.state.columnVisibility?.dst_port && <th data-sort="numeric" onClick={() => this.handleSort('port')}>
+              {this.state.columnVisibility?.Port && <th data-sort="numeric" onClick={() => this.handleSort('port')}>
                 Port {this.state.sortedColumn === 'port' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
               </th>}
             

@@ -271,11 +271,13 @@ For testing we use a Docker container encapsulating an operating system serves a
 
 **Builds Run Background**
 ```bash
-sudo docker -compose up-d
+   sudo docker -compose up-d
+```
      
 **Analyst**
 ```bash
-sudo docker exec -it my_att /bin/bash
+   sudo docker exec -it my_att /bin/bash
+```
 
 # License
 

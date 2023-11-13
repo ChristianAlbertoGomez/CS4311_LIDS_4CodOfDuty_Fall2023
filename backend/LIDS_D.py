@@ -135,9 +135,15 @@ def decrypt_alert(encrypted_alert):
     # Strip padding characters
     decrypted_alert_json = decrypted_alert_json.rstrip(b'\0')
 
+    # Find the end of the JSON object
+    end_of_json = decrypted_alert_json.index(b'}') + 1
+
+    # Extract the JSON object and the extra data
+    json_data = decrypted_alert_json[:end_of_json]
+
     try:
         # Convert the decrypted JSON-formatted string back to a dictionary
-        decrypted_alert = json.loads(decrypted_alert_json.decode('utf-8', errors='replace'))
+        decrypted_alert = json.loads(json_data.decode('utf-8', errors='replace'))
         return decrypted_alert
     except json.JSONDecodeError as e:
         print(f"Error decoding JSON: {str(e)}")

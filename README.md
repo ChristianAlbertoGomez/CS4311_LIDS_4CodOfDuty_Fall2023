@@ -132,6 +132,9 @@ The LIDS (Log-based Intrusion Detection System) GUI provides users with a user-f
 
 On the first page of the LIDS GUI, users can upload a configuration file for the system to read.
 
+![image](https://github.com/ChristianAlbertoGomez/CS4311_LIDS_4CodOfDuty_Fall2023/assets/89657614/5f3c25d5-55b1-4496-ad3a-3d3aaf55f7ba)
+
+
 ## Home Page
 
 Once the configuration file is successfully processed, the LIDS GUI transfers to the second screen, where alerts are organized into data tables with the following information:

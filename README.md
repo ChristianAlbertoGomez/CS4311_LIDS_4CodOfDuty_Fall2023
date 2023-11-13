@@ -52,7 +52,6 @@ For testing we used a Docker container encapsulating an operating system serves 
      
     ```bash
      sudo docker-compose up-d
-     ```
      
  2. **Analyst** 
     ```bash

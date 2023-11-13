@@ -108,10 +108,6 @@ If you encounter any issues during the installation process, consider the follow
   - Confirm that Python and pip are correctly installed.
   - Refer to the Pyshark documentation for troubleshooting.
   - Verify independencies.
-  
-
-
-
 
 ## LIDS GUI Information
 

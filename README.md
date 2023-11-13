@@ -21,7 +21,7 @@ Lightweight Intrusion Detection System Distributed (LIDS-D) Agent
 
 * Ms. Diana Ramírez 
 * Ms. Herandy Vázquez
-*  Mr. Sebastián Quiñones 
+* Mr. Sebastián Quiñones 
 * Dr. Gurijala
 
 ## Team #4: Code of Duty
@@ -36,6 +36,70 @@ Lightweight Intrusion Detection System Distributed (LIDS-D) Agent
 * Sergio Velasco 
 * David Gonzalez 
 * Tony Alanis
+
+## Table of Contents
+- [Installation](#installation)
+- [LIDS GUI Information](#lidsguiinformation)
+- [CLI Information](#cliinformation)
+- [Tools & Framewords](#tools&frameworks)
+- [Available Scripts](#availablescripts)
+
+
+## Installation
+### Tools & Frameworks
+
+1. **Linux Lite 6.6:**
+   - Download Linux Lite 6.6 from [official website](https://www.linuxliteos.com/download.php).
+   - Follow the installation instructions provided on the website.
+
+2. **VMware:**
+   - Download and install VMware from the [official website](https://www.vmware.com/).
+   - Follow the installation instructions for your operating system.
+
+3. **Python v3.10.12:**
+   - Download and install Python v3.10.12 from the [official Python website](https://www.python.org/downloads/release).
+   - Follow the installation instructions for your operating system.
+
+4. **JavaScript v12.22.09:**
+   - JavaScript is typically included in web browsers. Ensure you have a web browser that supports JavaScript.
+
+5. **React v18.2.0:**
+   - Install React using npm:
+     ```bash
+     npm install -g react@18.2.0
+     ```
+
+6. **Flask v2.0.1:**
+   - Install Flask using pip:
+     ```bash
+     pip install Flask==2.0.1
+     ```
+
+### Troubleshooting
+
+If you encounter any issues during the installation process, consider the following:
+
+- **Linux Lite Installation Issues:**
+  - Check the official Linux Lite documentation and community forums for troubleshooting.
+
+- **VMware Installation Issues:**
+  - Ensure your system meets VMware's requirements.
+  - Check the VMware documentation for troubleshooting steps.
+
+- **Python Installation Issues:**
+  - Double-check that you downloaded the correct version.
+  - Refer to the Python documentation for installation troubleshooting.
+
+- **React Installation Issues:**
+  - Make sure you have Node.js and npm installed.
+  - Check the React documentation for troubleshooting.
+
+- **Flask Installation Issues:**
+  - Confirm that Python and pip are correctly installed.
+  - Refer to the Flask documentation for troubleshooting.
+
+
+
 
 ## LIDS GUI Information
 
@@ -73,6 +137,14 @@ Errors
 
 The CLI or Command Line Interface is mainly to start the program from the command line or terminal. Once the script is ran, it will open up the LIDS program where you will begin to detect.
 
+## Tools & Frameworks
+* Linux Lite 6.6
+* VMware 
+* Python v3.10.12
+* JavaScript v12.22.09
+* React v18.2.0
+* Flask v2.0.1
+
 ### Available Scripts
 
 #### npm start
@@ -87,6 +159,24 @@ You may also see any lint errors in the console.
 
 Installs the necessary files so t hat you are able to run the app in developement mode.
 
+## Synopsis
+
+python3 main_dev.py [tag][filename]
+
+### **tag** 
+
+#### **-c**
+
+Tag used for running the Command User Interface (CLI)
+
+#### **-g**
+
+Tag for running the GUI
+
+### filename
+
+the file path of where your current configuration file resides. 
+
 ## Date:
 
-September 17, 2023,  3:42 PM
+October 30, 2023,  9:30 PM

@@ -14,7 +14,7 @@ import {
 const Sidebar = () => {
   return (
     <div className="sidebar">
-      <div className="sidebar-title">LIDS</div>
+      <div className="sidebar-title">LIDS-D</div>
       <ul className="nav-links">
         <li><Link to='/home'><BsHouseFill /> Home</Link></li>
         <li><Link to="/AlertsPage"><BsFillExclamationCircleFill /> Alerts</Link></li>

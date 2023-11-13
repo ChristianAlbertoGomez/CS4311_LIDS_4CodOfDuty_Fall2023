@@ -46,7 +46,7 @@ const SetConfigFile = () => {
 
   return (
     <div className="config">
-      <div className="title">Welcome to LIDS</div>
+      <div className="title">Welcome to LIDS-D</div>
       <div className="title-2">Please select the Configuration File</div>
       <form>
         <input type="file" accept=".xml" onChange={ (e) => { setFile(e.target.files[0]) } } id="fileInput" />

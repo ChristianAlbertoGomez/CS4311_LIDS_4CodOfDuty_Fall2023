@@ -303,13 +303,12 @@ class AlertTable extends Component {
                 {this.state.columnVisibility?.Lvl &&<td className={item.level?.toLowerCase()}>{item.level}</td>}
                 {this.state.columnVisibility?.Time && <td>{item.time}</td>}
 
-                {this.state.columnVisibility?.ipSource &&<td>{item.ipSource}</td>}
+                {this.state.columnVisibility?.ipSource &&<td>{item.src_ip}</td>}
 
 
-                {this.state.columnVisibility?.ipDestination &&<td>{item.ipDestination}</td>}
+                {this.state.columnVisibility?.ipDestination &&<td>{item.dst_ip}</td>}
               
-            
-                {this.state.columnVisibility?.Port && <td>{item.port}</td>}
+                {this.state.columnVisibility?.Port && <td>{item.src_port}</td>}
             
                 {this.state.columnVisibility?.Description && <td >{item.description}</td>}
                 <td>
@@ -367,7 +366,8 @@ const AlertDetailsModal = ({ alert, onClose, onExport }) => {
         <p><strong>Time:</strong> {alert.time}</p>
         <p><strong>IP Source:</strong> {alert.ipSource}</p>
         <p><strong>IP Destination:</strong> {alert.ipDestination}</p>
-        <p><strong>Port:</strong> {alert.port}</p>
+        <p><strong>Source Port:</strong> {alert.src_port}</p>
+        <p><strong>Destination Port:</strong> {alert.dst_port}</p>
         <p><strong>Description:</strong> {alert.description}</p>
         <p><strong>Details:</strong> {alert.details}</p>
         <button onClick={onExport}>Export</button>

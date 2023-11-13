@@ -182,6 +182,10 @@ def analyze_packet(packet, system_info, host_ip):
     Returns:
         None
     """
+    # Add a check to ignore packets sent by the LIDS_D server
+    if packet.haslayer(IP) and packet[IP].src == '10.0.0.160':
+        return
+        
     if packet.haslayer(IP) and packet[IP].dst == host_ip:
         src_ip, dst_ip = packet[IP].src, packet[IP].dst
         protocol, src_port, dst_port, payload = get_protocol_info(packet)
@@ -256,7 +260,8 @@ def sniff_traffic(capture_interface, system_info):
     """
     try:
         print("Capturing live traffic...")
-        host_ip = get_current_ip(capture_interface)
+        interface_name = 'eth0' 
+        host_ip = get_current_ip(interface_name)
         packet = sniff(iface=capture_interface, filter="tcp or udp", prn=lambda pkt: analyze_packet(pkt, system_info, host_ip))
     except KeyboardInterrupt:
         print("Capture stopped by the user.")
@@ -276,6 +281,9 @@ def connect_to_lidsd(server_info, system_info, user_interface):
         
         if user_interface == 'c':
             print("Connected to LIDS-D Server")
+            
+        elif user_interface == 'g':
+            sniff_traffic('eth0', system_info)
         
     except socket.error as e:
         error_message = f"Error connecting to LIDS-D server: {str(e)}"

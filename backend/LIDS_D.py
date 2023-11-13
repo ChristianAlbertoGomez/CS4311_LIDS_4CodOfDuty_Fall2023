@@ -1,4 +1,4 @@
-import sys, json, socket, defusedxml.ElementTree as ET
+import sys, json, socket, threading, defusedxml.ElementTree as ET
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 
@@ -100,21 +100,24 @@ def ingest_config(config: str):
 def manage_connections(server_info: dict):
     # Testing purposes only
     SERVER_IP, SERVER_PORT = get_current_ip(), int(server_info['port'])
-    
+
     # Real server implementation
     # SERVER_IP, SERVER_PORT = server_info['ip'], int(server_info['port'])
-    
+
     # Create a socket to listen for connections
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((SERVER_IP, SERVER_PORT))
-    server_socket.listen(5)
+    server_socket.listen(10)
 
     print(f"Server is listening on {SERVER_IP}:{SERVER_PORT}")
 
     while True:
         client_socket, client_address = server_socket.accept()
         print(f"Accepted connection from {client_address}")
-        receive_alert(client_socket)
+
+        # Use threading to handle each client connection
+        client_handler_thread = threading.Thread(target=handle_client, args=(client_socket,))
+        client_handler_thread.start()
         
 def decrypt_alert(encrypted_alert):
     """
@@ -132,15 +135,9 @@ def decrypt_alert(encrypted_alert):
     # Strip padding characters
     decrypted_alert_json = decrypted_alert_json.rstrip(b'\0')
 
-    # Find the end of the JSON object
-    end_of_json = decrypted_alert_json.index(b'}') + 1
-
-    # Extract the JSON object and the extra data
-    json_data = decrypted_alert_json[:end_of_json]
-
     try:
         # Convert the decrypted JSON-formatted string back to a dictionary
-        decrypted_alert = json.loads(json_data.decode('utf-8', errors='replace'))
+        decrypted_alert = json.loads(decrypted_alert_json.decode('utf-8', errors='replace'))
         return decrypted_alert
     except json.JSONDecodeError as e:
         print(f"Error decoding JSON: {str(e)}")
@@ -166,7 +163,12 @@ def receive_alert(client_socket):
 def process_alert(alert):
     # Process the received alert
     print(f"Received Alert: {alert}")
-    # Add your code to process the alert here
+
+def handle_client(client_socket):
+    try:
+        receive_alert(client_socket)
+    finally:
+        client_socket.close()
 
 # def save_alert(alert_data):
       

@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from tabulate import tabulate
 from flask_cors import CORS
-import backend_test as lids
+import backend_demo as lids
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:3000"])

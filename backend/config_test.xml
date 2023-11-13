@@ -1,21 +1,20 @@
 <?xml version="1.0"?>
 <config>
     <server>
-        <ip>10.0.0.160</ip>
+        <ip>127.0.1.1</ip>
         <mac>09:25:20:07:01:15</mac>
         <port>444</port>
     </server>
     <network>
         <system>
             <name>Sebastian</name>
-            <ip>10.0.0.2</ip>
+            <ip>10.0.2.15</ip>
             <mac>09-25-20-07-01-17</mac>
-            <ports>22,80,444</ports>
+            <ports>22,80,4444</ports>
             <whitelist>
-                <ip>10.0.0.2</ip>
                 <ip>10.0.0.3</ip>
                 <ip>10.0.0.4</ip>
-                <ip>10.0.0.160</ip>
+                <ip>10.0.0.5</ip>
             </whitelist>
         </system>
         <system>
@@ -24,10 +23,9 @@
             <mac>09-26-20-17-00-00</mac>
             <ports>22</ports>
             <whitelist>
-                <ip>10.0.0.1</ip>
                 <ip>10.0.0.2</ip>
+                <ip>10.0.0.3</ip>
                 <ip>10.0.0.245</ip>
-                <ip>10.0.0.160</ip>
             </whitelist>
         </system>
         <system>
@@ -36,10 +34,9 @@
             <mac>09-22-20-11-00-00</mac>
             <ports>22</ports>
             <whitelist>
-                <ip>10.0.0.1</ip>
+                <ip>10.0.0.2</ip>
                 <ip>10.0.0.3</ip>
                 <ip>10.0.0.5</ip>
-                <ip>10.0.0.160</ip>
             </whitelist>
         </system>
     </network>

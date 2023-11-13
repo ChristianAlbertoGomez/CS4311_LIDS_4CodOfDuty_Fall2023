@@ -1,4 +1,4 @@
-import os, sys, time, subprocess, threading, backend_demo as lids, alerts as alert, LIDS_D_demo as lids_d
+import os, sys, time, subprocess, threading, backend_demo as lids, backend_gui_demo as alert, LIDS_D_demo as lids_d
 
 def log_error(error_message):
     """
@@ -92,13 +92,10 @@ def main_cli(xml_path, user_interface):
 
 def main_gui():
     # Start the React application using 'npm start' in the background
-    react_app = subprocess.Popen(["npm", "start"], cwd="./../src")
+    react_process = subprocess.Popen(["npm", "start"], cwd="./../src")
     
     # Run 'python file_upload.py' and capture the file path returned by the server
-    #subprocess.Popen(["python", "file_upload.py"])
-    
-    # Run 'python alerts.py' to update front end with newly generated alerts
-    #subprocess.Popen(["python", "alerts.py"])
+    subprocess.check_output(["python3", "backend_gui_demo.py"])
         
 if __name__ == '__main__':
     try:

@@ -25,7 +25,6 @@ Lightweight Intrusion Detection System Distributed (LIDS-D) Agent
 * Dr. Gurijala
 
 ## Team #4: Code of Duty
-
 ### Team members
 
 * Darinka Carrasco-Cardona
@@ -39,10 +38,12 @@ Lightweight Intrusion Detection System Distributed (LIDS-D) Agent
 
 ## Table of Contents
 - [Installation](#installation)
+- [Troubleshooting](#troubleshooting)
 - [LIDS GUI Information](#lidsguiinformation)
 - [CLI Information](#cliinformation)
-- [Tools & Framewords](#tools&frameworks)
 - [Available Scripts](#availablescripts)
+- [Contact Information](#contactinformation)
+- [Release Date](#releasedate)
 
 
 ## Installation
@@ -74,6 +75,11 @@ Lightweight Intrusion Detection System Distributed (LIDS-D) Agent
      ```bash
      pip install Flask==2.0.1
      ```
+7. **Pyshark v3.1.2:**
+   - Install pyshark using pip:
+     ```bash
+     pip install pyshark==3.1.2
+     ```
 
 ### Troubleshooting
 
@@ -97,6 +103,12 @@ If you encounter any issues during the installation process, consider the follow
 - **Flask Installation Issues:**
   - Confirm that Python and pip are correctly installed.
   - Refer to the Flask documentation for troubleshooting.
+
+- **Pyshark Installation Issues:**
+  - Confirm that Python and pip are correctly installed.
+  - Refer to the Pyshark documentation for troubleshooting.
+  - Verify independencies.
+  
 
 
 
@@ -137,13 +149,16 @@ Errors
 
 The CLI or Command Line Interface is mainly to start the program from the command line or terminal. Once the script is ran, it will open up the LIDS program where you will begin to detect.
 
-## Tools & Frameworks
-* Linux Lite 6.6
-* VMware 
-* Python v3.10.12
-* JavaScript v12.22.09
-* React v18.2.0
-* Flask v2.0.1
+A Command Line Interface (CLI) is a text-based interface that enables users to interact with a computer or software application by entering commands into a terminal or command prompt. Unlike graphical user interfaces (GUIs), which rely on visual elements, CLIs operate solely through text-based commands.
+
+## Key Components of a CLI:
+
+1. **Commands:** Users communicate with the system by typing specific commands, usually followed by optional arguments and parameters. These commands instruct the computer to perform various tasks or operations.
+
+2. **Prompt:** The CLI displays a prompt, such as a dollar sign ('$') or a greater-than sign ('>'), indicating that the system is ready to receive a command.
+
+3. **Text Output:** The results of executed commands are displayed as text output in the same terminal. This output provides information about the success or failure of the command and any relevant data.
+
 
 ### Available Scripts
 
@@ -177,6 +192,9 @@ Tag for running the GUI
 
 the file path of where your current configuration file resides. 
 
-## Date:
+## Contact Information
 
-October 30, 2023,  9:30 PM
+
+## Release Date:
+
+November 12, 2023,  6:30 PM

@@ -1,4 +1,4 @@
-import os, sys, time, subprocess, threading, backend_test as lnids, backend_gui as alert, LIDS_D as lids_d
+import os, sys, time, subprocess, threading, backend_demo as lnids, backend_gui_demo as alert, LIDS_D_demo as lids_d
 
 def log_error(error_message):
     """
@@ -36,40 +36,20 @@ def print_help():
         '''
 
     print(help_text)
-    
-def select_analysis_method():
-    print("Select an option:")
-    print("1. Capture Live Traffic")
-    print("2. Replay Packet Capture File")
-    analysis_method = input()
-    
-    if analysis_method == "1":
-        capture_interface = input("Enter the capture interface: ")
-        return analysis_method, capture_interface, None
-    elif analysis_method == "2":
-        pcap_file = input("Enter the path to the PCAP file: ")
-        capture_interface = input("Enter the capture interface for replay: ")
-        return analysis_method, capture_interface, pcap_file
-    else:
-        error_message = "Invalid choice."
-        print(error_message)
-        lnids.log_error(error_message)
 
-def main_cli(xml_path):
-    # Your menu logic here
+def main_cli(xml_path, user_interface):
+    # Show the xml file path that was given by the user
     print(f"Processing XML file: {xml_path}")
 
+    # Pass the xml file path to the configuration ingestion and extract network information
     server_info, net_systems, system_info = lnids.ingest_config(xml_path)
     if server_info is not None and net_systems is not None:
-        # Call connect_server with the server_info dictionary and system information
-        lnids.connect_to_lidsd(server_info, system_info, 'c')
-        
-    analysis_method, capture_interface, pcap_file = select_analysis_method()
+        lnids.connect_to_lidsd(server_info, system_info, user_interface)  # Connect to LIDS D server
     
-    # Start capturing and analyzing traffic in the background
-    lids_thread = threading.Thread(target=lnids.sniff_traffic, args=(analysis_method, capture_interface, pcap_file, system_info,))
-    lids_thread.daemon = True
-    lids_thread.start()
+    # Start capturing and analyzing traffic in the background 
+    lnids_thread = threading.Thread(target=lnids.sniff_traffic, args=('eth0', system_info,))
+    lnids_thread.daemon = True
+    lnids_thread.start()
 
     print_help()
     while True:
@@ -84,11 +64,11 @@ def main_cli(xml_path):
             elif user.lower() == 'export':
                 exp = input('Enter format for export file: ')
                 if exp.lower() == 'xml':
-                    lnids.export_alerts(lnids.get_alerts(), exp.lower())
+                    lnids.export_alerts(lids.get_alerts(), exp.lower())
                 elif exp.lower() == 'json':
-                    lnids.export_alerts(lnids.get_alerts(), exp.lower())
+                    lnids.export_alerts(lids.get_alerts(), exp.lower())
                 elif exp.lower() == 'csv':
-                    lnids.export_alerts(lnids.get_alerts(), exp.lower())
+                    lnids.export_alerts(lids.get_alerts(), exp.lower())
                 else:
                     log_error(f"Error processing command: {str(e)}")
                     print('Invalid command. Please try again.')
@@ -99,6 +79,7 @@ def main_cli(xml_path):
             elif user.lower() == 'show pcap x':
                 print(' will show the specified pcap')
             elif user.lower() == 'exit':
+                lnids.disconnect_from_lidsd(user_interface)
                 print('Exiting...')
                 break
             else:
@@ -111,10 +92,10 @@ def main_cli(xml_path):
 
 def main_gui():
     # Start the React application using 'npm start' in the background
-    react_process = subprocess.Popen(["npm", "start"], cwd="/home/arnim_zola/Desktop/lids/test_gui/src")
+    react_process = subprocess.Popen(["npm", "start"], cwd="./../src")
     
     # Run 'python file_upload.py' and capture the file path returned by the server
-    subprocess.check_output(["python", "backend_gui.py"])
+    subprocess.check_output(["python3", "backend_gui_demo.py"])
         
 if __name__ == '__main__':
     try:
@@ -129,7 +110,7 @@ if __name__ == '__main__':
                 # Check if an argument exists at the expected index and if it ends with '.xml'
                 if xml_index < len(args) and args[xml_index].endswith('.xml'):
                     # Call the main_menu function with the XML file path
-                    main_cli(args[xml_index])
+                    main_cli(args[xml_index], 'c')
                 else:
                     # Print an error message if the argument is missing or invalid
                     print("Error: Invalid XML file path. Please provide a valid XML file path.")

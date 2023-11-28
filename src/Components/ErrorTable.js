@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './AlertTable.css'; 
+import './CSS Files/AlertTable.css'; 
 
 
 const ErrorTable = () => {

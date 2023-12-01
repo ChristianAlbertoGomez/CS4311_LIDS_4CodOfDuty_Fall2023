@@ -412,8 +412,17 @@ def create_alert(packet, severity, description, system_info):
     
 def export_alerts(alerts: list, file_type: str):
     if file_type == 'xml':
-        # Need to add XML export
-        pass
+        
+        root = ET.Element("root")
+
+        for alert in alerts:
+            alertElement = ET.SubElement(root, "alert")
+            for i, j in alert.items():
+                ET.SubElement(alertElement, i).text = str(j)
+        xmlstr = minidom.parseString(ET.tostring(root)).toprettyxml(indent="   ")
+        with open("alerts.xml", "w") as f:
+            f.write(xmlstr)
+            f.close()
     elif file_type == 'json':
         # Convert the list of alerts to a JSON-formatted string with indentation
         alert_data = json.dumps(alerts, indent=4)

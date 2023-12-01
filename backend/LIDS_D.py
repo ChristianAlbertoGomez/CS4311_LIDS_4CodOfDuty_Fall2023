@@ -177,7 +177,7 @@ def handle_client(client_socket):
         client_socket.close()
 
 # def save_alert(alert_data):
-      
+
 if __name__ == '__main__':
     try:
         # Get command-line arguments, excluding the script name and get the XML path

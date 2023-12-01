@@ -1,4 +1,4 @@
-import os, sys, time, subprocess, threading, ids_logic as lids, backend_to_gui as alert, LIDS_D as lids_d
+import os, sys, time, subprocess, threading, dev_ids_agent as lids, dev_lids_gui as alert, dev_LIDS_D as lids_d
 
 def log_error(error_message):
     """
@@ -90,12 +90,12 @@ def main_cli(xml_path, user_interface):
             log_error(f"Error processing command: {str(e)}")
             print('Invalid command. Please try again.')
 
-def main_gui():
+def run_gui():
     # Start the React application using 'npm start' in the background
-    #react_process = subprocess.Popen(["npm", "start"], cwd=("./../src"))
-    
+    #react_process = subprocess.Popen(["npm", "start"], cwd='./../src')
+    print("we here")
     # Run 'python file_upload.py' and capture the file path returned by the server
-    subprocess.check_output(["python", "backend_to_gui.py"])
+    #subprocess.check_output(["python", "dev_lids_gui.py"])
         
 if __name__ == '__main__':
     try:
@@ -119,7 +119,7 @@ if __name__ == '__main__':
                 print("Error: Please specify an XML file path with the -c flag.")
         elif "-g" in args:
             # Call the main_gui function if the "-g" flag is provided
-            main_gui()
+            run_gui()
         else:
             # Print an error message if neither -c nor -g flag is provided
             print("Error: Please specify either -c or -g flag")

@@ -92,10 +92,10 @@ def main_cli(xml_path, user_interface):
 
 def main_gui():
     # Start the React application using 'npm start' in the background
-    react_process = subprocess.Popen(["npm", "start"], cwd="./../src")
+    #react_process = subprocess.Popen(["npm", "start"], cwd="./../src")
     
     # Run 'python file_upload.py' and capture the file path returned by the server
-    subprocess.check_output(["python3", "backend_gui_demo.py"])
+    subprocess.check_output(["python", "backend_to_gui.py"])
         
 if __name__ == '__main__':
     try:

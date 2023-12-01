@@ -1,4 +1,4 @@
-import os, sys, time, subprocess, threading, ids_logic as lids, backend_to_gui as alert, LIDS_D as lids_d
+import os, sys, time, subprocess, threading, dev_ids_agent as lnids, dev_lids_gui as alert, dev_LIDS_D as lids_d
 
 def log_error(error_message):
     """
@@ -42,14 +42,14 @@ def main_cli(xml_path, user_interface):
     print(f"Processing XML file: {xml_path}")
 
     # Pass the xml file path to the configuration ingestion and extract network information
-    server_info, net_systems, system_info = lids.ingest_config(xml_path)
+    server_info, net_systems, system_info = lnids.ingest_config(xml_path)
     if server_info is not None and net_systems is not None:
-        lids.connect_to_lidsd(server_info, system_info, user_interface)  # Connect to LIDS D server
+        lnids.connect_to_lidsd(server_info, system_info, user_interface)  # Connect to LIDS D server
     
     # Start capturing and analyzing traffic in the background 
-    lids_thread = threading.Thread(target=lids.sniff_traffic, args=('eth0', system_info,))
-    lids_thread.daemon = True
-    lids_thread.start()
+    lnids_thread = threading.Thread(target=lnids.sniff_traffic, args=('eth0', system_info,))
+    lnids_thread.daemon = True
+    lnids_thread.start()
 
     print_help()
     while True:
@@ -60,15 +60,15 @@ def main_cli(xml_path, user_interface):
             elif user.lower() == 'clear':
                 clear_terminal()
             elif user.lower() == 'config':
-                lids.print_config_details(server_info, net_systems)
+                lnids.print_config_details(server_info, net_systems)
             elif user.lower() == 'export':
                 exp = input('Enter format for export file: ')
                 if exp.lower() == 'xml':
-                    lids.export_alerts(lids.get_alerts(), exp.lower())
+                    lnids.export_alerts(lids.get_alerts(), exp.lower())
                 elif exp.lower() == 'json':
-                    lids.export_alerts(lids.get_alerts(), exp.lower())
+                    lnids.export_alerts(lids.get_alerts(), exp.lower())
                 elif exp.lower() == 'csv':
-                    lids.export_alerts(lids.get_alerts(), exp.lower())
+                    lnids.export_alerts(lids.get_alerts(), exp.lower())
                 else:
                     log_error(f"Error processing command: {str(e)}")
                     print('Invalid command. Please try again.')
@@ -79,7 +79,7 @@ def main_cli(xml_path, user_interface):
             elif user.lower() == 'show pcap x':
                 print(' will show the specified pcap')
             elif user.lower() == 'exit':
-                lids.disconnect_from_lidsd(user_interface)
+                lnids.disconnect_from_lidsd(user_interface)
                 print('Exiting...')
                 break
             else:
@@ -92,10 +92,10 @@ def main_cli(xml_path, user_interface):
 
 def main_gui():
     # Start the React application using 'npm start' in the background
-    #react_process = subprocess.Popen(["npm", "start"], cwd=("./../src"))
+    react_process = subprocess.Popen(["npm", "start"], cwd="./../src")
     
     # Run 'python file_upload.py' and capture the file path returned by the server
-    subprocess.check_output(["python", "backend_to_gui.py"])
+    subprocess.check_output(["python3", "backend_gui_demo.py"])
         
 if __name__ == '__main__':
     try:

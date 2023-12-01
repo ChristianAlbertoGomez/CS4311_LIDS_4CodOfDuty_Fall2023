@@ -9,8 +9,10 @@ from xml.dom import minidom
 alert_id_counter = 0
 lidsd_socket = None
 alerts = []
-freq_ip = {}
-
+syn_counter = Counter()
+ack_counter = Counter()
+fin_counter = Counter()
+udp_counter = Counter()
 # AES encryption key used for testing
 encryption_key = b'0123456789ABCDEF'
 
@@ -173,6 +175,8 @@ def analyze_packet(packet, system_info, host_ip):
     Returns:
         None
     """
+    
+    global syn_counter, ack_counter, fin_counter, udp_counter
     #storeLNIDS(packet)
     if packet.haslayer(IP) and packet[IP].dst == host_ip:
         src_ip, dst_ip = packet[IP].src, packet[IP].dst
@@ -213,24 +217,49 @@ def analyze_packet(packet, system_info, host_ip):
                 if '530 Login incorrect' in payload:
                     create_alert(packet, 'high', 'Failed login attempt from non-whitelisted IP')
                     
-        if packet.haslayer(TCP):
-            if packet[TCP].flags == 'S':
-                try:
-                    freq_ip['dst_port'] += 1
-                except:
-                    freq_ip['dst_port'] = 1
-        elif packet.haslayer(UDP):
-            try:
-                freq_ip['dst_port'] += 1
-            except:
-                freq_ip['dst_port']= 1
+        # if packet.haslayer(TCP):
+        #     if packet[TCP].flags == 'S':
+        #         try:
+        #             freq_ip['dst_port'] += 1
+        #         except:
+        #             freq_ip['dst_port'] = 1
+        # elif packet.haslayer(UDP):
+        #     try:
+        #         freq_ip['dst_port'] += 1
+        #     except:
+        #         freq_ip['dst_port']= 1
         
-        for key, val in freq_ip.items():
-            if val > 10:
-                create_alert(packet, 'high', 'Port scanning detected')
+        # for key, val in freq_ip.items():
+        #     if val > 10:
+        #         create_alert(packet, 'high', 'Port scanning detected')
 
-                # Reset the value of the port and IP to 0
-                freq_ip[key] = 0
+        #         # Reset the value of the port and IP to 0
+        #         freq_ip[key] = 0
+        
+        # Check for SYN flood attack
+        if packet.haslayer(TCP) and packet[TCP].flags == 'S':
+            syn_counter[packet[IP].src] += 1
+            if syn_counter[packet[IP].src] > 10:
+                create_alert(packet, 'high', 'SYN flood detected')
+                syn_counter[packet[IP].src] = 0
+        # Check for ACK flood attack
+        elif packet.haslayer(TCP) and packet[TCP].flags == 'A':
+            ack_counter[packet[IP].src] += 1
+            if ack_counter[packet[IP].src] > 10:
+                create_alert(packet, 'high', 'ACK flood detected')
+                ack_counter[packet[IP].src] = 0
+        # Check for FIN flood attack
+        elif packet.haslayer(TCP) and packet[TCP].flags == 'F':
+            fin_counter[packet[IP].src] += 1
+            if fin_counter[packet[IP].src] > 10:
+                create_alert(packet, 'high', 'FIN flood detected')
+                fin_counter[packet[IP].src] = 0
+        # Check for UDP flood attack
+        elif packet.haslayer(UDP):
+            udp_counter[packet[IP].src] += 1
+            if udp_counter[packet[IP].src] > 10:
+                create_alert(packet, 'high', 'UDP flood detected')
+                udp_counter[packet[IP].src] = 0
 
 # Inside the sniff_live_traffic function, add host_ip as an argument:
 def sniff_live_traffic(capture_interface, system_info, host_ip):

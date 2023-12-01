@@ -95,7 +95,7 @@ def run_gui():
     react_process = subprocess.Popen(["npm", "start"], cwd="./../src")
     
     # Run 'python file_upload.py' and capture the file path returned by the server
-    subprocess.check_output(["python3", "lids_gui.py"])
+    subprocess.check_output(["python3", "dev_lids_gui.py"])
         
 if __name__ == '__main__':
     try:

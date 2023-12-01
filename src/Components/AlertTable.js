@@ -13,7 +13,7 @@ class AlertTable extends Component {
 
   state={
     // data:[{"level": 'Low',"time": 8.233,"ipSource": '192.12.4.101',"port": 88,"description": 'Multiple password attempts',}],
-    data: [{'level': 'Low', 'alert_id': "20", 'time':"9:20", 'src_port': "80", 'dst_port': "90", 'description':"80->90", 'src_ip':"104.1", 'dst_ip': "109.2", 'reason': "for alert in alerts"}],
+    data: [{"level": 'Low', 'alert_id': 20, 'time':"9:20", 'src_port': 80, 'dst_port': 90, 'description':"80->90", 'src_ip':104.1, 'dst_ip': 109.2, 'reason': "for alert in alerts",}],
     sortDirection:'asc',
     sortedColumn:null,
     selectedAlert:null,
@@ -25,15 +25,15 @@ class AlertTable extends Component {
       // ipDestination: true,
       // Port: true,
       // Description: true, 
-      level: true, 
-      alert_id:true, 
-      time: true, 
-      src_port: true,
-      dst_port: true,
-      description: true,
-      src_ip: true, 
-      dst_ip: true, 
-      reason: true
+      Level: false, 
+      Alert_id:true, 
+      Time: true, 
+      Src_port: true,
+      Dst_port: true,
+      Description: true,
+      Src_ip: true, 
+      Dst_ip: true, 
+      Reason: true
     },
     menuVisible:false,
     searchQuery:'',
@@ -74,15 +74,15 @@ class AlertTable extends Component {
           // ipDestination: true,
           // Port: true,
           // Description: true, 
-          level: true, 
-          alert_id:true, 
-          time: true, 
-          src_port: true,
-          dst_port: true,
-          description: true,
-          src_ip: true, 
-          dst_ip: true, 
-          reason: true
+          Level: true, 
+          Alert_id:true, 
+          Time: true, 
+          Src_port: true,
+          Dst_port: true,
+          Description: true,
+          Src_ip: true, 
+          Dst_ip: true, 
+          Reason: true
         },
           menuVisible:false,
           searchQuery:'',
@@ -228,7 +228,7 @@ class AlertTable extends Component {
 
 
   render() {
-    //const{menuVisible}=this.state[menuVisible]
+   // const{menuVisible}=this.state[menuVisible]
 
     return (
       
@@ -255,7 +255,7 @@ class AlertTable extends Component {
             <input
               type="checkbox"
               checked={this.state.columnVisibility.column2}
-              onChange={() => this.handleCheckboxChange('Alert ID')}
+              onChange={() => this.handleCheckboxChange('Alert_id')}
             />
             Alert ID
           </label>
@@ -270,48 +270,48 @@ class AlertTable extends Component {
           <label>
             <input
               type="checkbox"
-              checked={this.state.columnVisibility.column3}
-              onChange={() => this.handleCheckboxChange('SRC Port')}
+              checked={this.state.columnVisibility.column4}
+              onChange={() => this.handleCheckboxChange('Src_port')}
             />
             SRC Port'
           </label>
           <label>
             <input
               type="checkbox"
-              checked={this.state.columnVisibility.column3}
-              onChange={() => this.handleCheckboxChange('Dest Port')}
+              checked={this.state.columnVisibility.column5}
+              onChange={() => this.handleCheckboxChange('Dst_port')}
             />
             Dest Port
           </label>
           <label>
             <input
               type="checkbox"
-              checked={this.state.columnVisibility.column3}
-              onChange={() => this.handleCheckboxChange('Port Description')}
+              checked={this.state.columnVisibility.column6}
+              onChange={() => this.handleCheckboxChange('Description')}
             />
             Port Description
           </label>
           <label>
             <input
               type="checkbox"
-              checked={this.state.columnVisibility.column3}
-              onChange={() => this.handleCheckboxChange('Src IP')}
+              checked={this.state.columnVisibility.column7}
+              onChange={() => this.handleCheckboxChange('Src_ip')}
             />
             Src IP
           </label>
           <label>
             <input
               type="checkbox"
-              checked={this.state.columnVisibility.column3}
-              onChange={() => this.handleCheckboxChange('Dest IP')}
+              checked={this.state.columnVisibility.column8}
+              onChange={() => this.handleCheckboxChange('Dst_ip')}
             />
             Dest IP
           </label>
           <label>
             <input
               type="checkbox"
-              checked={this.state.columnVisibility.column3}
-              onChange={() => this.handleCheckboxChange('Alert Description')}
+              checked={this.state.columnVisibility.column9}
+              onChange={() => this.handleCheckboxChange('Reason')}
             />
             Alert Description
           </label>
@@ -319,64 +319,64 @@ class AlertTable extends Component {
           )}
     
 
-    //Fix the table sort
+    
         <table id='sortable-table'>
           <thead>
             <tr>
-              {this.state.columnVisibility?.level && <th onClick={() => this.handleSort('level')}>
+              {this.state.columnVisibility?.Level && <th onClick={() => this.handleSort('level')}>
                 Level {this.state.sortedColumn === 'level' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
               </th> }
 
-              {this.state.columnVisibility?.alert_id && <th data-sort="numeric" onClick={() => this.handleSort('alert_id')}>
+              {this.state.columnVisibility?.Alert_id && <th data-sort="numeric" onClick={() => this.handleSort('alert_id')}>
                 Alert ID {this.state.sortedColumn === 'alert_id' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
               </th>}
 
-              {this.state.columnVisibility?.time && <th data-sort="numeric" onClick={() => this.handleSort('time')}>
+              {this.state.columnVisibility?.Time && <th onClick={() => this.handleSort('time')}>
                 Time {this.state.sortedColumn === 'time' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
               </th>}
 
-              {this.state.columnVisibility?.src_port && <th data-sort="numeric" onClick={() => this.handleSort('src_port')}>
+              {this.state.columnVisibility?.Src_port && <th data-sort="numeric" onClick={() => this.handleSort('src_port')}>
                 Src Port {this.state.sortedColumn === 'src_port' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
               </th>}
 
-              {this.state.columnVisibility?.dst_port && <th data-sort="numeric" onClick={() => this.handleSort('dst_port')}>
+              {this.state.columnVisibility?.Dst_port && <th data-sort="numeric" onClick={() => this.handleSort('dst_port')}>
                 Dst Port {this.state.sortedColumn === 'dst_port' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
               </th>}
 
-              {this.state.columnVisibility?.description && <th>Description</th>}
+              {this.state.columnVisibility?.Description && <th>Description</th>}
 
-              {this.state.columnVisibility?.src_ip && <th data-sort="numeric" onClick={() => this.handleSort('src_ip')}>
+              {this.state.columnVisibility?.Src_ip && <th data-sort="numeric" onClick={() => this.handleSort('src_ip')}>
                 Src IP {this.state.sortedColumn === 'src_ip' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
               </th>}
 
-              {this.state.columnVisibility?.dst_ip && <th data-sort="numeric" onClick={() => this.handleSort('dst_ip')}>
+              {this.state.columnVisibility?.Dst_ip && <th data-sort="numeric" onClick={() => this.handleSort('dst_ip')}>
                 Dst IP {this.state.sortedColumn === 'dst_ip' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
               </th>}
             
-              {this.state.columnVisibility?.reason && <th>Alert Description</th>}
+              {this.state.columnVisibility?.Reason && <th>Alert Description</th>}
               <th>Actions</th>
               </tr>
           </thead>
           <tbody>
             {this.state.data?.map((item, index) => (//this.filteredData?.map((item, index) => (
               <tr key={index}>
-                {this.state.columnVisibility?.level &&<td className={item.level?.toLowerCase()}>{item.level}</td>}
+                {this.state.columnVisibility?.Level &&<td className={item.level?.toLowerCase()}>{item.level}</td>}
 
-                {this.state.columnVisibility?.alert_id && <td>{item.alert_id}</td>}
+                {this.state.columnVisibility?.Alert_id && <td>{item.alert_id}</td>}
 
-                {this.state.columnVisibility?.time && <td>{item.time}</td>}
+                {this.state.columnVisibility?.Time && <td>{item.time}</td>}
 
-                {this.state.columnVisibility?.src_port &&<td>{item.src_port}</td>}
+                {this.state.columnVisibility?.Src_port &&<td>{item.src_port}</td>}
 
-                {this.state.columnVisibility?.dst_port &&<td>{item.dst_port}</td>}
+                {this.state.columnVisibility?.Dst_port &&<td>{item.dst_port}</td>}
 
-                {this.state.columnVisibility?.description && <td >{item.description}</td>}
+                {this.state.columnVisibility?.Description && <td >{item.description}</td>}
 
-                {this.state.columnVisibility?.src_ip && <td>{item.src_ip}</td>}
+                {this.state.columnVisibility?.Src_ip && <td>{item.src_ip}</td>}
 
-                {this.state.columnVisibility?.dst_ip && <td>{item.dst_ip}</td>}
+                {this.state.columnVisibility?.Dst_ip && <td>{item.dst_ip}</td>}
             
-                {this.state.columnVisibility?.reason && <td>{item.reason}</td>}
+                {this.state.columnVisibility?.Reason && <td>{item.reason}</td>}
             
                 
                 <td>

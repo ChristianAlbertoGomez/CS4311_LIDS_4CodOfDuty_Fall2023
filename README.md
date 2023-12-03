@@ -174,7 +174,69 @@ If you encounter any issues during the installation process, consider the follow
   - Ensure that dependencies, such as the wireshark library, are installed. On Linux, you can use:
     ```bash
     sudo apt-get install libwireshark-dev
-
+- **JSON v3.10.12**
+  - Unable to import json.
+  - Ensure your Python environment is correctly set up.
+  - Confirm that the Python version is 3.10.12 or compatible.
+  - Verify that there are no typos or syntax errors in your import statement.
+    
+- **Collection v3.10.12**
+  - Unable to import collections.
+  - Double-check your Python environment.
+  - Confirm that the Python version is 3.10.12 or compatible.
+  - Verify the correct import statement (from collections import ...).
+    
+- **XML v3.10.12**
+  - Unable to import xml.
+  - Ensure Python environment correctness.
+  - Confirm Python version is 3.10.12 or compatible.
+  - Check the correct import statement (import xml).
+    
+- **Scapy v2.5.0**
+  - Unable to import or use scapy.
+  - Install scapy using pip install scapy.
+  - Confirm the scapy version is 2.5.0 or compatible.
+  - Check for any error messages during installation.
+ 
+- **Cryptography v41.0.7**
+   - Unable to import or use cryptography.
+   - Install cryptography using pip install cryptography.
+   - Confirm the cryptography version is 41.0.7 or compatible.
+   - Check for any error messages during installation.
+     
+- **Socket v3.10.12**
+   - Unable to import socket.
+   - Confirm Python version is 3.10.12 or compatible.
+   - Verify the correct import statement (import socket).
+     
+- **Netifaces v2.0.0.19**
+   - Unable to import or use netifaces.
+   - Install netifaces using pip install netifaces.
+   - Confirm the netifaces version is 2.0.0.19 or compatible.
+   - Check for any error messages during installation.
+   - Unable to import threading.
+   - Confirm Python version is 3.10.12 or compatible.
+   - Verify the correct import statement (import threading).
+     
+- **Tabulate v0.9.0**
+   - Unable to import or use tabulate.
+   - Install tabulate using pip install tabulate.
+   - Confirm the tabulate version is 0.9.0 or compatible.
+   - Check for any error messages during installation.
+     
+- **Threading v3.10.12**
+   - Unable to import threading.
+   - Confirm Python version is 3.10.12 or compatible.
+   - Verify the correct import statement (import threading).
+ 
+- **Defusedxml v0.7.1**
+   - Unable to import or use defusedxml.
+   - Install defusedxml using pip install defusedxml.
+   - Confirm the defusedxml version is 0.7.1 or compatible.
+   - Check for any error messages during installation.
+   - Remember to replace ... in the import statements with the specific components you are importing from each library or module. Always ensure that your Python environment is 
+     correctly set up, and the versions of the installed libraries match the expected versions.
+     
 # LIDS GUI Information
 
 The LIDS (Log-based Intrusion Detection System) GUI provides users with a user-friendly interface for managing system alerts. Here's an overview of the key features and functionalities:

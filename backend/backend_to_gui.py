@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from tabulate import tabulate
 from flask_cors import CORS
 import ids_logic as lids
@@ -19,6 +19,7 @@ def log_error(error_message):
 
 def alerts():
     return lids.get_alerts()
+
 
 @app.route("/getData",methods=['GET'])
 def get_data():

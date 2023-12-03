@@ -91,11 +91,12 @@ def main_cli(xml_path, user_interface):
             print('Invalid command. Please try again.')
 
 def run_gui():
+
     # Start the React application using 'npm start' in the background
-    react_process = subprocess.Popen(["npm", "start"], cwd="./../src")
+    #react_process = subprocess.Popen(["npm", "start"], cwd="src")
     
     # Run 'python file_upload.py' and capture the file path returned by the server
-    subprocess.check_output(["python3", "dev_lids_gui.py"])
+    subprocess.check_output(["python", "dev_lids_gui.py"])
         
 if __name__ == '__main__':
     try:

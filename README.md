@@ -81,52 +81,52 @@ Lightweight Intrusion Detection System Distributed (LIDS-D) Agent
      ```bash
      pip install pyshark==3.1.2
      ```
-8. **JSON v3.10.02**
+8. **JSON v3.10.12**
    - No need of using pip isntall. Just have the following line of code:
      ```bash
      import json
      ```
-10. **Collection v**
+10. **Collection v3.10.12**
    - No need of using pip isntall. Just have the following line of code:
      ```bash
      from collections
      ```
-12. **XML v**
+12. **XML v3.10.12**
    - No need of using pip isntall. Just have the following line of code:
      ```bash
      import xml
      ```
-14. **Scapy v**
+14. **Scapy v2.5.0**
    - Install scapy using pip:
      ```bash
      pip install scapy
      ```
-16. **Cryptography v**
+16. **Cryptography v41.0.7**
    - Install cryptography using pip:
      ```bash
      pip install cryptography
      ```
-18. **Socket v**
+18. **Socket v3.10.12**
    - No need of using pip isntall. Just have the following line of code:
      ```bash
      import socket
      ```
-20. **Netifaces v**
+20. **Netifaces v2.0.0.19**
    - Install netifaces using pip:
      ```bash
      pip install netifaces
      ```
-22. **Threading v**
+22. **Threading v3.10.12**
    - No need of using pip isntall. Just have the following line of code:
      ```bash
      import threading
      ```
-24. **Tabulate v**
+24. **Tabulate v0.9.0**
    - Install tabulate using pip:
      ```bash
      pip install tabulate
      ```
-26. **Defusedxml**
+26. **Defusedxml v0.7.1**
    - Install defusedxml using pip:
      ```bash
      pip install defusedxml

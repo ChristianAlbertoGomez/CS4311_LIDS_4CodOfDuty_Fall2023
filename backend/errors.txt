@@ -17,5 +17,5 @@ Error connecting to LIDS-D server: [Errno 113] No route to host
 Error disconnecting from the LIDS-D server: [Errno 107] Transport endpoint is not connected
 Error connecting to LIDS-D server: [Errno 113] No route to host
 Error disconnecting from the LIDS-D server: [Errno 107] Transport endpoint is not connected
-testError processing command: name 'server' is not defined
+Error disconnecting from the LIDS-D server: [Errno 107] Transport Error processing command: name 'server' is not defined
 Error processing command: name 'server' is not defined

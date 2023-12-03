@@ -16,7 +16,7 @@ const ErrorTable = () => {
       console.log('HTTP Status Code:', response.status);
       const data = await response.text();
       console.log(data);
-      const lines = data.split('\n');
+      const lines = data.split('\n').filter(line => line.trim() !== '');;
       setErrors(lines);
     }catch (e) {
       console.log('Error fetching data', e);

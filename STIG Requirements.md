@@ -1,7 +1,7 @@
 | ID | Description | Mitigating Reason |
 | --- | --- | -- |
 | V-222400 | Validity periods must be verified on all application messages using WS-Security or SAML assertions. | Not Applicable; Our implementation does not contain SOAP Capabilities.  |
-| V-222404 | The application must use both the NotBefore and NotOnOrAfter elements or OneTimeUse element when using the Conditions element in a SAML assertion. |  |
+| V-222404 | The application must use both the NotBefore and NotOnOrAfter elements or OneTimeUse element when using the Conditions element in a SAML assertion. | Not Applicable; SAML assertion is not used to exchange authentication data for our system.  |
 | V-222612 | The application must not be vulnerable to overflow attacks. | Not Applicable; Our system is developed using a memory safe language  |
 | V-222578 | The application must destroy the session ID value and/or cookie on logoff or browser close.  |  |
 | V-222430 | The application must execute without excessive account permissions.  | System requires Root permissions due to pulling Root Ownership of files  |

@@ -174,7 +174,7 @@ If you encounter any issues during the installation process, consider the follow
   - Ensure that dependencies, such as the wireshark library, are installed. On Linux, you can use:
     ```bash
     sudo apt-get install libwireshark-dev
-- **JSON v3.10.12**
+- **JSON v3.10.12 / Import Issues:**
   - Unable to import json.
   - Ensure your Python environment is correctly set up.
   - Confirm that the Python version is 3.10.12 or compatible.

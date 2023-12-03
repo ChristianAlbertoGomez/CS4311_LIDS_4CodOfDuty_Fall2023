@@ -1,1 +1,3 @@
-Error saving configuration file: module 'netifaces' has no attribute 'error'
+Error 1
+Error 3
+Error 5

@@ -124,14 +124,13 @@ def ingest_config(config: str):
 def print_config_details(server_info: dict, net_systems: dict):
     interface_name = 'eth0' 
     current_ip = get_current_ip(interface_name)
-    print(f"Current IP is {current_ip}")
+    print(f"Current IP is {current_ip}\n")
     
     # Print server information
     print("Server Information:")
     print(f"Server IP: {server_info.get('ip', 'N/A')}")
-    print(f"Server MAC Address: {server.info.get('mac', 'N/A')}")
-    print(f"Server Port: {server_info.get('port', 'N/A')}")
-    print()
+    print(f"Server MAC Address: {server_info.get('mac', 'N/A')}")
+    print(f"Server Port: {server_info.get('port', 'N/A')}\n")
 
     # Print network system information
     print("Network Systems:")

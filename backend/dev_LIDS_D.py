@@ -14,10 +14,10 @@ def log_error(error_message):
 def run_gui():
     try:
         # Start the React application using 'npm start' in the background
-        react_process = subprocess.Popen(["npm", "start"], cwd="./../src")
+        react_process = subprocess.Popen(["npm", "run", "start-lids-d"], cwd="./../lids-d")
         
         # Run 'python file_upload.py' and capture the file path returned by the server
-        subprocess.check_output(["python", "dev_lids_d_gui.py"])
+        subprocess.check_output(["python3", "dev_lids_d_gui.py"])
     except Exception as e:
         log_error(f"Error occurred while starting LIDS D server: {str(e)}")
 

@@ -23,6 +23,7 @@ const ErrorTable = () => {
   const [errors, setErrors] = useState(initialData);
 
   return (
+    
     <div className="errors-table">
       <h2>    </h2>
       <table>

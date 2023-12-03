@@ -364,7 +364,7 @@ return (
         value={searchQuery}
         onChange={handleSearchChange}
       />
-    <button onClick={toggleMenu}>Toggle Menu</button>
+    <button className="filter-options-button" onClick={toggleMenu}>Toggle</button>
     {menuVisible && (
     <div id='menu'>
       <label>

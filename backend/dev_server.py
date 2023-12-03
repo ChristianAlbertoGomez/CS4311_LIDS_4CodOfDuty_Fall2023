@@ -1,4 +1,4 @@
-import csv, json, sys, socket, subprocess, threading, defusedxml.ElementTree as ET
+import csv, json, netifaces, sys, socket, subprocess, threading, defusedxml.ElementTree as ET
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 
@@ -21,19 +21,23 @@ def log_error(error_message):
     with open('server_error_log.db', 'a') as error_log_file:
         error_log_file.write(error_message + '\n')
 
-def get_current_ip() -> str:
+def get_current_ip(interface: str) -> str:
     """
-    Retrieves the current system's IP address.
+    Retrieves the IP address of a specific network interface.
+    
+    Args:
+        interface (str): The name of the network interface (e.g., 'eth0', 'wlan0').
+
     Returns:
-        The current system's IP address as a string.
+        str: The IP address of the specified network interface, or None if an error occurs.
     """
     try:
-        # Get the IP address using the hostname
-        ip_address = socket.gethostbyname(socket.gethostname())
-    
+        ip_address = netifaces.ifaddresses(interface)[netifaces.AF_INET][0]['addr']
         return ip_address
-    except socket.error as e:
-        log_error(f"Error determining the current system's IP address: {str(e)}")
+    except (KeyError, IndexError, netifaces.error) as e:
+        error_message = f"Error determining the IP address of interface '{interface}': {str(e)}"
+        print(error_message)
+        log_error(error_message)
         return None
 
 def ingest_config(config: str):
@@ -90,12 +94,11 @@ def ingest_config(config: str):
         net_systems[system_ip] = system_dict  # Store system information in a dictionary
 
         # Simulate getting the current IP 
-        current_ip = get_current_ip()
+        #current_ip = get_current_ip()
         # print(f"Current IP is {current_ip}")
 
         # Use the actual current_ip value here
-        # if get_current_ip() == server_info['ip']:
-        if current_ip == server_info['ip']:
+        if get_current_ip('lo') == server_info['ip']:
             return server_info, net_systems # Return server, network systems 
         else:
             log_error("Error saving configuration file: Error matching host to configuration file")
@@ -169,10 +172,7 @@ def convert_alert_CSV(alerts: list):
 def manage_connections(server_info: dict, net_systems: dict):
     try:
         # Testing purposes only
-        SERVER_IP, SERVER_PORT = get_current_ip(), int(server_info['port'])
-
-        # Real server implementation
-        # SERVER_IP, SERVER_PORT = server_info['ip'], int(server_info['port'])
+        SERVER_IP, SERVER_PORT = get_current_ip('lo'), int(server_info['port'])
 
         # Create a socket to listen for connections
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

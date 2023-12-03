@@ -1,4 +1,4 @@
-import csv, json, time, socket, netifaces, threading, tabulate, defusedxml.ElementTree as ET
+import csv, json, os, time, socket, netifaces, threading, tabulate, defusedxml.ElementTree as ET
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 from scapy.all import sniff, sendp, rdpcap
@@ -50,21 +50,6 @@ def get_current_ip(interface: str) -> str:
         print(error_message)
         log_error(error_message)
         return None
-
-#def get_current_ip() -> str:
-#    """
-#    Retrieves the current system's IP address.
-#    Returns:
-#        str: The current system's IP address as a string, or None if an error occurs.
-#    """
-#    try:
-#        ip_address = socket.gethostbyname(socket.gethostname())
-#        return ip_address
-#    except socket.error as e:
-#        error_message = f"Error determining the current system's IP address: {str(e)}"
-#        print(error_message)
-#        log_error(error_message)
-#        return None
 
 def ingest_config(config: str):
     """
@@ -201,6 +186,8 @@ def analyze_packet(packet, system_info, host_ip):
     Returns:
         None
     """
+    global alerts 
+    
     # Add a check to ignore packets sent by the LIDS_D server
     if packet.haslayer(IP) and packet[IP].src == '10.0.0.160':
         return
@@ -264,7 +251,7 @@ def analyze_packet(packet, system_info, host_ip):
                  freq_ip[key] = 0
                  
         # Check if the size of alerts list has reached 2 gigabits
-        alerts_size_gb = os.path.getsize('alerts.json') * 8e-9
+        alerts_size_gb = sum(len(json.dumps(alert)) for alert in alerts) * 8e-9
         if alerts_size_gb >= MAX_ALERTS_SIZE_GB:
             save_alerts_to_json()
             alerts = []  # Reset the alerts list

@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import dev_server as lids_d
+import threading, dev_server as lids_d
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:3000"])
@@ -22,6 +22,19 @@ def alerts():
 @app.route("/getData",methods=['GET'])
 def get_data():
     return jsonify(lids_d.get_alerts())
+    
+def process_file_upload(file):
+    """
+    Process file upload in a separate thread.
+    """
+    try:
+        # Pass the file path to ingest_config
+        server_info, net_systems = lids_d.ingest_config(file.filename)
+        if server_info is not None and net_systems is not None:
+            lids_d.manage_connections(server_info, net_systems)
+        print("File processing completed successfully")
+    except Exception as e:
+        log_error(f"Error processing file upload: {str(e)}")
 
 @app.route('/', methods=['POST', 'GET'])
 def handle_file_upload():
@@ -44,14 +57,23 @@ def handle_file_upload():
             file.save(destination_folder + file.filename)
         
             # Pass the file path to ingest_config
-            server_info, net_systems = lids_d.ingest_config(file.filename)
-            if server_info is not None and net_systems is not None:
-                lids_d.manage_connections(server_info, net_systems)
+            #server_info, net_systems = lids_d.ingest_config(file.filename)
+            #if server_info is not None and net_systems is not None:
+                #lids_d.manage_connections(server_info, net_systems)
+                
+            # Create a new thread for processing the file
+            thread = threading.Thread(target=process_file_upload, args=(file,))
+            thread.start()
             
             return jsonify({'message': 'File uploaded successfully'})
 
         elif request.method == 'GET':
             return jsonify({'message': 'Server is running'})
+
+        # Add a default response for unsupported methods
+        else:
+            return jsonify({'error': 'Unsupported method'})
+
     except Exception as e:
         log_error(f"Error handling file upload: {str(e)}")
         

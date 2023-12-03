@@ -230,46 +230,39 @@ def analyze_packet(packet, system_info, host_ip):
             else:
                 if '530 Login incorrect' in payload:
                     create_alert(packet, 'high', 'Failed login attempt from non-whitelisted IP')
-    #     if packet.haslayer(TCP):
-    #         if packet[TCP].flags == 'S':
-    #             try:
-    #                 freq_ip['dst_port'] += 1
-    #             except:
-    #                 freq_ip['dst_port'] = 1
-    #     elif packet.haslayer(UDP):
-    #         try:
-    #             freq_ip['dst_port'] += 1
-    #         except:
-    #             freq_ip['dst_port']= 1
-        
-    # for key, val in freq_ip.items():
-    #         if val > 10:
-    #             create_alert(packet, 'high', 'Port scanning detected')
 
-    #             # Reset the value of the port and IP to 0
-    #             freq_ip[key] = 0
-    
     # Check for SYN flood attack
     if packet.haslayer(TCP) and packet[TCP].flags == 'S':
         syn_counter[packet[IP].src] += 1
+        if syn_counter[packet[IP].src] == 5:
+            create_alert(packet, 'med', 'Warning: Possible SYN flood detected')
         if syn_counter[packet[IP].src] > 10:
             create_alert(packet, 'high', 'SYN flood detected')
             syn_counter[packet[IP].src] = 0
+
     # Check for ACK flood attack
     elif packet.haslayer(TCP) and packet[TCP].flags == 'A':
         ack_counter[packet[IP].src] += 1
+        if ack_counter[packet[IP].src] == 5:
+            create_alert(packet, 'med', 'Warning: Possible ACK flood detected')
         if ack_counter[packet[IP].src] > 10:
             create_alert(packet, 'high', 'ACK flood detected')
             ack_counter[packet[IP].src] = 0
+
     # Check for FIN flood attack
     elif packet.haslayer(TCP) and packet[TCP].flags == 'F':
         fin_counter[packet[IP].src] += 1
+        if fin_counter[packet[IP].src] == 5:
+            create_alert(packet, 'med', 'Warning: Possible FIN flood detected')
         if fin_counter[packet[IP].src] > 10:
             create_alert(packet, 'high', 'FIN flood detected')
             fin_counter[packet[IP].src] = 0
+
     # Check for UDP flood attack
     elif packet.haslayer(UDP):
         udp_counter[packet[IP].src] += 1
+        if udp_counter[packet[IP].src] == 5:
+            create_alert(packet, 'med', 'Warning: Possible UDP flood detected')
         if udp_counter[packet[IP].src] > 10:
             create_alert(packet, 'high', 'UDP flood detected')
             udp_counter[packet[IP].src] = 0

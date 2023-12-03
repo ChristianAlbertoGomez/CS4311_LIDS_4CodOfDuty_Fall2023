@@ -5,10 +5,43 @@ from scapy.all import sniff, sendp, rdpcap
 from scapy.layers.inet import IP, TCP, UDP
 from xml.dom import minidom
 
+alert1 = {
+    'alert_id': 1,
+    'level': 'low',
+    'time': '10:20',
+    'src_port': '12.0.0.1',
+    'dst_port': '11.0,0,1',
+    'description': 'src_port' + ' -> ' + 'dst_port',
+    'src_ip': '12.0.01',
+    'dst_ip': '11.0.0.1',
+    'reason': 'test',
+}
+alert2 = {
+    'alert_id': 2,
+    'level': 'mid',
+    'time': '10:20',
+    'src_port': '12.0.0.1',
+    'dst_port': '11.0,0,1',
+    'description': 'src_port' + ' -> ' + 'dst_port',
+    'src_ip': '12.0.01',
+    'dst_ip': '11.0.0.1',
+    'reason': 'test',
+}
+alert3 = {
+    'alert_id': 3,
+    'level': 'high',
+    'time': '10:20',
+    'src_port': '12.0.0.1',
+    'dst_port': '11.0,0,1',
+    'description': 'src_port' + ' -> ' + 'dst_port',
+    'src_ip': '12.0.01',
+    'dst_ip': '11.0.0.1',
+    'reason': 'test',
+}
 #Global Variables
 alert_id_counter = 0
 lidsd_socket = None
-alerts = []
+alerts = [alert1,alert2,alert3]
 freq_ip = {}
 
 # Maximum size of alerts list in gigabits
@@ -45,7 +78,7 @@ def get_current_ip(interface: str) -> str:
     try:
         ip_address = netifaces.ifaddresses(interface)[netifaces.AF_INET][0]['addr']
         return ip_address
-    except (KeyError, IndexError, netifaces.error) as e:
+    except (KeyError, IndexError, netifaces.interfaces()) as e:
         error_message = f"Error determining the IP address of interface '{interface}': {str(e)}"
         print(error_message)
         log_error(error_message)
@@ -225,7 +258,7 @@ def analyze_packet(packet, system_info, host_ip):
         if (src_port == 21) and 'FTP' in payload:
             if src_ip in system_info.get('whitelist', []):
                 if '530 Login incorrect' in payload:
-                    create_alert(packet, 'med', 'Failed login attempt from whitelisted IP', system_info)
+                    create_alert(packet, 'mid', 'Failed login attempt from whitelisted IP', system_info)
             else:
                 if '530 Login incorrect' in payload:
                     create_alert(packet, 'high', 'Failed login attempt from non-whitelisted IP', system_info)

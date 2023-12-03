@@ -22,7 +22,7 @@ const SetConfigFile = () => {
     setProgress(prevState => {
       return {...prevState, started: true}
     })
-    axios.post('http://127.0.0.1:5000/', fd, {
+    axios.post('http://127.0.0.1:5001/', fd, {
       // 'http://httpbin.org/post'
       onUploadProgress: (progressEvent) => {setProgress(prevState => {
         return { ...prevState, pc: progressEvent.progress*100}

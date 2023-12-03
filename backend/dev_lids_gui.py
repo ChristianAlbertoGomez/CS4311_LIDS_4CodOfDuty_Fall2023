@@ -21,10 +21,10 @@ def alerts():
     return lids.get_alerts()
 
 def merge_db_files():
-    file1_path = 'lids_backend_error_log.db'
-    file2_path = 'lids_main_error_log.db'
-    file3_path = 'lids_gui_error_log.db'
-    output_file_path = '/home/arnim_zola/Desktop/dev/backend/lids_errors.txt'
+    file1_path = 'CS4311_LIDS_4CodOfDuty_Fall2023/backend/lids_backend_error_log.db'
+    file2_path = 'CS4311_LIDS_4CodOfDuty_Fall2023/backend/lids_main_error_log.db'
+    file3_path = 'CS4311_LIDS_4CodOfDuty_Fall2023/backend/lids_gui_error_log.db'
+    output_file_path = 'lids_errors.txt'
     try:
         # Open the first database file and read its content
         with open(file1_path, 'r', encoding='utf-8') as file1:
@@ -52,7 +52,7 @@ def merge_db_files():
 @app.route('/getErrors')
 def get_file():
     merge_db_files()
-    return send_file('./lids_errors.txt', as_attachment=True)
+    return send_file('errors.txt', as_attachment=True)
 
 
 @app.route("/getData",methods=['GET'])

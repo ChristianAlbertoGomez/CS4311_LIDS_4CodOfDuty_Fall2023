@@ -174,42 +174,42 @@ If you encounter any issues during the installation process, consider the follow
   - Ensure that dependencies, such as the wireshark library, are installed. On Linux, you can use:
     ```bash
     sudo apt-get install libwireshark-dev
-- **JSON v3.10.12 / Import Issues:**
+- **JSON Import Issues:**
   - Unable to import json.
   - Ensure your Python environment is correctly set up.
   - Confirm that the Python version is 3.10.12 or compatible.
   - Verify that there are no typos or syntax errors in your import statement.
     
-- **Collection v3.10.12**
+- **Collections Import Issues**
   - Unable to import collections.
   - Double-check your Python environment.
   - Confirm that the Python version is 3.10.12 or compatible.
   - Verify the correct import statement (from collections import ...).
     
-- **XML v3.10.12**
+- **XML Import Issues**
   - Unable to import xml.
   - Ensure Python environment correctness.
   - Confirm Python version is 3.10.12 or compatible.
   - Check the correct import statement (import xml).
     
-- **Scapy v2.5.0**
+- **Scapy Import Issues**
   - Unable to import or use scapy.
   - Install scapy using pip install scapy.
   - Confirm the scapy version is 2.5.0 or compatible.
   - Check for any error messages during installation.
  
-- **Cryptography v41.0.7**
+- **Cryptography Import Issues**
    - Unable to import or use cryptography.
    - Install cryptography using pip install cryptography.
    - Confirm the cryptography version is 41.0.7 or compatible.
    - Check for any error messages during installation.
      
-- **Socket v3.10.12**
+- **Socket Import Issues**
    - Unable to import socket.
    - Confirm Python version is 3.10.12 or compatible.
    - Verify the correct import statement (import socket).
      
-- **Netifaces v2.0.0.19**
+- **Netifaces Installation Issues**
    - Unable to import or use netifaces.
    - Install netifaces using pip install netifaces.
    - Confirm the netifaces version is 2.0.0.19 or compatible.
@@ -218,18 +218,18 @@ If you encounter any issues during the installation process, consider the follow
    - Confirm Python version is 3.10.12 or compatible.
    - Verify the correct import statement (import threading).
      
-- **Tabulate v0.9.0**
+- **Tabulate Installation Issues**
    - Unable to import or use tabulate.
    - Install tabulate using pip install tabulate.
    - Confirm the tabulate version is 0.9.0 or compatible.
    - Check for any error messages during installation.
      
-- **Threading v3.10.12**
+- **Threading Import Issues**
    - Unable to import threading.
    - Confirm Python version is 3.10.12 or compatible.
    - Verify the correct import statement (import threading).
  
-- **Defusedxml v0.7.1**
+- **Defusedxml Installation Issues**
    - Unable to import or use defusedxml.
    - Install defusedxml using pip install defusedxml.
    - Confirm the defusedxml version is 0.7.1 or compatible.

@@ -6,12 +6,34 @@
 }
 
 .header {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
   font-size: 30px;
   font-weight: bold;
-  margin-bottom: 20px;
   margin-left: 240px;
   margin-top: 20px;
   margin-bottom: 0;
+}
+
+/* Style the icon-button */
+.icon-button {
+  cursor: pointer;
+}
+
+.large-icon {
+  cursor: pointer;
+  font-size: 3em; /* Adjust the size as needed */
+}
+
+/* Style the "Config Server" text */
+.icon-label {
+  font-size: 14px;
+  margin-top: 5px; /* Adjust the margin as needed */
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
 }
 
 .tables {
@@ -32,4 +54,15 @@
 /* Add some space below the tables */
 .AlertTable {
   margin-top: 40px; /* Adjust the margin-top as needed */
+}
+
+/* Style for the screen (make it hidden by default) */
+.visible {
+  display: block;
+}
+
+
+.modal-button {
+  display: inline-block; /* Agregar esta propiedad para hacer que los botones estén en línea */
+  margin-right: 10px; /* Opcional: Agregar margen entre los botones para separarlos */
 }

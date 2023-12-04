@@ -1,0 +1,27 @@
+/* ServerReport.css */
+
+.server-report {
+    background-color: #f5f5f5; /* Cambiar el color de fondo a un gris claro */
+    border: 1px solid #ccc;
+    border-radius: 10px; /* Aumentar el radio del borde para un aspecto más redondeado */
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Aumentar el sombreado */
+  }
+  
+  .server-report h1 {
+    font-size: 28px; /* Aumentar el tamaño de fuente del título */
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .report-data {
+    font-size: 18px; /* Aumentar el tamaño de fuente del contenido */
+    line-height: 1.6; /* Aumentar la altura de línea para una mejor legibilidad */
+  }
+  
+  .report-data p {
+    margin: 10px 0; /* Aumentar el espacio entre los párrafos */
+    color: #666; /* Cambiar el color del texto a un tono más oscuro */
+  }
+  

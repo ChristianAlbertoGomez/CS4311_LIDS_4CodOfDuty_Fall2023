@@ -330,7 +330,7 @@ class AlertTable extends Component {
             <input
               type="checkbox"
               checked={this.state.columnVisibility.column1}
-              onChange={() => this.handleCheckboxChange('Level')}
+              onChange={() => this.handleCheckboxChange('level')}
             />
             Level
           </label>
@@ -338,7 +338,7 @@ class AlertTable extends Component {
             <input
               type="checkbox"
               checked={this.state.columnVisibility.column2}
-              onChange={() => this.handleCheckboxChange('Alert ID')}
+              onChange={() => this.handleCheckboxChange('alert_id')}
             />
             Alert ID
           </label>
@@ -346,7 +346,7 @@ class AlertTable extends Component {
             <input
               type="checkbox"
               checked={this.state.columnVisibility.column3}
-              onChange={() => this.handleCheckboxChange('Time')}
+              onChange={() => this.handleCheckboxChange('time')}
             />
             Time
           </label>
@@ -354,7 +354,7 @@ class AlertTable extends Component {
             <input
               type="checkbox"
               checked={this.state.columnVisibility.column3}
-              onChange={() => this.handleCheckboxChange('SRC Port')}
+              onChange={() => this.handleCheckboxChange('src_port')}
             />
             SRC Port'
           </label>
@@ -362,7 +362,7 @@ class AlertTable extends Component {
             <input
               type="checkbox"
               checked={this.state.columnVisibility.column3}
-              onChange={() => this.handleCheckboxChange('Dest Port')}
+              onChange={() => this.handleCheckboxChange('dst_port')}
             />
             Dest Port
           </label>
@@ -378,7 +378,7 @@ class AlertTable extends Component {
             <input
               type="checkbox"
               checked={this.state.columnVisibility.column3}
-              onChange={() => this.handleCheckboxChange('Src IP')}
+              onChange={() => this.handleCheckboxChange('src_ip')}
             />
             Src IP
           </label>
@@ -386,7 +386,7 @@ class AlertTable extends Component {
             <input
               type="checkbox"
               checked={this.state.columnVisibility.column3}
-              onChange={() => this.handleCheckboxChange('Dest IP')}
+              onChange={() => this.handleCheckboxChange('dst_ip')}
             />
             Dest IP
           </label>

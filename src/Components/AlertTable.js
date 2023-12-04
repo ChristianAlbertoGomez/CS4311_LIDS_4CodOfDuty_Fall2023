@@ -1,6 +1,9 @@
 
 import React, { useState,addEventListener, useEffect, Component } from 'react';
+import { Document, Page, Text } from '@react-pdf/renderer';
+import { js2xml } from 'xml-js';
 import './CSS Files/AlertTable.css';
+
 
 
 class AlertTable extends Component {
@@ -107,6 +110,7 @@ class AlertTable extends Component {
   dateTime = this.date+' '+this.time;
   
   
+  
 
   /*const [data, setData] = useState([{}]);
   const [sortDirection, setSortDirection] = useState('asc');
@@ -121,22 +125,42 @@ class AlertTable extends Component {
     ipDestination: true,
     Port: true,
     Description: true
-  });
+  });*/
 
-  const [menuVisible, setMenuVisible] = useState(false);*/
+  // const [menuVisible, setMenuVisible] = useState(false);
 
-  toggleMenu() {
-    this.state.menuVisible.setState(!this.state.menuVisible);
+  // toggleMenu() {
+  //   this.state.menuVisible.setState(!this.state.menuVisible);
+  // };
+  // handleCheckboxChange(columnName) {
+  //   /*setColumnVisibility((prevState) => ({
+  //     ...prevState,
+  //     [columnName]: !prevState[columnName],
+  //   }));*/
+  //   //this.state.columnVisibility[columnName]= !this.state.columnVisibility
+  //   this.state.columnVisibility.setState(!this.state.columnVisibility);
+  // };
+
+  toggleMenu = () => {
+    this.setState((prevState) => ({
+      menuVisible: !prevState.menuVisible,
+    }));
   };
-  handleCheckboxChange(columnName) {
-    /*setColumnVisibility((prevState) => ({
-      ...prevState,
-      [columnName]: !prevState[columnName],
-    }));*/
-    //this.state.columnVisibility[columnName]= !this.state.columnVisibility
-    this.state.columnVisibility.setState(!this.state.columnVisibility);
+
+  handleCheckboxChange = (columnName) => {
+    this.setState((prevState) => ({
+      columnVisibility: {
+        ...prevState.columnVisibility,
+        [columnName]: !prevState.columnVisibility[columnName],
+      },
+    }));
   };
 
+  handleSearchChange = (event) => {
+    this.setState({
+      searchQuery: event.target.value,
+    });
+  };
 
   /*useEffect(() =>{
     fetch("/alerts").then(
@@ -195,6 +219,7 @@ class AlertTable extends Component {
     this.state.sortDirection=direction;
     this.state.sortedColumn=columnName;
   };
+  
 
 
   // This section is used to create the filter search bar
@@ -208,10 +233,23 @@ class AlertTable extends Component {
     return searchString.toLowerCase().includes(this.state.searchQuery?.toLowerCase());
   });
 
+
   // Function to handle search input change
-  handleSearchChange(event) {
+  handleSearchChange = (event) => {
     //this.setSearchQuery(event.target.value);
-    this.state.searchQuery=event.target.value
+    this.setState({searchQuery: event.target.value});
+  };
+
+  
+  getFilteredData = () => {
+    const { data, searchQuery } = this.state;
+
+    if (!searchQuery) return data;
+  
+    return data.filter((item) => {
+      const searchString = `${item.level} ${item.alert_id} ${item.time} ${item.src_port} ${item.dst_port} ${item.description} ${item.src_ip} ${item.dst_ip} ${item.reason}`;
+      return searchString.toLowerCase().includes(searchQuery.toLowerCase());
+    });
   };
 
   handleAlertClick(alert) {
@@ -219,16 +257,71 @@ class AlertTable extends Component {
     this.state.selectedAlert=alert
   };
 
-  handleExport() {
-    //this.setExportModalVisible(true);
-    this.state.exportModalVisible=true
-  };
+  // handleExport() {
+  //   //this.setExportModalVisible(true);
+  //   this.state.exportModalVisible=true
+  // };
 
+  handleExport() {
+    // Open the export modal
+    this.setState({ exportModalVisible: true });
+  }
+
+  handleExportFormatChange(format) {
+    this.setState({ exportFormat: format });
+  }
+  
+  handleExportConfirm() {
+    // Close the export modal
+    this.setState({ exportModalVisible: false });
+  
+    // Implement export logic based on the selected format
+    if (this.state.exportFormat === 'pdf') {
+      // Call a function to trigger PDF export
+      this.exportPDF();
+    } else if (this.state.exportFormat === 'xml') {
+      // Call a function to trigger XML export
+      this.exportXML();
+    }
+  }
+  
+  exportPDF() {
+    // Create a PDF document
+    const pdfDocument = (
+      <Document>
+        <Page>
+          <Text>PDF Export Content</Text>
+        </Page>
+      </Document>
+    );
+
+    // Create a download link for the PDF
+    const downloadLink = document.createElement('a');
+    downloadLink.href = URL.createObjectURL(
+      new Blob([pdfDocument], { type: 'application/pdf' })
+    );
+    downloadLink.download = 'exported-document.pdf';
+    downloadLink.click();
+  }
+  
+  exportXML() {
+    // Convert data to XML format
+    const xmlData = js2xml(this.state.data, { compact: true, ignoreComment: true });
+
+    // Create a download link for the XML
+    const downloadLink = document.createElement('a');
+    downloadLink.href = `data:text/xml;charset=utf-8,${encodeURIComponent(xmlData)}`;
+    downloadLink.download = 'exported-data.xml';
+    downloadLink.click();
+  }
+  
+
+  
 
 
 
   render() {
-    //const{menuVisible}=this.state[menuVisible]
+    const filteredData = this.getFilteredData();
 
     return (
       
@@ -319,12 +412,12 @@ class AlertTable extends Component {
           )}
     
 
-    //Fix the table sort
+  
         <table id='sortable-table'>
           <thead>
             <tr>
-              {this.state.columnVisibility?.level && <th onClick={() => this.handleSort('level')}>
-                Level {this.state.sortedColumn === 'level' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
+              {this.state.columnVisibility?.level && <th onClick={() => this.handleSort('Level')}>
+                Level {this.state.sortedColumn === 'Level' && <span>{this.state.sortDirection === 'asc' ? '↑' : '↓'}</span>}
               </th> }
 
               {this.state.columnVisibility?.alert_id && <th data-sort="numeric" onClick={() => this.handleSort('alert_id')}>
@@ -358,7 +451,7 @@ class AlertTable extends Component {
               </tr>
           </thead>
           <tbody>
-            {this.state.data?.map((item, index) => (//this.filteredData?.map((item, index) => (
+            {/*this.state.data?.map((item, index) => (*/filteredData.map((item, index) => (
               <tr key={index}>
                 {this.state.columnVisibility?.level &&<td className={item.level?.toLowerCase()}>{item.level}</td>}
 
@@ -381,24 +474,10 @@ class AlertTable extends Component {
                 
                 <td>
                   <button onClick={() => this.handleExport()}>Export</button>
-                  <button onClick={() => this.handleAlertClick(item)}>Details</button>
+                  {/* <button onClick={() => this.handleAlertClick(item)}>Details</button> */}
                 </td>
               </tr>
                 
-
-    //         </thead>
-    //         <tbody>
-    //           {data.map((item, index) => (
-    //             <tr key={index}>
-    //               <td className={item.level?.toLowerCase()}>{item.level}</td>
-    //               <td>{item.time}</td>
-    //               <td>{item.ip}</td>
-    //               <td>{item.port}</td>
-    //               <td>{item.description}</td>
-    //             </tr>
-    //           ))}
-    //         </tbody>
-    //       </table>
 
             ))}
           </tbody>
@@ -412,9 +491,14 @@ class AlertTable extends Component {
           />
         )}
         {this.state.exportModalVisible && (
+          // <ExportOptionsModal
+          //   onClose={() => this.setExportModalVisible(false)}
+          // />
           <ExportOptionsModal
-            onClose={() => this.setExportModalVisible(false)}
-          />
+          onClose={() => this.setState({ exportModalVisible: false })}
+          onExportFormatChange={(format) => this.handleExportFormatChange(format)}
+          onExportConfirm={() => this.handleExportConfirm()}
+        />
         )}
       </div>
     );
@@ -445,48 +529,98 @@ const AlertDetailsModal = ({ alert, onClose, onExport }) => {
   );
 };
 
-const ExportOptionsModal = ({ onClose }) => {
+const ExportOptionsModal = ({ onClose, onExportFormatChange, onExportConfirm }) => {
   return (
     <div className="export-options-modal">
-      <div className="modal-content2">
-        <span className="close-button" onClick={onClose}>
-          &times;
-        </span>
-        <h3>Export Options</h3>
-        <div className="export-options">
-          <div className="export-option">
-            <label>Export As:</label>
-            <div className="export-as-options">
-              <input
-                type="radio"
-                id="export-pdf"
-                name="export-as"
-                value="PDF"
-              />
-              <label htmlFor="export-pdf">PDF</label>
+             <div className="modal-content2">
+         <span className="close-button" onClick={onClose}>
+           &times;
+         </span>
+         <h3>Export Options</h3>
 
-              <input
-                type="radio"
-                id="export-xml"
-                name="export-as"
-                value="XML"
-              />
-              <label htmlFor="export-xml">XML</label>
-            </div>
-          </div>
+      <div className="export-options">
+        <div className="export-option">
+          <label>Export As:</label>
+          <div className="export-as-options">
+            <input
+              type="radio"
+              id="export-pdf"
+              name="export-as"
+              value="PDF"
+              onChange={() => onExportFormatChange('pdf')}
+            />
+            <label htmlFor="export-pdf">PDF</label>
 
-          <div className="export-option">
-            <label>Save In:</label>
-            <div className="save-in-options">
-              <button>Browse</button>
-              {/* You can add a section for browse options here */}
-            </div>
+            <input
+              type="radio"
+              id="export-xml"
+              name="export-as"
+              value="XML"
+              onChange={() => onExportFormatChange('xml')}
+            />
+            <label htmlFor="export-xml">XML</label>
           </div>
         </div>
-        <button>Export</button>
+
+        <div className="export-option">
+          <label>Save In:</label>
+          <div className="save-in-options">
+            <button onClick={() => alert('Browse button clicked')}>Browse</button>
+            {/* You can add a section for browse options here */}
+          </div>
+        </div>
       </div>
+
+      <button onClick={onExportConfirm}>Export</button>
+    </div>
     </div>
   );
 };
+
+
+
+// const ExportOptionsModal = ({ onClose }) => {
+//   return (
+//     <div className="export-options-modal">
+//       <div className="modal-content2">
+//         <span className="close-button" onClick={onClose}>
+//           &times;
+//         </span>
+//         <h3>Export Options</h3>
+//         <div className="export-options">
+//           <div className="export-option">
+//             <label>Export As:</label>
+//             <div className="export-as-options">
+//               <input
+//                 type="radio"
+//                 id="export-pdf"
+//                 name="export-as"
+//                 value="PDF"
+//               />
+//               <label htmlFor="export-pdf">PDF</label>
+
+//               <input
+//                 type="radio"
+//                 id="export-xml"
+//                 name="export-as"
+//                 value="XML"
+//               />
+//               <label htmlFor="export-xml">XML</label>
+//             </div>
+//           </div>
+
+//           <div className="export-option">
+//             <label>Save In:</label>
+//             <div className="save-in-options">
+//               <button>Browse</button>
+//               {/* You can add a section for browse options here */}
+//             </div>
+//           </div>
+//         </div>
+//         <button>Export</button>
+//       </div>
+//     </div>
+//   );
+// };
 
 export default AlertTable;

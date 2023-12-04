@@ -25,26 +25,25 @@ const ErrorTable = () => {
   fetchData();
     }, []);
     
-  return (
-    <div className="errors-table">
-      <table>
-        <thead>
-          <tr>
-            <th>Errors</th>
-          </tr>
-        </thead>
-        <tbody>
-          <ol>
-          {errors.map((error, index) => (
-             <li key={index}>{error}</li>
-          ))}
-          </ol>
-        </tbody>
-      </table>
-    </div>
-  );
-
-
-};
+    return (
+      <div className='table-container'>
+        <h2>   </h2>
+        <table className="errors-table">
+          <thead>
+            <tr>
+              <th>Errors</th>
+            </tr>
+          </thead>
+          <tbody>
+            {errors.map((error, index) => (
+              <tr key={index}>
+                <td>{error}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  };
 
 export default ErrorTable;

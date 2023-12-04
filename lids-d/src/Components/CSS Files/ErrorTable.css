@@ -1,18 +1,31 @@
+.table-container {
+  max-height: 100px;
+  overflow: scroll;
+  position: static;
+  border-width: 5px;
+  border-style: solid;
+}
 .errors-table {
     width: 40%;
     margin: 20px;
     padding: 20px;
+
   }
   
   .errors-table h2 {
     margin-bottom: 10px;
     color: #333; /* Change the color to your preference */
+    /* position: static; */
   }
   
   .errors-table table {
     width: 30%; /* Adjust the width as needed */
     border-collapse: collapse;
     border-color: #f2f2f2;
+    max-height: 50px;
+    overflow: scroll;
+    border-width: 5px;
+    border-style: solid;
   }
   
   .errors-table th, .notifications-table td {

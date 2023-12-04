@@ -14,12 +14,12 @@ import {
 const Sidebar = () => {
   return (
     <div className="sidebar">
-      <div className="sidebar-title">LIDS-D</div>
+      <div className="sidebar-title">LIDS</div>
       <ul className="nav-links">
-        <li><Link to='/home'><BsHouseFill /> Home</Link></li>
-        <li><Link to="/AlertsPage"><BsFillExclamationCircleFill /> Alerts</Link></li>
-        <li><Link to="/NetworkPage"><BsDiagram2 /> Network</Link></li>
-        <li><BsGearFill /> Settings</li>
+        <li><Link to='/home' className="sidebar-link"><BsHouseFill /> Home</Link></li>
+        <li><Link to="/AlertsPage" className="sidebar-link"><BsFillExclamationCircleFill /> Alerts</Link></li>
+        <li><Link to="/NetworkPage" className="sidebar-link"><BsDiagram2 /> Network</Link></li>
+        {/* <li><BsGearFill /> Settings</li> */}
         <li><BsCloudHaze /> Disconnect</li>
       </ul>
     </div>

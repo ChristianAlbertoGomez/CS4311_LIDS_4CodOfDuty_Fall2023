@@ -12,6 +12,7 @@ class AlertTable extends Component {
     this.state={
       data:[{}],
     };
+    this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
   state={
@@ -22,12 +23,6 @@ class AlertTable extends Component {
     selectedAlert:null,
     exportModalVisible:false,
     columnVisibility:{
-      // level: true,
-      // Time: true,
-      // ipSource: true,
-      // ipDestination: true,
-      // Port: true,
-      // Description: true, 
       level: true, 
       alert_id:true, 
       time: true, 
@@ -71,12 +66,7 @@ class AlertTable extends Component {
           selectedAlert:null,
           exportModalVisible:false,
           columnVisibility:{
-          // level: true,
-          // Time: true,
-          // ipSource: true,
-          // ipDestination: true,
-          // Port: true,
-          // Description: true, 
+
           level: true, 
           alert_id:true, 
           time: true, 
@@ -133,11 +123,11 @@ class AlertTable extends Component {
   //   this.state.menuVisible.setState(!this.state.menuVisible);
   // };
   // handleCheckboxChange(columnName) {
-  //   /*setColumnVisibility((prevState) => ({
+  //   columnVisibility((prevState) => ({
   //     ...prevState,
   //     [columnName]: !prevState[columnName],
-  //   }));*/
-  //   //this.state.columnVisibility[columnName]= !this.state.columnVisibility
+  //   }));
+  //   this.state.columnVisibility[columnName]= !this.state.columnVisibility
   //   this.state.columnVisibility.setState(!this.state.columnVisibility);
   // };
 
@@ -472,8 +462,8 @@ class AlertTable extends Component {
                 {this.state.columnVisibility?.reason && <td>{item.reason}</td>}
             
                 
-                <td>
-                  <button onClick={() => this.handleExport()}>Export</button>
+                <td >
+                  <button className="actions-export-button" onClick={() => this.handleExport()}>Export</button>
                   {/* <button onClick={() => this.handleAlertClick(item)}>Details</button> */}
                 </td>
               </tr>
@@ -523,7 +513,7 @@ const AlertDetailsModal = ({ alert, onClose, onExport }) => {
         <p><strong>Src IP:</strong> {alert.src_ip}</p>
         <p><strong>Dst IP:</strong> {alert.dst_port}</p>
         <p><strong>Alert Description:</strong> {alert.reason}</p>
-        <button onClick={onExport}>Export</button>
+        <button  onClick={onExport}>Export</button>
       </div>
     </div>
   );
@@ -565,13 +555,11 @@ const ExportOptionsModal = ({ onClose, onExportFormatChange, onExportConfirm }) 
         <div className="export-option">
           <label>Save In:</label>
           <div className="save-in-options">
-            <button onClick={() => alert('Browse button clicked')}>Browse</button>
-            {/* You can add a section for browse options here */}
           </div>
         </div>
       </div>
 
-      <button onClick={onExportConfirm}>Export</button>
+      <button className="actions-export-button" onClick={onExportConfirm}>Export</button>
     </div>
     </div>
   );

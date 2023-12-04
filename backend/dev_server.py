@@ -9,8 +9,20 @@ from xml.dom import minidom
 # node
 alerts = []
 
-# AES encryption key used for testing
-encryption_key = b'0123456789ABCDEF'
+def get_ip() -> str:
+    """
+    Retrieves the current system's IP address.
+    Returns:
+        str: The current system's IP address as a string, or None if an error occurs.
+    """
+    try:
+        ip_address = socket.gethostbyname(socket.gethostname())
+        return ip_address
+    except socket.error as e:
+        error_message = f"Error determining the current system's IP address: {str(e)}"
+        print(error_message)
+        log_error(error_message)
+        return None
 
 def log_error(error_message):
     """
@@ -100,7 +112,7 @@ def ingest_config(config: str):
         # print(f"Current IP is {current_ip}")
 
         # Use the actual current_ip value here
-        if get_current_ip('lo') == server_info['ip']:
+        if get_ip() == server_info['ip']:
             return server_info, net_systems # Return server, network systems 
         else:
             log_error("Error saving configuration file: Error matching host to configuration file")
@@ -174,7 +186,7 @@ def convert_alert_CSV(alerts: list):
 def manage_connections(server_info: dict, net_systems: dict):
     try:
         # Testing purposes only
-        SERVER_IP, SERVER_PORT = get_current_ip('lo'), int(server_info['port'])
+        SERVER_IP, SERVER_PORT = get_ip(), int(server_info['port'])
 
         # Create a socket to listen for connections
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

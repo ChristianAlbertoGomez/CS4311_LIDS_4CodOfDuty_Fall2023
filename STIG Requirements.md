@@ -22,7 +22,7 @@
 | V-222399 | Messages protected with WS_Security must use time stamps with creation and expiration times.  | Not Applicable; System does not use WS-Security tokens.  |
 | V-222658 | All products must be supported by the vendor or the development team.  | The development team, upon delivery of the software, will provide essential documentation and guidance for understanding, maintaining, and supporting the software post-delivery. |
 | V-222659 | The application must be decommissioned when maintenance or support is no longer available.  | Not Applicable; Software requirements do not include these specifications.  |
-| V-222551 | The application, when using PKI-based authentication, must enforce authorized access to the corresponding private key.  |  |
+| V-222551 | The application, when using PKI-based authentication, must enforce authorized access to the corresponding private key.  | Not Applicable; Software requirements do not include these specifications.  |
 | V-222620 | Application web servers must be on a separate network segment from the application and database servers if it is a tiered application operating in the DoD DMZ.  | Not Applicable; Web servers aren’t connected to any network outside the network that is going to be scanned. |
 | V-222536 | The application must enforce a minimum 15-character password length.  | Not Applicable; Application does not include an internal mechanism for user authentication that involves passwords. Instead, it relies entirely on an external authentication system.  |
 | V-222643 | The application must have the capability to mark sensitive/classified output when required.  | Not Applicable; Software requirements do not include these specifications.  |

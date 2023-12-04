@@ -20,38 +20,38 @@ def log_error(error_message):
 def alerts():
     return lids.get_alerts()
 
-def merge_db_files():
-    file1_path = 'CS4311_LIDS_4CodOfDuty_Fall2023/backend/lids_backend_error_log.db'
-    file2_path = 'CS4311_LIDS_4CodOfDuty_Fall2023/backend/lids_main_error_log.db'
-    file3_path = 'CS4311_LIDS_4CodOfDuty_Fall2023/backend/lids_gui_error_log.db'
-    output_file_path = 'lids_errors.txt'
-    try:
-        # Open the first database file and read its content
-        with open(file1_path, 'r', encoding='utf-8') as file1:
-            content_file1 = file1.readlines()
+# def merge_db_files():
+#     file1_path = 'CS4311_LIDS_4CodOfDuty_Fall2023/backend/lids_backend_error_log.db'
+#     file2_path = 'CS4311_LIDS_4CodOfDuty_Fall2023/backend/lids_main_error_log.db'
+#     file3_path = 'CS4311_LIDS_4CodOfDuty_Fall2023/backend/lids_gui_error_log.db'
+#     output_file_path = 'lids_errors.txt'
+#     try:
+#         # Open the first database file and read its content
+#         with open(file1_path, 'r', encoding='utf-8') as file1:
+#             content_file1 = file1.readlines()
 
-        # Open the second database file and read its content
-        with open(file2_path, 'r', encoding='utf-8') as file2:
-            content_file2 = file2.readlines()
+#         # Open the second database file and read its content
+#         with open(file2_path, 'r', encoding='utf-8') as file2:
+#             content_file2 = file2.readlines()
             
-        # Open the second database file and read its content
-        with open(file3_path, 'r', encoding='utf-8') as file3:
-            content_file3 = file3.readlines()
+#         # Open the second database file and read its content
+#         with open(file3_path, 'r', encoding='utf-8') as file3:
+#             content_file3 = file3.readlines()
 
-        # Combine the content from both files
-        merged_content = content_file1 + content_file2 + content_file3
+#         # Combine the content from both files
+#         merged_content = content_file1 + content_file2 + content_file3
 
-        # Write the merged content to the output text file
-        with open(output_file_path, 'w', encoding='utf-8') as output_file:
-            output_file.writelines(merged_content)
+#         # Write the merged content to the output text file
+#         with open(output_file_path, 'w', encoding='utf-8') as output_file:
+#             output_file.writelines(merged_content)
 
-        print(f"Merged content from {file1_path}, {file2_path} and {file3_path} into {output_file_path}")
-    except Exception as e:
-        print(f"Error merging files: {e}")
+#         print(f"Merged content from {file1_path}, {file2_path} and {file3_path} into {output_file_path}")
+#     except Exception as e:
+#         print(f"Error merging files: {e}")
 
 @app.route('/getErrors')
 def get_file():
-    merge_db_files()
+    #merge_db_files()
     return send_file('errors.txt', as_attachment=True)
 
 

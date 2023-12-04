@@ -218,3 +218,18 @@ input[type="text"] {
   background-color: #ddd;
 }
 
+.filter-options-button{
+  color: white;
+  font-weight: bold;
+  background-color: #25374d;
+  border-radius: 3px;
+  border-style: none;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+  margin-bottom: 18px;
+  display: flex;
+  position: relative;
+}

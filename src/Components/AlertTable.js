@@ -240,7 +240,7 @@ class AlertTable extends Component {
             value={this.state.searchQuery}
             onChange={this.handleSearchChange}
           />
-        <button onClick={this.toggleMenu}>Toggle Menu</button>
+        <button className="filter-options-button" onClick={this.toggleMenu}>Filter</button>
         {this.state.menuVisible && (
         <div id='menu'>
           <label>

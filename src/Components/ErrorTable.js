@@ -1,44 +1,43 @@
-import React, { useState } from 'react';
-import './AlertTable.css'; 
-
+import React, { useState, useEffect } from 'react';
+import './CSS Files/AlertTable.css';
 
 const ErrorTable = () => {
-  const initialData = [
-    {
-      error: 'Error in Port 88',
-    },
-    {
-      error: 'Error connecting LIDS-D',
-    },
-    {
-      error: 'Error reading file ####',
-    }
-    // Add more data rows as needed
-  ];
+  const [errors, setErrors] = useState([]);
 
-  const [errors, setErrors] = useState(initialData);
-
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:5000/getErrors');
+        console.log('HTTP Status Code:', response.status);
+        const data = await response.text();
+        console.log(data);
+        const lines = data.split('\n').filter(line => line.trim() !== '');
+        setErrors(lines);
+      } catch (e) {
+        console.log('Error fetching data', e);
+      }
+    };
+    fetchData();
+  }, []);
   return (
-    <div className="errors-table">
-      <h2>    </h2>
-      <table>
+    <div className='table-container'>
+      <h2>   </h2>
+      <table className="errors-table">
         <thead>
           <tr>
             <th>Errors</th>
           </tr>
         </thead>
         <tbody>
-          {errors.map((item, index) => (
+          {errors.map((error, index) => (
             <tr key={index}>
-              <td>{item.error}</td>
+              <td>{error}</td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
   );
-
-
 };
 
 export default ErrorTable;

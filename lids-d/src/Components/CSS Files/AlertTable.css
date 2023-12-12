@@ -1,0 +1,252 @@
+.table-container {
+
+  max-height: 500px;
+  overflow: scroll;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px rgba(0,0,0,.25);
+  font-size: 15px;
+  max-height: 500px;
+  overflow: scroll;
+}
+
+th, td {
+  border: 1px solid rgba(255, 255, 255, 1);
+  padding: 8px;
+  text-align: left;
+  color: rgba(0,0,0,1);
+  border-radius: 5px;
+}
+td:hover {
+  background-color: whitesmoke;
+}
+
+th {
+  background-color: #25374d;
+  cursor: pointer;
+  color: white;
+  position: sticky;
+  top: 0px;
+  margin: 0 0 0 0;
+}
+
+th:hover {
+  background-color: rgba(37,55,77,.85);
+  color: white;
+}
+
+.low {
+  background-color: rgba(0, 255, 0, .65);
+}
+.low:hover {
+  background-color: rgb(4, 243, 4);
+}
+.mid {
+  background-color: rgba(255, 255, 3, 0.751);
+}
+.mid:hover {
+  background-color: rgb(244, 244, 7);
+}
+.high {
+  background-color: rgba(255, 0, 0, .75);
+} 
+.high:hover{
+  background-color: rgba(255, 0, 0, .9);
+}
+
+.filter-search-bar{
+  font-size: 15px;
+  margin: 0;
+  background-color: white;
+  border-style: solid;
+  border-color: rgba(0,0,0,.25);
+  border-width: 1px;
+  border-radius: 5px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 6px;
+  width: 250px;
+  margin-bottom: 10px;
+}
+.filter-search-bar:focus{
+  outline: none;
+  box-shadow: 1px 1px 1px rgba(0,0,0,.1);
+}
+
+
+
+/*My part --> Christian*/
+/* Alert Details Modal */
+.alert-details-modal {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 10000; /* Adjust the z-index to be higher than the export modal */
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 80%;
+  overflow-y: auto; /* Enable scrolling for long content */
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Additional Styles for Alert Details Content */
+.alert-details-modal h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.alert-details-modal p {
+  margin: 0;
+}
+
+
+/* Export options modal container */
+.export-options-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  z-index: 10001; /* Ensure it appears above the details screen */
+}
+
+/* Modal content */
+.modal-content2 {
+  background-color: #fff; /* Background color of the modal */
+  border-radius: 4px;
+  padding: 20px;
+  width: 40%; /* Adjust the width as needed */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+/* Close button (X) */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Export options title */
+h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* Dropdown select */
+select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Text input */
+input[type="text"] {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Export button style */
+.export-button {
+  background-color: #007BFF; /* Change the background color to your preference */
+  color: #fff; /* Text color */
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.export-button:hover {
+  background-color: #0056b3; /* Change the background color on hover */
+}
+
+
+
+.menu {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu li {
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.menu li:hover {
+  background-color: #ddd;
+}
+
+.filter-options-button{
+  color: white;
+  font-weight: bold;
+  background-color: #25374d;
+  border-radius: 3px;
+  border-style: none;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+  margin-bottom: 18px;
+  display: flex;
+  position: relative;
+}
+
+.actions-export-button {
+  color: white;
+  background-color: #25374d;
+  border-radius: 3px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border-style: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+.actions-export-button:active{
+  opacity: 75%;
+}

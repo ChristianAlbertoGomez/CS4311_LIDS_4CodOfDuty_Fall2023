@@ -1,0 +1,32 @@
+.known-devices {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    display: flex; /* Use flex display */
+    flex-wrap: wrap; /* Allow for wrapping */
+    gap: 10px; /* Add some space between tables */
+  }
+  
+  table {
+    margin-top: 20px;
+  }
+  
+  table, th, td {
+    border: 1px solid #ddd;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  tr:hover {
+    background-color: #ddd;
+  }
